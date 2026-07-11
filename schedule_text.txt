@@ -1,0 +1,20 @@
+Row1: Col1=1 | Col2=基本算法 | Col3=贪心与搜索
+Row2: Col1=2 | Col3=序列算法与序列问题
+Row3: Col1=3 | Col3=程序实现、构造、Ad-hoc
+Row4: Col1=4 | Col2=动态规划 | Col3=各类DP（一）
+Row5: Col1=5 | Col3=各类DP（二）
+Row6: Col1=6 | Col3=动态规划建模与状态设计
+Row7: Col1=7 | Col3=动态规划优化
+Row8: Col1=8 | Col2=图论 | Col3=最短路与最小生成树
+Row9: Col1=9 | Col3=连通性问题
+Row10: Col1=10 | Col3=简单网络流、二分图、与图论杂题
+Row11: Col1=11 | Col2=树上问题 | Col3=树上DP
+Row12: Col1=12 | Col3=树上数据结构与算法（一）
+Row13: Col1=13 | Col3=树上数据结构与算法（二）
+Row14: Col1=14 | Col3=树上问题杂题
+Row15: Col1=15 | Col2=数据结构 | Col3=基本数据结构与技巧
+Row16: Col1=16 | Col3=数据结构应用
+Row17: Col1=17 | Col3=根号数据结构与离线算法
+Row18: Col1=18 | Col2=字符串 | Col3=基础字符串算法
+Row19: Col1=19 | Col3=字符串进阶算法与应用
+Row20: Col1=20 | Col2=数学 | Col3=数论与组合数学

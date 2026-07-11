@@ -1,0 +1,7 @@
+{
+  data:
+  [[int] (12)] (100)
+  draw: int,
+  recordsFiltered: int,
+  recordsTotal: int
+}

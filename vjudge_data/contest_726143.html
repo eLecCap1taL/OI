@@ -1,0 +1,407 @@
+<!DOCTYPE html><html data-bs-theme="light" style="color-scheme: light;"><head>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  (function () {
+    try {
+      const storedTheme = localStorage.getItem('theme') || 'auto';
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const effectiveTheme = storedTheme === 'auto'
+          ? (prefersDark ? 'dark' : 'light')
+          : storedTheme;
+      document.documentElement.setAttribute('data-bs-theme', effectiveTheme);
+      document.documentElement.style.setProperty('color-scheme', effectiveTheme);
+    } catch (e) {
+    }
+  })();
+</script>
+
+
+
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-374JLX1715"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-374JLX1715', {
+      
+    });
+  </script>
+
+
+
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="keywords" content="Online Judge, vjudge, OJ, Virtual Judge, ICPC, OnlineJudge">
+<meta name="robots" content="index, follow">
+
+    <title>课后练习题省选第14组【杂题】 - Virtual Judge</title>
+
+    <meta property="og:url" content="https://vjudge.net/contest/726143">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="课后练习题省选第14组【杂题】 - Virtual Judge">
+    <meta property="og:description" content="Contest [课后练习题省选第14组【杂题】] in Virtual Judge">
+<script defer="" src="/static/bundle/ec8ec55297d92d5fe8a0.js"></script><script defer="" src="/static/bundle/148237ffa4d95912e91d.js"></script><script defer="" src="/static/bundle/609850a616cd1cd1050e.js"></script><script defer="" src="/static/bundle/06988c0cb5f325797923.js"></script><script defer="" src="/static/bundle/f0ddc3b4b794191bce6d.js"></script><script defer="" src="/static/bundle/06b09b49730e9c951467.js"></script><script defer="" src="/static/bundle/716f85e13f177dbf5e57.js"></script><script defer="" src="/static/bundle/1782ad6754f2ba5b2e05.js"></script><script defer="" src="/static/bundle/3c540aaf61f7313ffaf3.js"></script><script defer="" src="/static/bundle/ded676082d4c014e2770.js"></script><link href="/static/bundle/7dfcff63ee8a84ba4327.css" rel="stylesheet"><link href="/static/bundle/558cf47dd4aa8a2db0b6.css" rel="stylesheet"><link href="/static/bundle/b236573ab843bd819a66.css" rel="stylesheet"><link href="/static/bundle/5338b6884f6406a7d9f1.css" rel="stylesheet"></head>
+
+<body>
+<script defer="" src="/static/bundle/31d6cfe0d16ae931b73c.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark prod" id="top-nav">
+    <button class="navbar-toggler d-sm-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <a class="navbar-brand" href="/">
+            <img src="/static/bundle/11b24ab2156955d8f3fa.ico" height="30">
+            <span data-i18n="top.nav.home">主页</span>
+        </a>
+        <ul class="navbar-nav top-nav-primary">
+            <li class="nav-item" id="nav-problem">
+                <a class="nav-link" href="/problem" data-i18n="top.nav.problem">题目</a>
+            </li>
+            <li class="nav-item" id="nav-status">
+                <a class="nav-link" href="/status" data-i18n="top.nav.status">状态</a>
+            </li>
+            <li class="nav-item active" id="nav-contest">
+                <a class="nav-link" href="/contest" data-i18n="top.nav.contest">比赛</a>
+            </li>
+            <li class="nav-item" id="nav-workbook">
+                <a class="nav-link" href="/workbook" data-i18n="top.nav.workbook">题单</a>
+            </li>
+            <li class="nav-item" id="nav-user">
+                <a class="nav-link" href="/user" data-i18n="top.nav.user">用户</a>
+            </li>
+            <li class="nav-item" id="nav-group">
+                <a class="nav-link" href="/group" data-i18n="top.nav.group">团队</a>
+            </li>
+            <li class="nav-item" id="nav-comment">
+                <a class="nav-link" href="/comment" data-i18n="top.nav.forum">论坛</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="helpDropdown" data-bs-toggle="dropdown" data-i18n="top.nav.help">帮助</a>
+                <div class="dropdown-menu dropdown-menu-start">
+                    <a class="dropdown-item" href="/article/2771">
+                        <i class="fa fa-question-circle-o"></i>
+                        <span data-i18n="top.nav.faq">FAQ</span>
+                    </a>
+                    <a class="dropdown-item" href="/article/97">
+                        <i class="fa fa-bug"></i>
+                        <span data-i18n="top.nav.bf">问题反馈</span>
+                    </a>
+                    <a class="dropdown-item" href="/article/96">
+                        <i class="fa fa-lightbulb-o"></i>
+                        <span data-i18n="top.nav.suggestions">建议</span>
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" id="contact-us">
+                        <i class="fa fa-headphones"></i>
+                        <span data-i18n="top.nav.contact">联系我们</span>
+                    </a>
+                </div>
+            </li>
+            
+        </ul>
+        <ul class="navbar-nav top-nav-secondary ms-sm-auto">
+            <li class="nav-item top-nav-theme-item">
+                <a class="nav-link" href="javascript:void(0)" id="switchTheme" title="Auto Mode" aria-label="Auto Mode"><i class="fa fa-desktop"></i></a>
+            </li>
+            <li class="nav-item dropdown top-nav-locale-item">
+                <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="switchLocale" data-bs-toggle="dropdown" data-i18n="top.nav.locale">语言</a>
+                <div class="dropdown-menu dropdown-menu-end switch-locale-dropdown"><a class="dropdown-item" href="javascript:void(0)" data-locale="en" lang="en">English</a><a class="dropdown-item active" href="javascript:void(0)" data-locale="zh-Hans" lang="zh-Hans" aria-current="true">简体中文</a><a class="dropdown-item" href="javascript:void(0)" data-locale="zh-Hant" lang="zh-Hant">繁體中文</a><a class="dropdown-item" href="javascript:void(0)" data-locale="ja" lang="ja">日本語</a><a class="dropdown-item" href="javascript:void(0)" data-locale="ko" lang="ko">한국어</a><a class="dropdown-item" href="javascript:void(0)" data-locale="ar" lang="ar">اَلْعَرَبِيَّةُ</a><a class="dropdown-item" href="javascript:void(0)" data-locale="bn" lang="bn">বাংলা</a><a class="dropdown-item" href="javascript:void(0)" data-locale="hi" lang="hi">हिन्दी</a><a class="dropdown-item" href="javascript:void(0)" data-locale="vi" lang="vi">Tiếng Việt</a><a class="dropdown-item" href="javascript:void(0)" data-locale="es" lang="es">Español</a><a class="dropdown-item" href="javascript:void(0)" data-locale="pt" lang="pt">português</a><a class="dropdown-item" href="javascript:void(0)" data-locale="ru" lang="ru">русский язык</a><a class="dropdown-item" href="javascript:void(0)" data-locale="kk" lang="kk">Қазақ тілі</a></div>
+            </li>
+            
+                
+                
+                    <li class="nav-item top-nav-login-item">
+                        <a class="nav-link login" href="javascript:void(0)" data-i18n="top.nav.login">登录</a>
+                    </li>
+                    <li class="nav-item top-nav-register-item">
+                        <a class="nav-link register" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#registerModal" data-i18n="top.nav.register">注册</a>
+                    </li>
+                
+            
+        </ul>
+    </div>
+</nav>
+<div id="page-panel-toggle-slot"></div>
+
+
+<div class="container-md" style="margin-top: 30px;">
+    
+
+    <div class="row card" id="time-info">
+        <div class="row">
+            <div class="col-3 text-start">
+                <b>
+                    <span>开始时间</span>
+                    :
+                </b>
+                <span class="timestamp">2025-06-30 16:05 CST</span>
+            </div>
+            <div class="col-6 text-center">
+                <h3>
+                    <i id="btn-favorite" class="fa fa-star-o"></i>
+                    
+                        <img src="/static/bundle/bf2b66129c2d2acc0cc3.png" height="30">
+                    
+                    
+                    课后练习题省选第14组【杂题】
+                </h3>
+            </div>
+            <div class="col-3 text-end">
+                <b>
+                    <span>结束时间</span>
+                    :
+                </b>
+                <span class="timestamp">2026-06-25 16:05 CST</span>
+            </div>
+        </div>
+        <div class="row" id="contest-time-slider-container">
+            <div id="contest-time" class="noUi-target noUi-ltr noUi-horizontal noUi-txt-dir-ltr"><div class="noUi-base"><div class="noUi-connects"><div class="contest-time-progress" style="left: 0%; width: 100%;"></div></div><div class="noUi-origin" style="transform: translate(0%, 0px); z-index: 4;"><div class="noUi-handle noUi-handle-lower" data-handle="0" tabindex="0" role="slider" aria-orientation="horizontal" aria-valuemin="0.0" aria-valuemax="31104000000.0" aria-valuenow="31104000000.0" aria-valuetext="31104000000.00"><div class="noUi-touch-area"></div><div class="noUi-tooltip">360:00:00:00</div></div></div></div></div>
+        </div>
+        <div class="row">
+            <div class="col-3 text-start" id="info-elapsed"></div>
+            <div class="col-6 text-center">
+                <span id="info-running" style="color: var(--color-success);">已结束</span>
+                <span id="info-freeze" style="color: grey; display: none;">
+                    (<span>封榜中</span>)
+                </span>
+            </div>
+            <div class="col-3 text-end" id="info-remaining"></div>
+        </div>
+    </div>
+
+    
+
+    
+
+</div>
+
+<textarea style="display: none" name="dataJson">{"id":726143,"title":"课后练习题省选第14组【杂题】","type":1,"openness":2,"authStatus":0,"begin":1751270700000,"end":1782374700000,"freezeTime":1782374700000,"unfreezeTime":1782374700000,"enableFreeze":false,"createTime":1751270572000,"version":"d94","started":true,"ended":true,"managerId":0,"fav":false,"enableTimeMachine":false,"sumTime":true,"penalty":0,"partialScore":false,"oneShot":false,"customizedWeight":false,"showPeers":false,"participantMode":0,"excludedFromRank":false,"clonedFromId":0}</textarea>
+<script defer="" src="/static/bundle/31d6cfe0d16ae931b73c.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="body-footer">
+    <div style="margin-bottom: 8px">
+        <a href="mailto:is.un@qq.com" target="_blank">
+            <img src="/static/bundle/159d24b1b159c99a98e3.svg">
+        </a>
+        <img src="/static/bundle/fdbb90aaddd32a5ab4ad.png" class="qq" data-bs-toggle="popover" data-bs-placement="top">
+        <a href="https://weibo.com/u/5340553087" target="_blank">
+            <img src="/static/bundle/aae271671b3d18e15b40.svg">
+        </a>
+        <a href="https://space.bilibili.com/3056509/lists/3909505" target="_blank">
+            <img src="/static/bundle/ad1d62977bf56d0e0010.png">
+        </a>
+        <a href="https://t.me/joinchat/Erw7nRGwXN3iSCoKguVW3w" target="_blank">
+            <img src="/static/bundle/7182da66feaf3e99632a.svg">
+        </a>
+        <a href="https://www.facebook.com/virtualjudge/" target="_blank">
+            <img src="/static/bundle/c2687d1cf1f3e06984eb.svg">
+        </a>
+    </div>
+    <div id="footer-info">
+        All Copyright Reserved © 2010-2026<br>
+        <span data-i18n="bottom.server_time">服务器时间</span>: <span class="currentTimeTZ">2026-07-11 18:22:22 CST</span>
+    </div>
+</div>
+
+
+<input name="systemVersion" type="hidden" value="1783764198767">
+<input name="gaId" type="hidden" value="G-374JLX1715">
+
+
+
+
+    
+
+
+<script type="text/javascript">basePath = "";</script>
+
+
+<script defer="" src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;cbda702c6a634090aafa4717574879a5&quot;,&quot;r&quot;:1,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a197161b1fca6e52',t:'MTc4Mzc2NTMzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><iframe height="1" width="1" style="position: absolute; top: 0px; left: 0px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; visibility: hidden;"></iframe>
+
+<div class="modal" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel" data-i18n="login">登录</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="login-form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="login-username" data-i18n-placeholder="user.auth.username_or_email" placeholder="用户名 或 Email">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="login-password" data-i18n-placeholder="password" placeholder="密码">
+                    </div>
+                    <div id="turnstile-container-login" style="text-align: right"></div>
+                    <input type="submit" style="display: none">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="alert alert-danger" role="alert" id="login-alert"></div>
+                <button type="button" class="btn btn-secondary me-auto" id="btn-forget-password" data-i18n="user.auth.forget_password">忘记密码</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="button.cancel">取消</button>
+                <button type="button" class="btn btn-primary" id="btn-login" data-i18n="button.login">登录</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerModalLabel" data-i18n="register">注册</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="register-form">
+                    <!-- Phase 1: Email verification -->
+                    <div id="register-phase1">
+                        <div class="form-group row">
+                            <label for="register-email" class="col-2 col-form-label">
+                                * <span>邮箱</span>:
+                            </label>
+                            <div class="col-10">
+                                <input type="text" class="col-10 form-control" id="register-email" data-i18n-placeholder="user.auth.email_hint_private" placeholder="他人不可见。请务必填写真实邮箱。您忘记账号密码后，只能通过它来找回密码。">
+                            </div>
+                        </div>
+                        <div id="turnstile-container-register" style="text-align: right"></div>
+                    </div>
+                    <!-- Phase 2: Complete registration (hidden initially) -->
+                    <div id="register-phase2" style="display: none">
+                        <div class="form-group row">
+                            <label for="register-email-display" class="col-2 col-form-label">
+                                * <span>邮箱</span>:
+                            </label>
+                            <div class="col-10">
+                                <input type="text" class="col-10 form-control" id="register-email-display" readonly="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="register-code" class="col-2 col-form-label">
+                                * <span>验证码</span>:
+                            </label>
+                            <div class="col-10">
+                                <input type="text" class="form-control" id="register-code" maxlength="6" data-i18n-placeholder="user.auth.enter_verification_code" placeholder="请输入6位数字验证码">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="register-username" class="col-2 col-form-label">
+                                * <span>用户名</span>:
+                            </label>
+                            <div class="col-10">
+                                <input type="text" class="form-control" id="register-username" data-i18n-placeholder="user.auth.username_hint_immutable" placeholder="重要：一旦注册，您就不能更改了！">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="register-password" class="col-2 col-form-label">
+                                * <span>密码</span>:
+                            </label>
+                            <div class="col-10">
+                                <input type="password" class="form-control" id="register-password" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="register-repeat-password" class="col-2 col-form-label">
+                                * <span>重复密码</span>:
+                            </label>
+                            <div class="col-10">
+                                <input type="password" class="col-10 form-control" id="register-repeat-password" data-i18n-placeholder="user.auth.repeat_password_placeholder" placeholder="重复上面的密码">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="register-nickname" class="col-2 col-form-label">
+                                <span>昵称</span>:
+                            </label>
+                            <div class="col-10">
+                                <input type="text" class="col-10 form-control" id="register-nickname" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="register-school" class="col-2 col-form-label">
+                                <span>学校</span>:
+                            </label>
+                            <div class="col-10">
+                                <input type="text" class="col-10 form-control" id="register-school" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="alert" role="alert" id="register-feedback" style="display: none; margin-bottom: 0"></div>
+                <a href="javascript:void(0)" id="btn-resend-code" style="display: none; margin-right: 10px" data-i18n="user.auth.resend_code">重新发送</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="button.cancel">取消</button>
+                <button type="button" class="btn btn-primary" id="btn-send-code" data-i18n="user.auth.send_code">发送验证码</button>
+                <button type="button" class="btn btn-primary" id="btn-register" style="display: none" data-i18n="button.register">注册</button>
+            </div>
+        </div>
+    </div>
+</div><div id="vjudge-toast-container" class="toast-container position-fixed end-0 p-3" style="top: 68px; bottom: auto;"><div class="toast border-0 text-bg-danger fade show" role="status" aria-live="polite" aria-atomic="true" data-bs-delay="5000" data-bs-autohide="true" data-toast-content-key="{&quot;kind&quot;:&quot;i18n&quot;,&quot;value&quot;:&quot;toast.contest.login_required&quot;}">
+    <div class="d-flex">
+      <div class="toast-body">请先登录您的账号</div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    
+    <div class="toast-progress" aria-hidden="true">
+      <div class="toast-progress-bar" style="transition-duration: 5000ms; transform: scaleX(0);"></div>
+    </div>
+  
+  </div></div></body></html>

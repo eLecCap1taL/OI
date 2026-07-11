@@ -1,0 +1,54 @@
+[DUPLICATE] Duplicate problems:
+  P1137 appears 2x
+  P1352 appears 2x
+  P1525 appears 2x
+  P1600 appears 2x
+  P1631 appears 3x
+  P1776 appears 2x
+  P1908 appears 2x
+  P1962 appears 2x
+  P2085 appears 2x
+  P2444 appears 2x
+  P3128 appears 2x
+  P3372 appears 2x
+  P4180 appears 2x
+  P4551 appears 2x
+
+[DIFFICULTY] Distribution:
+  —              :   2
+  提高             :  83
+  提高+            :  18
+  提高+/省选-        :  12
+  普及             :  31
+  普及+/提高-        :  12
+  普及-            :  21
+  普及/提高-         :  32
+  省选             :   5
+  省选-            :  21
+  省选/NOI-        :   1
+  Total          : 238
+
+[LEVEL] 普及及以下: 96 (40.3%)
+[LEVEL] 提高:       113 (47.5%)
+[LEVEL] 省选/NOI:   39 (16.4%)
+[WARN] Province/province+ problems > 15%, consider adjusting for NOIP 200
+[LESSON] # 1: 12 problems [OK]
+[LESSON] # 2: 11 problems [OK]
+[LESSON] # 3: 12 problems [OK]
+[LESSON] # 4: 12 problems [OK]
+[LESSON] # 5: 12 problems [OK]
+[LESSON] # 6: 12 problems [OK]
+[LESSON] # 7: 12 problems [OK]
+[LESSON] # 8: 12 problems [OK]
+[LESSON] # 9: 12 problems [OK]
+[LESSON] #10: 12 problems [OK]
+[LESSON] #11: 12 problems [OK]
+[LESSON] #12: 12 problems [OK]
+[LESSON] #13: 12 problems [OK]
+[LESSON] #14: 12 problems [OK]
+[LESSON] #15: 12 problems [OK]
+[LESSON] #16: 12 problems [OK]
+[LESSON] #17: 12 problems [OK]
+[LESSON] #18: 12 problems [OK]
+[LESSON] #19: 12 problems [OK]
+[LESSON] #20: 12 problems [OK]

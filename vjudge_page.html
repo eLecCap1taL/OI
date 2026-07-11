@@ -1,0 +1,372 @@
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  (function () {
+    try {
+      const storedTheme = localStorage.getItem('theme') || 'auto';
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const effectiveTheme = storedTheme === 'auto'
+          ? (prefersDark ? 'dark' : 'light')
+          : storedTheme;
+      document.documentElement.setAttribute('data-bs-theme', effectiveTheme);
+      document.documentElement.style.setProperty('color-scheme', effectiveTheme);
+    } catch (e) {
+    }
+  })();
+</script>
+
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-374JLX1715"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-374JLX1715', {
+      
+        'user_id': 'Cap1taL'
+      
+    });
+  </script>
+
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9098591903020457" crossorigin="anonymous"></script>
+
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="keywords" content="Online Judge, vjudge, OJ, Virtual Judge, ICPC, OnlineJudge"/>
+<meta name="robots" content="index, follow"/>
+
+    <title data-i18n="page_title.contest_list"
+           data-i18n-arg-site="Virtual Judge">Contests - Virtual Judge</title>
+<script defer src="/static/bundle/ec8ec55297d92d5fe8a0.js"></script><script defer src="/static/bundle/148237ffa4d95912e91d.js"></script><script defer src="/static/bundle/609850a616cd1cd1050e.js"></script><script defer src="/static/bundle/06988c0cb5f325797923.js"></script><script defer src="/static/bundle/06b09b49730e9c951467.js"></script><script defer src="/static/bundle/716f85e13f177dbf5e57.js"></script><script defer src="/static/bundle/1782ad6754f2ba5b2e05.js"></script><script defer src="/static/bundle/dd1e98a5733f7f6f68ee.js"></script><script defer src="/static/bundle/0934fdb208cf867c49c3.js"></script><link href="/static/bundle/7dfcff63ee8a84ba4327.css" rel="stylesheet"><link href="/static/bundle/558cf47dd4aa8a2db0b6.css" rel="stylesheet"><link href="/static/bundle/b236573ab843bd819a66.css" rel="stylesheet"><link href="/static/bundle/b263fe3e0701fea9e576.css" rel="stylesheet"></head>
+
+<body class="contest-list-page-body">
+<head><script defer src="/static/bundle/31d6cfe0d16ae931b73c.js"></script></head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark prod" id="top-nav">
+    <button class="navbar-toggler d-sm-none" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <a class="navbar-brand" href="/">
+            <img src="/static/bundle/11b24ab2156955d8f3fa.ico" height="30"/>
+            <span data-i18n="top.nav.home"></span>
+        </a>
+        <ul class="navbar-nav top-nav-primary">
+            <li class="nav-item" id="nav-problem">
+                <a class="nav-link" href="/problem" data-i18n="top.nav.problem"></a>
+            </li>
+            <li class="nav-item" id="nav-status">
+                <a class="nav-link" href="/status" data-i18n="top.nav.status"></a>
+            </li>
+            <li class="nav-item" id="nav-contest">
+                <a class="nav-link" href="/contest" data-i18n="top.nav.contest"></a>
+            </li>
+            <li class="nav-item" id="nav-workbook">
+                <a class="nav-link" href="/workbook" data-i18n="top.nav.workbook"></a>
+            </li>
+            <li class="nav-item" id="nav-user">
+                <a class="nav-link" href="/user" data-i18n="top.nav.user"></a>
+            </li>
+            <li class="nav-item" id="nav-group">
+                <a class="nav-link" href="/group" data-i18n="top.nav.group"></a>
+            </li>
+            <li class="nav-item" id="nav-comment">
+                <a class="nav-link" href="/comment" data-i18n="top.nav.forum"></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="helpDropdown" data-bs-toggle="dropdown" data-i18n="top.nav.help"></a>
+                <div class="dropdown-menu dropdown-menu-start">
+                    <a class="dropdown-item" href="/article/2771">
+                        <i class="fa fa-question-circle-o"></i>
+                        <span data-i18n="top.nav.faq"></span>
+                    </a>
+                    <a class="dropdown-item" href="/article/97">
+                        <i class="fa fa-bug"></i>
+                        <span data-i18n="top.nav.bf"></span>
+                    </a>
+                    <a class="dropdown-item" href="/article/96">
+                        <i class="fa fa-lightbulb-o"></i>
+                        <span data-i18n="top.nav.suggestions"></span>
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" id="contact-us">
+                        <i class="fa fa-headphones"></i>
+                        <span data-i18n="top.nav.contact"></span>
+                    </a>
+                </div>
+            </li>
+            
+        </ul>
+        <ul class="navbar-nav top-nav-secondary ms-sm-auto">
+            <li class="nav-item top-nav-theme-item">
+                <a class="nav-link" href="javascript:void(0)" id="switchTheme"></a>
+            </li>
+            <li class="nav-item dropdown top-nav-locale-item">
+                <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="switchLocale" data-bs-toggle="dropdown" data-i18n="top.nav.locale"></a>
+                <div class="dropdown-menu dropdown-menu-end switch-locale-dropdown"></div>
+            </li>
+            
+                
+                    <li class="nav-item dropdown top-nav-user-item">
+                        <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="userNameDropdown" data-bs-toggle="dropdown">Cap1taL</a>
+                        <div class="dropdown-menu dropdown-menu-end user-dropdown">
+                            <a class="dropdown-item" href="/user/Cap1taL" data-i18n="top.nav.profile"></a>
+                            <a class="dropdown-item update-profile" href="javascript:void(0)" data-i18n="top.nav.update"></a>
+                            <a class="dropdown-item" href="/team/mine" data-i18n="team.mine"></a>
+                            <a class="dropdown-item message" href="/message" data-i18n="top.nav.message"></a>
+                        </div>
+                    </li>
+                    <li class="nav-item top-nav-logout-item">
+                        <a class="nav-link logout" href="javascript:void(0)" data-i18n="top.nav.logout"></a>
+                    </li>
+                
+                
+            
+        </ul>
+    </div>
+</nav>
+<div id="page-panel-toggle-slot"></div>
+
+
+<div class="page-panel-toggle-host d-none">
+    <button type="button"
+            class="btn btn-outline-light page-panel-toggle contest-filter-toggle d-none"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#contest-filter-offcanvas"
+            aria-controls="contest-filter-offcanvas">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+    </button>
+</div>
+
+<div class="container-fluid contest-list-page" style="width: 100%; margin-top: 30px;">
+    <div class="row fixed-left-panel-layout">
+        <div class="offcanvas-md offcanvas-start contest-filter-column list-side-panel-column fixed-left-panel"
+             tabindex="-1"
+             id="contest-filter-offcanvas"
+             aria-labelledby="contest-filter-title">
+            <div class="offcanvas-header d-md-none">
+                <h5 class="offcanvas-title" id="contest-filter-title" data-i18n="button.panels"></h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="offcanvas"
+                        data-bs-target="#contest-filter-offcanvas"
+                        aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body contest-filter-body list-side-panel-body">
+                <div class="contest-running list-group contest-filter-group list-side-panel-group">
+                    <a href="javascript:void(0)" class="list-group-item" data-running="0" data-i18n="all"></a>
+                    <a href="javascript:void(0)" class="list-group-item list-group-item-info" data-running="1" data-i18n="contest.scheduled"></a>
+                    <a href="javascript:void(0)" class="list-group-item list-group-item-danger" data-running="2" data-i18n="contest.running"></a>
+                    <a href="javascript:void(0)" class="list-group-item list-group-item-success" data-running="3" data-i18n="contest.ended"></a>
+                    <input type="hidden" name="running"/>
+                </div>
+
+                <div class="list-group contest-category contest-filter-group list-side-panel-group" id="my-contest-panel">
+                    <a href="javascript:void(0)" class="list-group-item" data-category="all" data-i18n="contest.list.all_contests"></a>
+                    <a href="javascript:void(0)" class="list-group-item" data-category="public" data-i18n="contest.list.public_contests"></a>
+                    <a href="javascript:void(0)" class="list-group-item my-contest-item" data-category="mine" data-i18n="contest.list.my.contests"></a>
+                    <a href="javascript:void(0)" class="list-group-item my-contest-item" data-category="participation">
+                        &nbsp;&nbsp;&nbsp;<i18n>contest.list.my.participation</i18n>
+                    </a>
+                    <a href="javascript:void(0)" class="list-group-item my-contest-item" data-category="arrangement">
+                        &nbsp;&nbsp;&nbsp;<i18n>contest.list.my.arrangement</i18n>
+                    </a>
+                    <a href="javascript:void(0)" class="list-group-item my-contest-item" data-category="mygroup">
+                        &nbsp;&nbsp;&nbsp;<i18n>contest.list.my.group</i18n>
+                    </a>
+                    <a href="javascript:void(0)" class="list-group-item my-contest-item" data-category="favorites">
+                        &nbsp;&nbsp;&nbsp;<i18n>contest.list.my.favorites</i18n>
+                    </a>
+                    <a href="javascript:void(0)" class="list-group-item my-contest-item" data-category="follow">
+                        &nbsp;&nbsp;&nbsp;<i18n>contest.list.my.follow</i18n>
+                    </a>
+                </div>
+
+                <div class="list-group contest-category contest-filter-group list-side-panel-group">
+                    <a href="javascript:void(0)" class="list-group-item" data-category="classical">
+                        <img src="/static/bundle/4aa72fde8ec2dee94cb4.gif">
+                        <i18n>contest.type.classical</i18n>
+                    </a>
+                    <a href="javascript:void(0)" class="list-group-item" data-category="group">
+                        <img src="/static/bundle/bf2b66129c2d2acc0cc3.png">
+                        <i18n>contest.type.group</i18n>
+                    </a>
+                    <a href="javascript:void(0)" class="list-group-item" data-category="replay">
+                        <img src="/static/bundle/24d8ec9c029098277348.png">
+                        <i18n>contest.type.replay</i18n>
+                    </a>
+                </div>
+
+                <input type="hidden" name="category" value=""/>
+
+                <div class="contest-filter-ad">
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-9098591903020457"
+                         data-ad-slot="5496840117"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                    <script>
+                      (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="fixed-main-panel">
+            <input type="button" class="btn btn-secondary btn-md" id="filter" data-i18n="button.filter" />
+            <input type="button" class="btn btn-secondary btn-md" id="reset" data-i18n="button.reset" />
+            <div class="btn-group" id="contest-action-group" role="group" style="display: none">
+                <a href="/contest/statistic"
+                   class="btn btn-outline-secondary"
+                   id="btn-statistic"
+                   data-i18n="contest.statistic"></a>
+                <button type="button"
+                        class="btn btn-outline-secondary"
+                        id="btn-replay-import"
+                        data-i18n="contest.list.import_replay"></button>
+                <input type="button"
+                       class="btn btn-outline-primary"
+                       id="btn-create"
+                       data-i18n="contest.create_contest"/>
+            </div>
+            <div class="table-responsive">
+                <table id="listContest" cellspacing="0" width="100%"
+                       class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th class="contest-id">ID</th>
+                    <th class="fav"></th>
+                    <th class="title">
+                        <span data-i18n="contest.title"></span>
+                        <i class="fa fa-info-circle"
+                           data-i18n-title="common.search.match_examples_html"
+                           data-bs-html="true"
+                           data-bs-toggle="tooltip"></i>
+                        <input type="text" name="title" class="search_text" style="width:95%"/>
+                    </th>
+                    <th class="contestants"></th>
+                    <th class="date"><span data-i18n="contest.begin_time"></span></th>
+                    <th class="length"><span data-i18n="contest.length"></span></th>
+                    <th class="owner">
+                        <span data-i18n="contest.owner"></span><br/>
+                        <input type="text" name="owner" class="search_text" style="width:95%"/>
+                    </th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<head><script defer src="/static/bundle/31d6cfe0d16ae931b73c.js"></script></head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="body-footer">
+    <div style="margin-bottom: 8px">
+        <a href="/cdn-cgi/l/email-protection#b8d1cb96cdd6f8c9c996dbd7d5" target="_blank">
+            <img src="/static/bundle/159d24b1b159c99a98e3.svg"/>
+        </a>
+        <img src="/static/bundle/fdbb90aaddd32a5ab4ad.png" class="qq" data-bs-toggle="popover" data-bs-placement="top"/>
+        <a href="https://weibo.com/u/5340553087" target="_blank">
+            <img src="/static/bundle/aae271671b3d18e15b40.svg"/>
+        </a>
+        <a href="https://space.bilibili.com/3056509/lists/3909505" target="_blank">
+            <img src="/static/bundle/ad1d62977bf56d0e0010.png"/>
+        </a>
+        <a href="https://t.me/joinchat/Erw7nRGwXN3iSCoKguVW3w" target="_blank">
+            <img src="/static/bundle/7182da66feaf3e99632a.svg"/>
+        </a>
+        <a href="https://www.facebook.com/virtualjudge/" target="_blank">
+            <img src="/static/bundle/c2687d1cf1f3e06984eb.svg"/>
+        </a>
+    </div>
+    <div id="footer-info">
+        All Copyright Reserved © 2010-2026<br/>
+        <span data-i18n="bottom.server_time"></span>: <span class="currentTimeTZ"></span>
+    </div>
+</div>
+
+
+<input name="systemVersion" type="hidden" value="1783764198767"/>
+<input name="gaId" type="hidden" value="G-374JLX1715"/>
+
+    <input id="visitor_username" name="username" type="hidden" value="Cap1taL"/>
+    <input id="visitor_userId" name="userId" type="hidden" value="859679"/>
+    <input id="visitor_sup" name="sup" type="hidden" value="0"/>
+    <input id="newMessage" name="newMessage" type="hidden" value="false"/>
+
+
+
+
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/javascript">basePath = "";</script>
+
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1970d061f3806b9',t:'MTc4Mzc2NDk2Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"cbda702c6a634090aafa4717574879a5","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>

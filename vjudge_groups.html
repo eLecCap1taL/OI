@@ -1,0 +1,298 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  (function () {
+    try {
+      const storedTheme = localStorage.getItem('theme') || 'auto';
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const effectiveTheme = storedTheme === 'auto'
+          ? (prefersDark ? 'dark' : 'light')
+          : storedTheme;
+      document.documentElement.setAttribute('data-bs-theme', effectiveTheme);
+      document.documentElement.style.setProperty('color-scheme', effectiveTheme);
+    } catch (e) {
+    }
+  })();
+</script>
+
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-374JLX1715"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-374JLX1715', {
+      
+    });
+  </script>
+
+
+
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="keywords" content="Online Judge, vjudge, OJ, Virtual Judge, ICPC, OnlineJudge"/>
+<meta name="robots" content="index, follow"/>
+
+    <title data-i18n="page_title.group_portal"
+           data-i18n-arg-site="Virtual Judge">Groups - Virtual Judge</title>
+<script defer src="/static/bundle/ec8ec55297d92d5fe8a0.js"></script><script defer src="/static/bundle/148237ffa4d95912e91d.js"></script><script defer src="/static/bundle/609850a616cd1cd1050e.js"></script><script defer src="/static/bundle/06988c0cb5f325797923.js"></script><script defer src="/static/bundle/06b09b49730e9c951467.js"></script><script defer src="/static/bundle/716f85e13f177dbf5e57.js"></script><script defer src="/static/bundle/1782ad6754f2ba5b2e05.js"></script><script defer src="/static/bundle/bec2c71e6de630bb5345.js"></script><script defer src="/static/bundle/e096c2fd8fab41ff652f.js"></script><link href="/static/bundle/7dfcff63ee8a84ba4327.css" rel="stylesheet"><link href="/static/bundle/558cf47dd4aa8a2db0b6.css" rel="stylesheet"><link href="/static/bundle/b236573ab843bd819a66.css" rel="stylesheet"><link href="/static/bundle/3a4bc03d31cb08c168cc.css" rel="stylesheet"></head>
+
+<body>
+<head><script defer src="/static/bundle/31d6cfe0d16ae931b73c.js"></script></head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark prod" id="top-nav">
+    <button class="navbar-toggler d-sm-none" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <a class="navbar-brand" href="/">
+            <img src="/static/bundle/11b24ab2156955d8f3fa.ico" height="30"/>
+            <span data-i18n="top.nav.home"></span>
+        </a>
+        <ul class="navbar-nav top-nav-primary">
+            <li class="nav-item" id="nav-problem">
+                <a class="nav-link" href="/problem" data-i18n="top.nav.problem"></a>
+            </li>
+            <li class="nav-item" id="nav-status">
+                <a class="nav-link" href="/status" data-i18n="top.nav.status"></a>
+            </li>
+            <li class="nav-item" id="nav-contest">
+                <a class="nav-link" href="/contest" data-i18n="top.nav.contest"></a>
+            </li>
+            <li class="nav-item" id="nav-workbook">
+                <a class="nav-link" href="/workbook" data-i18n="top.nav.workbook"></a>
+            </li>
+            <li class="nav-item" id="nav-user">
+                <a class="nav-link" href="/user" data-i18n="top.nav.user"></a>
+            </li>
+            <li class="nav-item" id="nav-group">
+                <a class="nav-link" href="/group" data-i18n="top.nav.group"></a>
+            </li>
+            <li class="nav-item" id="nav-comment">
+                <a class="nav-link" href="/comment" data-i18n="top.nav.forum"></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="helpDropdown" data-bs-toggle="dropdown" data-i18n="top.nav.help"></a>
+                <div class="dropdown-menu dropdown-menu-start">
+                    <a class="dropdown-item" href="/article/2771">
+                        <i class="fa fa-question-circle-o"></i>
+                        <span data-i18n="top.nav.faq"></span>
+                    </a>
+                    <a class="dropdown-item" href="/article/97">
+                        <i class="fa fa-bug"></i>
+                        <span data-i18n="top.nav.bf"></span>
+                    </a>
+                    <a class="dropdown-item" href="/article/96">
+                        <i class="fa fa-lightbulb-o"></i>
+                        <span data-i18n="top.nav.suggestions"></span>
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" id="contact-us">
+                        <i class="fa fa-headphones"></i>
+                        <span data-i18n="top.nav.contact"></span>
+                    </a>
+                </div>
+            </li>
+            
+        </ul>
+        <ul class="navbar-nav top-nav-secondary ms-sm-auto">
+            <li class="nav-item top-nav-theme-item">
+                <a class="nav-link" href="javascript:void(0)" id="switchTheme"></a>
+            </li>
+            <li class="nav-item dropdown top-nav-locale-item">
+                <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="switchLocale" data-bs-toggle="dropdown" data-i18n="top.nav.locale"></a>
+                <div class="dropdown-menu dropdown-menu-end switch-locale-dropdown"></div>
+            </li>
+            
+                
+                
+                    <li class="nav-item top-nav-login-item">
+                        <a class="nav-link login" href="javascript:void(0)" data-i18n="top.nav.login"></a>
+                    </li>
+                    <li class="nav-item top-nav-register-item">
+                        <a class="nav-link register" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#registerModal" data-i18n="top.nav.register"></a>
+                    </li>
+                
+            
+        </ul>
+    </div>
+</nav>
+<div id="page-panel-toggle-slot"></div>
+
+
+<div class="container" style="margin-top: 30px;">
+    <div class="row">
+        
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist" id="group-tabs">
+            <li class="nav-item" id="my-invitations-li" style="display: none">
+                <a class="nav-link my-invitations" data-bs-toggle="tab" href="#my-invitations" role="tab" data-i18n="group.portal.my_invitations"></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link my-groups" data-bs-toggle="tab" href="#my-groups" role="tab" data-i18n="group.portal.my_groups"></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link explore-groups" data-bs-toggle="tab" href="#explore-groups" role="tab" data-i18n="group.portal.explore"></a>
+            </li>
+
+            
+                <li class="ms-auto">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-primary" id="btn-create-group" data-i18n="group.portal.create_groups"></button>
+                    </div>
+                </li>
+            
+
+        </ul>
+
+        <!-- Tab panels -->
+        <div class="tab-content group-panels">
+            <div class="tab-pane" id="my-invitations" role="tabpanel">
+                <div class="row" id="my-invitations-panel">
+                    <div class="alert alert-success" data-i18n="group.portal.invitations_hint"></div>
+                </div>
+            </div>
+            <div class="tab-pane" id="my-groups" role="tabpanel">
+                <div class="row" id="my-groups-panel"></div>
+            </div>
+            <div class="tab-pane" id="explore-groups" role="tabpanel">
+                <div class="row">
+                    <form class="col-md-4" id="search-group-form">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="search-group-name" data-i18n-placeholder="group.portal.search_by_group_name">
+                            <button class="btn btn-secondary" type="submit" id="btn-search-group" data-i18n="group.portal.search"></button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="row" id="search-groups-panel"></div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4 data-i18n="group.portal.new_groups"></h4>
+                        <hr>
+                        <div class="row" id="new-groups-panel">
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<textarea style="display: none" name="dataJson">{"myGroups":[],"newGroupCards":[{"myRole":0,"hasApplicants":false,"id":35117,"name":"计科2605班","shortName":"cs2605","isPublic":true,"logoUrl":"https://cn.cravatar.com/avatar/64d96fa5f40562b3de139b21d1a7d200?d\u003drobohash","members":2,"brief":"JNU计科2605班每日一题","scheduledContests":0,"runningContests":0,"endedContests":0,"leaderId":1020135,"leaderName":"boyou","managerIds":[1020135,1033843]},{"myRole":0,"hasApplicants":false,"id":35116,"name":"nanana","shortName":"nanana","isPublic":true,"logoUrl":"https://cn.cravatar.com/avatar/ffefd230fa219e3a2d56ffae2f9b04ed?d\u003drobohash","members":1,"brief":"nanana","scheduledContests":0,"runningContests":0,"endedContests":0,"leaderId":1264390,"leaderName":"na_na_na","managerIds":[1264390]},{"myRole":0,"hasApplicants":false,"id":35115,"name":"Dokhan mn 8er Kofta","shortName":"aa-zz","isPublic":true,"logoUrl":"https://cn.cravatar.com/avatar/09cdf45063a126729ecdbb700951c498?d\u003dwavatar","members":3,"brief":"...","scheduledContests":0,"runningContests":1,"endedContests":0,"summaryContestId":829897,"leaderId":1276263,"leaderName":"mohamed_samy327","managerIds":[1276263]},{"myRole":0,"hasApplicants":false,"id":35110,"name":"26暑期泉州提高组集训","shortName":"csp_qz","isPublic":true,"logoUrl":"https://cn.cravatar.com/avatar/26ff9720c40302a873186f73347c4ad0?d\u003didenticon","members":24,"brief":"26暑期泉州提高组集训","scheduledContests":0,"runningContests":0,"endedContests":0,"leaderId":657368,"leaderName":"konbi","managerIds":[657368]},{"myRole":0,"hasApplicants":false,"id":35092,"name":"7891","shortName":"cs7891","isPublic":true,"logoUrl":"https://cn.cravatar.com/avatar/d3ee2dc9da22772519498c12145847bf?d\u003dretro","members":8,"brief":"666","scheduledContests":0,"runningContests":1,"endedContests":0,"summaryContestId":829721,"leaderId":1213341,"leaderName":"sunyiyang1101","managerIds":[1303143,1213341,1303148]},{"myRole":0,"hasApplicants":false,"id":35088,"name":"lcrNB","shortName":"ab225","isPublic":true,"logoUrl":"https://cn.cravatar.com/avatar/7255c67bd117a14440a4916a358f265a?d\u003dmonsterid","members":5,"brief":"无","scheduledContests":0,"runningContests":1,"endedContests":0,"summaryContestId":829711,"leaderId":1303148,"leaderName":"liuchenrui0418","managerIds":[1213341,1303148]},{"myRole":0,"hasApplicants":false,"id":35084,"name":"Team HexP U","shortName":"t-hexp","isPublic":true,"logoUrl":"https://cdn.vjudge.net.cn/group/logo/35084?v\u003d1783692482","members":2,"brief":"Practice/Learning","scheduledContests":0,"runningContests":0,"endedContests":1,"leaderId":1135052,"leaderName":"hexp","managerIds":[1135052]},{"myRole":0,"hasApplicants":false,"id":35082,"name":"真题大练习TPFLP_FMVH组","shortName":"frommyvalleyuphard-man","isPublic":true,"logoUrl":"https://cn.cravatar.com/avatar/794f66f51e1b12bc1e38c1fd93cd4596?d\u003dmonsterid","members":2,"brief":"这里有很多真题，大家可以按照更清晰的顺序练习","scheduledContests":0,"runningContests":2,"endedContests":0,"summaryContestId":829543,"leaderId":1158411,"leaderName":"TPF_MXZ_gurui","managerIds":[1158411]},{"myRole":0,"hasApplicants":false,"id":35070,"name":"酸角洲行动","shortName":"df666","isPublic":true,"logoUrl":"https://cn.cravatar.com/avatar/5c2fed6df9ee38c909a968e83d1d4d08?d\u003didenticon","members":2,"brief":"dgheth","scheduledContests":0,"runningContests":0,"endedContests":0,"leaderId":968501,"leaderName":"doors_cross","managerIds":[968501,1151346]},{"myRole":0,"hasApplicants":false,"id":35068,"name":"gay gay","shortName":"abcsbwc","isPublic":true,"logoUrl":"https://cn.cravatar.com/avatar/39403725b7ee50def16281fe7cad9e29?d\u003dretro","members":5,"brief":"123456789","scheduledContests":0,"runningContests":0,"endedContests":1,"leaderId":1303153,"leaderName":"duanyvchen1204","managerIds":[1213341,1303155,1303143,1303148,1303153]},{"myRole":0,"hasApplicants":false,"id":35067,"name":"yanchenghan\u003dgay\u0026la\u0026无根人","shortName":"yanchenghan54188","isPublic":true,"logoUrl":"https://cn.cravatar.com/avatar/4ad8383d19b4d496ff12c0483e53b6ae?d\u003dmonsterid","members":1,"brief":"yanchenghan\u003dgay\u0026la\u0026无根人","scheduledContests":0,"runningContests":0,"endedContests":0,"leaderId":1303157,"leaderName":"tangyixun1007","managerIds":[1303157]},{"myRole":0,"hasApplicants":false,"id":35065,"name":"测测你的智商，是不是sb","shortName":"emm","isPublic":true,"logoUrl":"https://cdn.vjudge.net.cn/group/logo/35065?v\u003d1783572815","members":10,"brief":"666","scheduledContests":0,"runningContests":1,"endedContests":0,"summaryContestId":829408,"leaderId":1303143,"leaderName":"csz001","managerIds":[1303149,1303167,1303162,1303143,1303157,1303155,1213341,1303156,1303148,1303153]},{"myRole":0,"hasApplicants":false,"id":35060,"name":"压力！","shortName":"wwwjjnafkbchnjdks","isPublic":true,"logoUrl":"https://cdn.vjudge.net.cn/group/logo/35060?v\u003d1783564528","members":5,"brief":"闲的没事","scheduledContests":0,"runningContests":0,"endedContests":1,"leaderId":1302871,"leaderName":"xuxiaofan1","managerIds":[1302871,1302160]},{"myRole":0,"hasApplicants":false,"id":35059,"name":"wzh2012","shortName":"wzhh","isPublic":true,"logoUrl":"https://cn.cravatar.com/avatar/f5a2650b261131dd5d4a15867e53b747?d\u003drobohash","members":2,"brief":"91","scheduledContests":0,"runningContests":1,"endedContests":1,"summaryContestId":829535,"leaderId":1000075,"leaderName":"wangzhehan2012","managerIds":[1000075,1063194]},{"myRole":0,"hasApplicants":false,"id":35049,"name":"2026暑期训练","shortName":"hnu","isPublic":true,"logoUrl":"https://cdn.vjudge.net.cn/group/logo/35049?v\u003d1783511899","members":27,"brief":"1","scheduledContests":0,"runningContests":1,"endedContests":0,"summaryContestId":829444,"leaderId":1151273,"leaderName":"iwanttosleep","managerIds":[1151273,605889,927916,1015739,1123424]},{"myRole":0,"hasApplicants":false,"id":35043,"name":"2026上海智灵省选衔接","shortName":"shzlsxxj","isPublic":true,"logoUrl":"https://cdn.vjudge.net.cn/group/logo/35043?v\u003d1783733657","members":8,"brief":"加油AK","scheduledContests":0,"runningContests":0,"endedContests":0,"leaderId":1290870,"leaderName":"Byeboo","managerIds":[538754,1290870,701227,130754]},{"myRole":0,"hasApplicants":false,"id":35041,"name":"汪汪队","shortName":"wwd","isPublic":true,"logoUrl":"https://cn.cravatar.com/avatar/bea25c6dc10b3d1f856413d5a4d88e32?d\u003dwavatar","members":7,"brief":"雷霆动物","scheduledContests":0,"runningContests":1,"endedContests":0,"summaryContestId":830003,"leaderId":1303153,"leaderName":"duanyvchen1204","managerIds":[1303148,1303153]},{"myRole":0,"hasApplicants":false,"id":35032,"name":"FWX","shortName":"furina","isPublic":true,"logoUrl":"https://cn.cravatar.com/avatar/26931373579b7d5ea5ed741f3585e4b0?d\u003drobohash","members":3,"brief":"Furina\u0027s","scheduledContests":0,"runningContests":0,"endedContests":0,"leaderId":1092796,"leaderName":"FanWenxuan","managerIds":[1092796]},{"myRole":0,"hasApplicants":false,"id":35031,"name":"JCSE暑期2部编程思维社团","shortName":"jcse202607","isPublic":true,"logoUrl":"https://cn.cravatar.com/avatar/5119e91baba8e5ff02a13d666d868b4a?d\u003dmonsterid","members":37,"brief":"2部编程思维社团","scheduledContests":0,"runningContests":0,"endedContests":1,"leaderId":1149512,"leaderName":"daitianyu","managerIds":[934337,1149512,1289258]},{"myRole":0,"hasApplicants":false,"id":35028,"name":"khelo24bet","shortName":"khelo24bet","isPublic":true,"logoUrl":"https://cdn.vjudge.net.cn/group/logo/35028?v\u003d1783491968","members":1,"brief":"Never miss FIFA World Cup 2026, the biggest event on Earth, with Khelo24Bet!","scheduledContests":0,"runningContests":0,"endedContests":0,"leaderId":1303833,"leaderName":"Khelo24bet","managerIds":[1303833]},{"myRole":0,"hasApplicants":false,"id":35027,"name":"zjr","shortName":"zjr","isPublic":true,"logoUrl":"https://cdn.vjudge.net.cn/group/logo/35027?v\u003d1783495118","members":4,"brief":"zjr\u0027s团","scheduledContests":0,"runningContests":0,"endedContests":1,"leaderId":1298883,"leaderName":"zjr2014","managerIds":[1298883]},{"myRole":0,"hasApplicants":false,"id":35026,"name":"Olympic Class Feez - OSNP 2026","shortName":"oc-osnp-2026-feez","isPublic":true,"logoUrl":"https://cn.cravatar.com/avatar/172eec6b8c41cfd1c8ab8d833fef549c?d\u003dwavatar","members":3,"brief":"Semangat YGY","scheduledContests":0,"runningContests":2,"endedContests":0,"summaryContestId":829142,"leaderId":565598,"leaderName":"MengCP","managerIds":[565598]},{"myRole":0,"hasApplicants":false,"id":35022,"name":"XJTU_SELECTION 2026-2027","shortName":"xjtu-selection-2026-2027","isPublic":true,"logoUrl":"https://cdn.vjudge.net.cn/group/logo/35022?v\u003d1783488423","members":21,"brief":"XJTU ACM 算法竞赛校队选拔","scheduledContests":0,"runningContests":0,"endedContests":0,"leaderId":800785,"leaderName":"hwphwp","managerIds":[800785]},{"myRole":0,"hasApplicants":false,"id":35018,"name":"无无无无无无无无","shortName":"drhueregyu","isPublic":true,"logoUrl":"https://cn.cravatar.com/avatar/bea25c6dc10b3d1f856413d5a4d88e32?d\u003dwavatar","members":4,"brief":"这个人很懒，没有简介","scheduledContests":0,"runningContests":1,"endedContests":2,"summaryContestId":829906,"leaderId":1303149,"leaderName":"zhouhengye0721","managerIds":[1303149,1303167,1303148,1303162]},{"myRole":0,"hasApplicants":false,"id":35017,"name":"看到的人是gay","shortName":"hcy0409NB","isPublic":true,"logoUrl":"https://cn.cravatar.com/avatar/78a895a574b4d7489f132dc903dd2c5b?d\u003dmonsterid","members":2,"brief":"随便进","scheduledContests":0,"runningContests":0,"endedContests":0,"leaderId":1303156,"leaderName":"zhouyixian1018","managerIds":[1303156,1303162]},{"myRole":0,"hasApplicants":false,"id":35016,"name":"星陨","shortName":"weigjwperighwpog","isPublic":true,"logoUrl":"https://cn.cravatar.com/avatar/ebd19fe4fb897352dc3caa40d78029c5?d\u003dmonsterid","members":7,"brief":"随便进","scheduledContests":0,"runningContests":2,"endedContests":1,"summaryContestId":829335,"leaderId":1303162,"leaderName":"binyipeng0709","managerIds":[1303148,1303162,1213341,1303149,1303157,1303167,1303156]},{"myRole":0,"hasApplicants":false,"id":35013,"name":"1+1\u003d?","shortName":"yingren","isPublic":true,"logoUrl":"https://cn.cravatar.com/avatar/ef848da4cb730e030913a5757b8603b3?d\u003dmonsterid","members":3,"brief":"egrehet5","scheduledContests":0,"runningContests":0,"endedContests":0,"leaderId":1217418,"leaderName":"tkbdawa","managerIds":[1217418,1243720,1153934]},{"myRole":0,"hasApplicants":false,"id":35009,"name":"题目搜集","shortName":"z1","isPublic":true,"logoUrl":"https://cn.cravatar.com/avatar/7daa66db7e0e706d43a1315f83c7e8a7?d\u003didenticon","members":2,"brief":"one of team.","scheduledContests":0,"runningContests":1,"endedContests":1,"summaryContestId":829028,"leaderId":1298353,"leaderName":"meng_xiong","managerIds":[1298353]},{"myRole":0,"hasApplicants":false,"id":35001,"name":"星屹","shortName":"a0a7a8a9a","isPublic":true,"logoUrl":"https://cn.cravatar.com/avatar/78a895a574b4d7489f132dc903dd2c5b?d\u003dmonsterid","members":4,"brief":"大家好","scheduledContests":0,"runningContests":1,"endedContests":2,"summaryContestId":829379,"leaderId":1303157,"leaderName":"tangyixun1007","managerIds":[1303156,1303162,1303149,1303157]},{"myRole":0,"hasApplicants":false,"id":34996,"name":"勇敢小男孩","shortName":"good_boys","isPublic":true,"logoUrl":"https://cn.cravatar.com/avatar/776ef73be4953a76dd86867fb993b8e9?d\u003didenticon","members":7,"brief":"hello","scheduledContests":0,"runningContests":2,"endedContests":0,"summaryContestId":828893,"leaderId":1098454,"leaderName":"cchupup","managerIds":[1098454]}],"invitationGroups":[]}</textarea>
+<head><script defer src="/static/bundle/31d6cfe0d16ae931b73c.js"></script></head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="body-footer">
+    <div style="margin-bottom: 8px">
+        <a href="/cdn-cgi/l/email-protection#1d746e3368735d6c6c337e7270" target="_blank">
+            <img src="/static/bundle/159d24b1b159c99a98e3.svg"/>
+        </a>
+        <img src="/static/bundle/fdbb90aaddd32a5ab4ad.png" class="qq" data-bs-toggle="popover" data-bs-placement="top"/>
+        <a href="https://weibo.com/u/5340553087" target="_blank">
+            <img src="/static/bundle/aae271671b3d18e15b40.svg"/>
+        </a>
+        <a href="https://space.bilibili.com/3056509/lists/3909505" target="_blank">
+            <img src="/static/bundle/ad1d62977bf56d0e0010.png"/>
+        </a>
+        <a href="https://t.me/joinchat/Erw7nRGwXN3iSCoKguVW3w" target="_blank">
+            <img src="/static/bundle/7182da66feaf3e99632a.svg"/>
+        </a>
+        <a href="https://www.facebook.com/virtualjudge/" target="_blank">
+            <img src="/static/bundle/c2687d1cf1f3e06984eb.svg"/>
+        </a>
+    </div>
+    <div id="footer-info">
+        All Copyright Reserved © 2010-2026<br/>
+        <span data-i18n="bottom.server_time"></span>: <span class="currentTimeTZ"></span>
+    </div>
+</div>
+
+
+<input name="systemVersion" type="hidden" value="1783764198767"/>
+<input name="gaId" type="hidden" value="G-374JLX1715"/>
+
+
+
+
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/javascript">basePath = "";</script>
+
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1970dec1a2f5df8',t:'MTc4Mzc2NTAwNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
+</html>

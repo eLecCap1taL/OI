@@ -1,0 +1,389 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  (function () {
+    try {
+      const storedTheme = localStorage.getItem('theme') || 'auto';
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const effectiveTheme = storedTheme === 'auto'
+          ? (prefersDark ? 'dark' : 'light')
+          : storedTheme;
+      document.documentElement.setAttribute('data-bs-theme', effectiveTheme);
+      document.documentElement.style.setProperty('color-scheme', effectiveTheme);
+    } catch (e) {
+    }
+  })();
+</script>
+
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-374JLX1715"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-374JLX1715', {
+      
+        'user_id': 'Cap1taL'
+      
+    });
+  </script>
+
+
+
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="keywords" content="Online Judge, vjudge, OJ, Virtual Judge, ICPC, OnlineJudge"/>
+<meta name="robots" content="index, follow"/>
+
+    <title data-i18n="page_title.user_profile"
+           data-i18n-arg-username="Cap1taL"
+           data-i18n-arg-site="Virtual Judge">Cap1taL's profile - Virtual Judge</title>
+<script defer src="/static/bundle/ec8ec55297d92d5fe8a0.js"></script><script defer src="/static/bundle/148237ffa4d95912e91d.js"></script><script defer src="/static/bundle/609850a616cd1cd1050e.js"></script><script defer src="/static/bundle/06988c0cb5f325797923.js"></script><script defer src="/static/bundle/0e334b02f23837b51627.js"></script><script defer src="/static/bundle/06b09b49730e9c951467.js"></script><script defer src="/static/bundle/716f85e13f177dbf5e57.js"></script><script defer src="/static/bundle/1782ad6754f2ba5b2e05.js"></script><script defer src="/static/bundle/b21cf489edbf955ef8cb.js"></script><link href="/static/bundle/7dfcff63ee8a84ba4327.css" rel="stylesheet"><link href="/static/bundle/558cf47dd4aa8a2db0b6.css" rel="stylesheet"><link href="/static/bundle/b236573ab843bd819a66.css" rel="stylesheet"><link href="/static/bundle/f9f56f2c3fb6af339691.css" rel="stylesheet"></head>
+
+<body>
+<head><script defer src="/static/bundle/31d6cfe0d16ae931b73c.js"></script></head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark prod" id="top-nav">
+    <button class="navbar-toggler d-sm-none" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <a class="navbar-brand" href="/">
+            <img src="/static/bundle/11b24ab2156955d8f3fa.ico" height="30"/>
+            <span data-i18n="top.nav.home"></span>
+        </a>
+        <ul class="navbar-nav top-nav-primary">
+            <li class="nav-item" id="nav-problem">
+                <a class="nav-link" href="/problem" data-i18n="top.nav.problem"></a>
+            </li>
+            <li class="nav-item" id="nav-status">
+                <a class="nav-link" href="/status" data-i18n="top.nav.status"></a>
+            </li>
+            <li class="nav-item" id="nav-contest">
+                <a class="nav-link" href="/contest" data-i18n="top.nav.contest"></a>
+            </li>
+            <li class="nav-item" id="nav-workbook">
+                <a class="nav-link" href="/workbook" data-i18n="top.nav.workbook"></a>
+            </li>
+            <li class="nav-item" id="nav-user">
+                <a class="nav-link" href="/user" data-i18n="top.nav.user"></a>
+            </li>
+            <li class="nav-item" id="nav-group">
+                <a class="nav-link" href="/group" data-i18n="top.nav.group"></a>
+            </li>
+            <li class="nav-item" id="nav-comment">
+                <a class="nav-link" href="/comment" data-i18n="top.nav.forum"></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="helpDropdown" data-bs-toggle="dropdown" data-i18n="top.nav.help"></a>
+                <div class="dropdown-menu dropdown-menu-start">
+                    <a class="dropdown-item" href="/article/2771">
+                        <i class="fa fa-question-circle-o"></i>
+                        <span data-i18n="top.nav.faq"></span>
+                    </a>
+                    <a class="dropdown-item" href="/article/97">
+                        <i class="fa fa-bug"></i>
+                        <span data-i18n="top.nav.bf"></span>
+                    </a>
+                    <a class="dropdown-item" href="/article/96">
+                        <i class="fa fa-lightbulb-o"></i>
+                        <span data-i18n="top.nav.suggestions"></span>
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" id="contact-us">
+                        <i class="fa fa-headphones"></i>
+                        <span data-i18n="top.nav.contact"></span>
+                    </a>
+                </div>
+            </li>
+            
+        </ul>
+        <ul class="navbar-nav top-nav-secondary ms-sm-auto">
+            <li class="nav-item top-nav-theme-item">
+                <a class="nav-link" href="javascript:void(0)" id="switchTheme"></a>
+            </li>
+            <li class="nav-item dropdown top-nav-locale-item">
+                <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="switchLocale" data-bs-toggle="dropdown" data-i18n="top.nav.locale"></a>
+                <div class="dropdown-menu dropdown-menu-end switch-locale-dropdown"></div>
+            </li>
+            
+                
+                    <li class="nav-item dropdown top-nav-user-item">
+                        <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="userNameDropdown" data-bs-toggle="dropdown">Cap1taL</a>
+                        <div class="dropdown-menu dropdown-menu-end user-dropdown">
+                            <a class="dropdown-item" href="/user/Cap1taL" data-i18n="top.nav.profile"></a>
+                            <a class="dropdown-item update-profile" href="javascript:void(0)" data-i18n="top.nav.update"></a>
+                            <a class="dropdown-item" href="/team/mine" data-i18n="team.mine"></a>
+                            <a class="dropdown-item message" href="/message" data-i18n="top.nav.message"></a>
+                        </div>
+                    </li>
+                    <li class="nav-item top-nav-logout-item">
+                        <a class="nav-link logout" href="javascript:void(0)" data-i18n="top.nav.logout"></a>
+                    </li>
+                
+                
+            
+        </ul>
+    </div>
+</nav>
+<div id="page-panel-toggle-slot"></div>
+
+
+<div class="container user-profile-page">
+    
+
+    <section class="profile-overview">
+        <div class="profile-hero">
+            <div class="profile-identity">
+                <img src="https://cdn.vjudge.net.cn/user/avatar/859679?v=1730789594" id="user_avatar"/>
+                <div class="profile-name-block">
+                    <div class="profile-username-row">
+                        <h3 class="profile-username">Cap1taL</h3>
+                        
+                        <div class="profile-actions">
+                            
+                            
+                                <a href="javascript:void(0)" class="profile-action-link change-username" data-bs-toggle="tooltip" data-i18n-title="user.profile.change_username">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            
+                        </div>
+                    </div>
+                    <div class="profile-meta">
+                        
+                            <span>Cap1taL</span>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="profile-stat-strip problem-solve"></div>
+        </div>
+
+        <dl class="user-info">
+            
+                <div class="profile-fact">
+                    <dt data-i18n="user.profile.register">Register:</dt>
+                    <dd>31 months ago</dd>
+                </div>
+            
+            
+                <div class="profile-fact">
+                    <dt data-i18n="user.profile.last_seen">Last seen:</dt>
+                    <dd>Just now</dd>
+                </div>
+            
+            
+                <div class="profile-fact">
+                    <dt data-i18n="user.profile.school">School:</dt>
+                    <dd>LCEZ</dd>
+                </div>
+            
+            
+                <div class="profile-fact">
+                    <dt data-i18n="user.profile.qq"></dt>
+                    <dd>1485909869</dd>
+                </div>
+            
+            
+                <div class="profile-fact">
+                    <dt data-i18n="user.profile.email"></dt>
+                    <dd>
+                        <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6d17050c031e0508031504050c022d14080c0543030819">[email&#160;protected]</a>
+                        
+                            <img src="/static/bundle/866f01e85699ccbf40a4.png" height="16" data-i18n-title="user.profile.email_confirmed"/>
+                        
+                        
+                    </dd>
+                </div>
+            
+        </dl>
+    </section>
+
+    <section class="profile-section profile-solve-detail hide">
+        <div class="table-responsive">
+            <table id="probRecords" class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th class="oj">OJ</th>
+                    <th data-i18n="user.profile.solved">Solved</th>
+                    <th data-i18n="user.profile.attempted">Attempted</th>
+                </tr>
+                </thead>
+                <tr style="display: none;" id="templ">
+                    <td class="oj"></td>
+                    <td class="solved"></td>
+                    <td class="attempted"></td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <section class="profile-section" id="daily_solve_activity">
+        <div class="profile-section-heading">
+            <h5 data-i18n="user.profile.activity"></h5>
+            <div class="profile-section-toolbar">
+                <select name="year_selected"></select>
+            </div>
+        </div>
+        <div class="calendar"></div>
+        <div class="detail"></div>
+    </section>
+
+    
+
+    <section class="profile-section user-articles" style="display: none">
+        <textarea style="display: none" name="articles">[]</textarea>
+        <div class="profile-section-heading">
+            <h5>
+                <i18n>user.profile.article</i18n>
+                
+                    <a href="/article/create" target="_blank">
+                        <i class="fa fa-plus-square text-success write-article"></i>
+                    </a>
+                
+            </h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th class="view">
+                        <span data-i18n="user.profile.article.view"></span>
+                    </th>
+                    <th class="like">
+                        <span data-i18n="user.profile.article.like"></span>
+                    </th>
+                    <th class="type">
+                        <select id="article_type">
+                            <option value="0" data-i18n="all" selected></option>
+                            <option value="1" data-i18n="article.tag.workbook"></option>
+                            <option value="2" data-i18n="article.tag.solution"></option>
+                            <option value="3" data-i18n="article.tag.other"></option>
+                        </select>
+                    </th>
+                    <th class="title">
+                        <span data-i18n="user.profile.article.title"></span>
+                    </th>
+                    <th class="date">
+                        <span data-i18n="user.profile.article.date"></span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </section>
+
+
+    
+
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="application/json" id="profile-header-data">{"username":"Cap1taL","canViewSubmissionActivity":true,"canExportSource":true,"counts":{"acAll":55,"ac30d":0,"ac1d":0,"attAll":61,"ac7d":0},"ranks":{"all":115324}}</script>
+<input id="username" name="username" type="hidden" value="Cap1taL"/>
+
+<head><script defer src="/static/bundle/31d6cfe0d16ae931b73c.js"></script></head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="body-footer">
+    <div style="margin-bottom: 8px">
+        <a href="/cdn-cgi/l/email-protection#38514b164d56784949165b5755" target="_blank">
+            <img src="/static/bundle/159d24b1b159c99a98e3.svg"/>
+        </a>
+        <img src="/static/bundle/fdbb90aaddd32a5ab4ad.png" class="qq" data-bs-toggle="popover" data-bs-placement="top"/>
+        <a href="https://weibo.com/u/5340553087" target="_blank">
+            <img src="/static/bundle/aae271671b3d18e15b40.svg"/>
+        </a>
+        <a href="https://space.bilibili.com/3056509/lists/3909505" target="_blank">
+            <img src="/static/bundle/ad1d62977bf56d0e0010.png"/>
+        </a>
+        <a href="https://t.me/joinchat/Erw7nRGwXN3iSCoKguVW3w" target="_blank">
+            <img src="/static/bundle/7182da66feaf3e99632a.svg"/>
+        </a>
+        <a href="https://www.facebook.com/virtualjudge/" target="_blank">
+            <img src="/static/bundle/c2687d1cf1f3e06984eb.svg"/>
+        </a>
+    </div>
+    <div id="footer-info">
+        All Copyright Reserved © 2010-2026<br/>
+        <span data-i18n="bottom.server_time"></span>: <span class="currentTimeTZ"></span>
+    </div>
+</div>
+
+
+<input name="systemVersion" type="hidden" value="1783764198767"/>
+<input name="gaId" type="hidden" value="G-374JLX1715"/>
+
+    <input id="visitor_username" name="username" type="hidden" value="Cap1taL"/>
+    <input id="visitor_userId" name="userId" type="hidden" value="859679"/>
+    <input id="visitor_sup" name="sup" type="hidden" value="0"/>
+    <input id="newMessage" name="newMessage" type="hidden" value="false"/>
+
+
+
+
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/javascript">basePath = "";</script>
+
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1970d74ca1db42b',t:'MTc4Mzc2NDk4NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,70 @@
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# AI tooling
+.claude/
+.agents/
+memory/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.synctex.gz(busy)
+*.toc
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.run.xml
+
+# Generated PDF (regenerable from .tex)
+PPT/**/main.pdf
+
+# Office temp files
+~$*
+
+# Scraped / regenerable data from vjudge_scraper.py
+vjudge_data/
+vjudge_raw.txt
+vjudge_page.html
+vjudge_groups.html
+vjudge_teams.html
+vjudge_user.html
+vjudge_contests.json
+contest_*.html
+
+# Generated reports
+difficulty_audit.txt
+review_report.txt
+review_report_final.txt
+
+# Derived outputs
+schedule_out.json
+schedule_text.txt
+schedule.xlsx
+
+# Generated JS bundle
+bundle_06.js
+
+# Old PowerPoint (superseded by LaTeX)
+PPT/**/main.pptx

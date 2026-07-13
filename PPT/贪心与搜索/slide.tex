@@ -95,78 +95,231 @@
 \end{frame}
 
 % B
+\subsection{CodeForces 525D Arthur and Walls}
 \begin{frame}{CodeForces 525D Arthur and Walls}
-    题目大意
+    给定一个 $n\times m$ 的网格，每个格子是空地 \texttt{.} 或墙壁 \texttt{*}
+
+房间定义为极大四连通空地连通块
+
+可以拆除一些墙壁（将 \texttt{*} 变成 \texttt{.}），目标是让\textbf{每个房间都是矩形}
+
+求最少拆除数量，并输出任意一种方案
+
+$n,m\leq 2000$
 \end{frame}
 
 % C
+\subsection{CodeForces 442C Artem and Array}
 \begin{frame}{CodeForces 442C Artem and Array}
-    题目大意
+    给定长度为 $n$ 的正整数序列 $a$
+
+进行 $n-2$ 次操作，每次选择一个位置 $i\,(2\leq i\leq \text{len}-1)$ 删除，获得 $\min(a_{i-1},a_{i+1})$ 分
+
+删除后两边合并，继续操作，直到只剩 $2$ 个数
+
+求最大总得分
+
+$n\leq 5\times 10^5,\; a_i\leq 10^6$
 \end{frame}
 
 % D
+\subsection{洛谷 P6243 The Milk Queue G}
 \begin{frame}{洛谷 P6243 The Milk Queue G}
-    题目大意
+    $N$ 头奶牛排队挤奶，每头牛需先后经过两道工序
+
+第 $i$ 头牛的第一道工序耗时 $A_i$，第二道工序耗时 $B_i$
+
+若牛 $i$ 先于牛 $j$ 开始第一道工序，则她也先开始第二道工序
+
+求最优排队顺序下，完成所有挤奶的最短总时间
+
+$N\leq 25000,\; A_i,B_i\leq 2\times 10^4$
 \end{frame}
 
 % E
+\subsection{洛谷 P6631 序列}
 \begin{frame}{洛谷 P6631 序列}
-    题目大意
+    给定长度为 $n$ 的非负整数序列 $a$
+
+每一步可选择以下三种操作之一：
+
+\begin{itemize}
+    \item 选择区间 $[l,r]$，所有数减 $1$
+    \item 选择区间 $[l,r]$，其中下标为奇数的数减 $1$
+    \item 选择区间 $[l,r]$，其中下标为偶数的数减 $1$
+\end{itemize}
+
+求将全部数归零的最少步数
+
+$n\leq 10^5,\; a_i\leq 10^9,\; T\leq 10$
 \end{frame}
 
 % F
+\subsection{洛谷 P8314 Parkovi}
 \begin{frame}{洛谷 P8314 Parkovi}
-    题目大意
+    给定一棵 $n$ 个节点的树，边有长度
+
+选择 $k$ 个位置修建公园（同一节点最多一个）
+
+最小化每个节点到最近公园距离的最大值
+
+$n\leq 2\times 10^5$
 \end{frame}
 
 % G
+\subsection{洛谷 P5665 划分}
 \begin{frame}{洛谷 P5665 划分}
-    题目大意
+    将数列 $a$ 划分成若干连续段
+
+要求每段之和\textbf{单调不降}
+
+最小化每段平方之和
+
+$n\leq 4\times 10^7$
 \end{frame}
 
 % H
+\subsection{QOJ 5173 染色}
 \begin{frame}{QOJ 5173 染色}
-    题目大意
+    一条纸条上有 $n$ 个格子，第 $i$ 个格子的颜色为 $a_i$
+
+每秒钟可以执行以下两种操作之一：
+
+\begin{itemize}
+    \item 将某个格子染成任意颜色
+    \item 移动到相邻格子（要求移动前后颜色相同）
+\end{itemize}
+
+$Q$ 次询问，每次求从格子 $u$ 到 $v$ 的最短时间
+
+询问之间独立（不实际修改纸条）
+
+$n,Q\leq 10^6$
 \end{frame}
 
 % I
+\subsection{QOJ 1173 Knowledge Is...}
 \begin{frame}{QOJ 1173 Knowledge Is...}
-    题目大意
+    from Petrozavodsk Winter 2021, GP of Suwon
+
+$N$ 个项目，$M$ 名学生
+
+项目 $i$ 在时间 $L_i$ 可被领取，必须在 $R_i$ 或之前完成
+
+一名学生不能同时做两个项目（即若选 $i,j$，须满足 $R_i<L_j$ 或 $R_j<L_i$）
+
+每名学生最多做两个项目
+
+求最多能完成的项目数，并输出每个项目由哪名学生（1\textasciitilde M）完成，未完成输出 0
+
+$N\leq 3\times 10^5$
 \end{frame}
 
 % J
+\subsection{CodeForces 802M3 April Fools' Problem (hard)}
 \begin{frame}{CodeForces 802M3 April Fools' Problem (hard)}
-    题目大意
+    有 $n$ 天，需要准备 $k$ 个问题
+
+第 $i$ 天最多准备一个问题（花费 $a_i$），最多打印一个问题（花费 $b_i$）
+
+一个问题必须先准备再打印（可在同一天完成）
+
+求准备并打印 $k$ 个问题的最小总花费
+
+$n\leq 5\times 10^5$
 \end{frame}
 
 % K
+\subsection{CodeForces 436E Cardboard Box}
 \begin{frame}{CodeForces 436E Cardboard Box}
-    题目大意
+    $n$ 个关卡，每个关卡可以：
+
+\begin{itemize}
+    \item 不玩（得 0 星）
+    \item 花 $a_i$ 时间通关得 1 星
+    \item 花 $b_i$ 时间通关得 2 星（$a_i<b_i$）
+\end{itemize}
+
+每个关卡最多通关一次
+
+至少要获得 $w$ 颗星，求最短总时间
+
+$n\leq 3\times 10^5$
 \end{frame}
 
 % L
+\subsection{洛谷 P4511 日程管理}
 \begin{frame}{洛谷 P4511 日程管理}
-    题目大意
+    有 $T$ 天，每天恰好可以完成一个任务
+
+每个任务有截止日期 $t_i$ 和收益 $p_i$，必须在截止日前完成才获得收益
+
+支持 $Q$ 次操作：
+
+\begin{itemize}
+    \item \texttt{ADD t p}：添加一个任务
+    \item \texttt{DEL t p}：删除一个任务
+\end{itemize}
+
+每次操作后输出当前最大可获收益
+
+$T,Q\leq 3\times 10^5$
 \end{frame}
 
 % M
+\subsection{SPOJ MTREECOL Color a tree}
 \begin{frame}{SPOJ MTREECOL Color a tree}
-    题目大意
+    给定一棵 $N$ 个节点的树，根为 $R$
+
+每个节点有染色代价因子 $C_i$
+
+必须先染父节点才能染子节点
+
+每染一个节点耗时 $1$，若节点 $i$ 在时刻 $F_i$ 完成染色，代价为 $C_i\times F_i$
+
+求最小总染色代价
+
+$N\leq 1000,\; C_i\leq 500$
 \end{frame}
 
 % N
+\subsection{洛谷 P3620 数据备份}
 \begin{frame}{洛谷 P3620 数据备份}
-    题目大意
+    $N$ 栋办公楼在一条直线上，坐标 $s_i$ 已排序
+
+需要铺设 $K$ 条电缆，每条连接两栋楼
+
+每栋楼至多属于一对
+
+最小化电缆总长度
+
+$N\leq 10^5$
 \end{frame}
 
 % O
+\subsection{CodeForces 2128F Strict Triangle}
 \begin{frame}{CodeForces 2128F Strict Triangle}
-    题目大意
+    给定连通无向图 $G$ 和节点 $k$
+
+每条边 $i$ 的权重 $w_i$ 可在 $[l_i,r_i]$ 中任取实数
+
+判断是否存在赋值方案，使得
+
+$\mathrm{dist}_w(1,n)\neq \mathrm{dist}_w(1,k)+\mathrm{dist}_w(k,n)$
+
+多组数据，$\sum n,\sum m\leq 2\times 10^5$
 \end{frame}
 
 % P
+\subsection{CodeForces 2034G2 Simurgh's Watch (Hard Version)}
 \begin{frame}{CodeForces 2034G2 Simurgh's Watch (Hard Version)}
-    题目大意
+    给定 $n$ 个区间 $[l_i,r_i]$，每个区间需分配一种颜色
+
+对任意整数时刻 $t$，若至少有一个区间覆盖 $t$，则存在一种颜色在 $t$ 恰好只出现一次
+
+求最小所需颜色数，并给出构造
+
+$\sum n\leq 2\times 10^5$
 \end{frame}
 
 % ===== 结束页 =====

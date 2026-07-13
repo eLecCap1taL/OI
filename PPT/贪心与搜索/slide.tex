@@ -1,0 +1,181 @@
+﻿\documentclass[aspectratio=169]{ctexbeamer}
+\usepackage[T1]{fontenc}
+\usepackage{latexsym,amsmath,xcolor,multicol,booktabs,calligra}
+\usepackage{graphicx,listings,stackengine}
+\usepackage{hyperref}
+
+\usepackage{PekingU}
+
+% 去掉每节/子节前面的自动目录页
+\AtBeginSection[]{}
+\AtBeginSubsection[]{}
+
+% ===== 每节课改这里 =====
+\author{Cap1taL}
+\title{贪心与搜索}
+\date{2026年7月}
+% ========================
+
+% 代码高亮设置
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{halfgray}{gray}{0.55}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\bfseries\color{deepblue},
+    emphstyle=\ttfamily\color{deepred},
+    stringstyle=\color{deepgreen},
+    numbers=left,
+    numberstyle=\small\color{halfgray},
+    rulesepcolor=\color{red!20!green!20!blue!20},
+    frame=shadowbox,
+}
+
+\begin{document}
+
+\kaishu
+
+% 封面
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% 目录
+% \begin{frame}{目录}
+%     \tableofcontents[sectionstyle=show,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/shaded/hide]
+% \end{frame}
+
+% ===== 从这里开始写你的内容 =====
+
+\section{题目}
+
+
+% A
+\subsection{CodeForces 496E Distributing Parts}
+\begin{frame}{CodeForces 496E Distributing Parts}
+    热身题 \\
+
+    $n$ 首歌曲，每首的音域为 $[a_i,b_i]$
+
+    $m$ 个演员，每个人的音域范围为 $[c_i,d_i]$，他最多可以演唱 $k_i$ 首歌曲
+
+    一首歌曲能被一个演员演唱，当且仅当演员 $[c,d]$ 完全包含歌曲 $[a,b]$
+    
+    判断是否存在一个分配歌曲演唱的方案，并给出构造
+
+    $n,m\leq 10^5$
+
+    其余不重要
+\end{frame}
+
+\begin{frame}{Solution}
+    先忽略 $k$ 的影响，不难转化为经典模型
+    
+    将演员与歌曲，一同按区间左端点升序排列，从左向右依次考虑它们
+    
+    \begin{enumerate}
+        \item 若考虑到演员-左端，将其纳入维护
+        \item 若考虑到演员-右端，将其移出维护
+        \item 若考虑到歌曲-左端，我们从维护的演员里，找到\textcolor{peaking}{能演唱}当前歌曲，且\textcolor{peaking}{右端最小}的的演员，将其与当前乐曲匹配
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Solution}
+    现在考虑 $k$ 的影响
+    
+    我们将一个人可唱 $k$ 次，等效为 $k$ 个人，则可直接套用刚才的做法
+    
+    $k$ 可以到 $10^9$ 量级，因此我们不能真的拆人（？！）
+    
+    我们在纳入维护演员时，为每个人额外维护一个“剩余次数”即可
+    
+    具体维护可以使用 set 或者 multiset
+\end{frame}
+
+% B
+\begin{frame}{CodeForces 525D Arthur and Walls}
+    题目大意
+\end{frame}
+
+% C
+\begin{frame}{CodeForces 442C Artem and Array}
+    题目大意
+\end{frame}
+
+% D
+\begin{frame}{洛谷 P6243 The Milk Queue G}
+    题目大意
+\end{frame}
+
+% E
+\begin{frame}{洛谷 P6631 序列}
+    题目大意
+\end{frame}
+
+% F
+\begin{frame}{洛谷 P8314 Parkovi}
+    题目大意
+\end{frame}
+
+% G
+\begin{frame}{洛谷 P5665 划分}
+    题目大意
+\end{frame}
+
+% H
+\begin{frame}{QOJ 5173 染色}
+    题目大意
+\end{frame}
+
+% I
+\begin{frame}{QOJ 1173 Knowledge Is...}
+    题目大意
+\end{frame}
+
+% J
+\begin{frame}{CodeForces 802M3 April Fools' Problem (hard)}
+    题目大意
+\end{frame}
+
+% K
+\begin{frame}{CodeForces 436E Cardboard Box}
+    题目大意
+\end{frame}
+
+% L
+\begin{frame}{洛谷 P4511 日程管理}
+    题目大意
+\end{frame}
+
+% M
+\begin{frame}{SPOJ MTREECOL Color a tree}
+    题目大意
+\end{frame}
+
+% N
+\begin{frame}{洛谷 P3620 数据备份}
+    题目大意
+\end{frame}
+
+% O
+\begin{frame}{CodeForces 2128F Strict Triangle}
+    题目大意
+\end{frame}
+
+% P
+\begin{frame}{CodeForces 2034G2 Simurgh's Watch (Hard Version)}
+    题目大意
+\end{frame}
+
+% ===== 结束页 =====
+
+\begin{frame}
+    \begin{center}
+        {\Huge\calligra Thanks!}
+    \end{center}
+\end{frame}
+
+\end{document}
+.

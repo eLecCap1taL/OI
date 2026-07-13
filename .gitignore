@@ -38,7 +38,7 @@ build/
 *.run.xml
 
 # Generated PDF (regenerable from .tex)
-PPT/**/main.pdf
+# PPT/**/main.pdf
 
 # Office temp files
 ~$*

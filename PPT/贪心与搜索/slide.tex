@@ -563,6 +563,24 @@ $N\leq 3\times 10^5$
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 % J
 \subsection{CodeForces 802M3 April Fools' Problem (hard)}
 \begin{frame}{CodeForces 802M3 April Fools' Problem (hard)}
@@ -696,6 +714,58 @@ $n\leq 3\times 10^5$
 
 $T,Q\leq 3\times 10^5$
 \end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 先考虑静态版本怎么处理，即问题集固定
+        \item 什么情况下才会完不成？
+        \pause
+        \begin{itemize}
+            \item 若存在 $k$，使得前第 $k$ 天必须做完 $>k$ 个任务，我们就会爆炸
+            \item 否则我们一定可以构造一个完成任务的方案，每天贪心做最早的题即可
+            \pause
+        \end{itemize}
+        \item 如何确定选哪些任务？
+        \pause
+        \begin{itemize}
+            \item 反悔贪心。一个个考虑任务
+            \item 若还塞得下就塞进任务序列
+            \item 若塞不下就找替换一个收益不如它的
+        \end{itemize}
+        \pause
+        \item 发现我们实际上已经可以做只有 ADD 的动态版本。删除怎么办？
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution}
+    方案 \#1 修补贪心方案
+    \pause
+    \begin{itemize}
+        \item 若删除的任务根本没使用，直接删除
+        \item 若删除的任务已经被使用，我们将其删除，并尝试放入一个尚未被使用的任务
+        \pause
+        \item 如何维护合法性？
+        \begin{itemize}
+            \item “若存在 $k$，使得前第 $k$ 天必须做完 $>k$ 个任务，我们就会爆炸”
+            \pause
+            \item 定义 $c_i=k-[$必须在前 $k$ 天完成的任务数$]$。这个值必须非负
+            \item 同时我们可以发现，插入一个任务 $(t,p)$ 只要求 $[c_t,c_T]$ 必须为正，插入后会对这个后缀减一。
+            \item 使用线段树维护即可 
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution}
+    方案 \#2 线段树分治
+    \begin{itemize}
+        \item 用线段树分治的板子把 $O(q)$ 次增加和删除变成 $O(q\log q)$ 次增加和撤销
+        \item 撤销可以硬维护，用栈记录操作序列
+        \item 比较套路的做法，不是我们今天的重点
+    \end{itemize}
+\end{frame}
+
+
+
 
 % M
 \subsection{SPOJ MTREECOL Color a tree}

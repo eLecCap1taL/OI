@@ -29,6 +29,7 @@ build/
 *.out
 *.snm
 *.synctex.gz
+*.synctex(busy)
 *.synctex.gz(busy)
 *.toc
 *.bbl

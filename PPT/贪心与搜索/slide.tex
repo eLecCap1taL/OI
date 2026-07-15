@@ -211,7 +211,7 @@ $n,m\leq 2000$
     \begin{itemize}
         \item 第一步在理解题目大意后可以感受到
         \item 第二步可以手玩出来
-        \item 第一步可以带 $\log$，实现方案很多，链表或者一点数据结构都可以
+        \item 第一步可以带 $\log$，实现方案很多，链表或者一点数据结构都可以。或者采用类似搜索的手法。
     \end{itemize}
 \end{frame}
 
@@ -295,6 +295,39 @@ $N\leq 25000,\; A_i,B_i\leq 2\times 10^4$
 求将全部数归零的最少步数
 
 $n\leq 10^5,\; a_i\leq 10^9,\; T\leq 10$
+\end{frame}
+
+\begin{frame}{Solution}
+    存在线性规划的套路做法，不过这不是我们今天的主题
+    \pause
+    \begin{itemize}
+        \item 观察范围和时空限制，结合题面操作的高自由度，我们猜测是某种神秘贪心
+        \pause
+        \item 注意到后两种操作其实是同一种，即隔一个操作一个
+        \pause
+        \item 一个常见的思考角度是从端点情况入手。我们考虑 $a_n$ 和 $a_{n-1}$
+        \pause
+        \begin{itemize}
+            \item 若 $a_{n-1}=0$，显然操作二不劣
+            \item 若 $a_n\neq 0$，不做任何事
+            \item 若 $a_{n-1},a_n\neq 0$，虽然操作二可能延伸更远，但直接用操作一覆盖不劣。可以转化为上述情形
+        \end{itemize}
+        \item 具体证明？
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution}
+    从右向左扫描，假设我们已经用刚才的方法把 $[L+1,n]$ 都变成 $0$，考虑 $a_L$
+    \begin{itemize}
+        \item 基本与刚才的情形类似，不同的是右侧 “传来” 了几个\textcolor{peaking}{尚未结束的}操作一/二或三。不妨假设其数量为 $x$ 和 $y$。
+        \item 若 $a_L<x+y$，贪心选取，则必定有 $x+y-a_L$ 操作需要在 $L$ 右侧结束
+        \begin{itemize}
+            \item 我们暂时无法决策具体保留哪些操作，于是一个技巧是，将 $x$ 与 $y$ 均扣除 $ x+y-a_L $ ，再“保留 $x+y-a_L$ 的自由操作额度”
+            \item $x$ 和 $y$ 可能会小于 $x+y-a_L$，需要先用鸽巢原理处理。
+        \end{itemize}
+        \item 若 $a_L\ge x+y$，继续延伸右侧的操作——将 $a_L$ 减去 $x+y$。此后若 $a_L$ 仍不为 $ 0 $，我们先尝试使用之前积累的 "自由操作额度"，若不足再使用新操作
+        \item 如何想到？
+    \end{itemize}
 \end{frame}
 
 % F

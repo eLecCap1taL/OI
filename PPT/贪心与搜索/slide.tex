@@ -13,6 +13,7 @@
 % ===== 每节课改这里 =====
 \author{Cap1taL}
 \title{贪心与搜索}
+\subtitle{pwq}
 \date{2026年7月}
 % ========================
 
@@ -72,8 +73,10 @@
 
 \begin{frame}{Solution}
     先忽略 $k$ 的影响，不难转化为经典模型
-    
+    \pause 
+
     将演员与歌曲，一同按区间左端点升序排列，从左向右依次考虑它们
+    \pause 
     
     \begin{enumerate}
         \item 若考虑到演员-左端，将其纳入维护
@@ -84,15 +87,30 @@
 
 \begin{frame}{Solution}
     现在考虑 $k$ 的影响
-    
+    \pause
+
     我们将一个人可唱 $k$ 次，等效为 $k$ 个人，则可直接套用刚才的做法
-    
+    \pause
+
     $k$ 可以到 $10^9$ 量级，因此我们不能真的拆人（？！）
-    
+    \pause
+
     我们在纳入维护演员时，为每个人额外维护一个“剩余次数”即可
-    
+    \pause
+
     具体维护可以使用 set 或者 multiset
 \end{frame}
+
+
+
+
+
+
+
+
+
+
+
 
 % B
 \subsection{CodeForces 525D Arthur and Walls}
@@ -108,6 +126,34 @@
 $n,m\leq 2000$
 \end{frame}
 
+\begin{frame}[fragile]{Solution}
+    我们考虑：什么样的“房间”不是一个“矩形”？
+    \pause
+    \begin{verbatim}
+..
+.#
+    \end{verbatim}
+    容易发现，既然房间不是矩形，必然存在上图所示的“拐角”（可以旋转）。且这样的拐角\textcolor{peaking}{必须被修复}
+    \pause
+
+    又发现，若我们修复了一个拐角，可能会引入新的拐角
+    
+    搜索！我们抽象每个 $2x2$ 的单元为一个新元素即可
+
+
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
 % C
 \subsection{CodeForces 442C Artem and Array}
 \begin{frame}{CodeForces 442C Artem and Array}
@@ -121,6 +167,15 @@ $n,m\leq 2000$
 
 $n\leq 5\times 10^5,\; a_i\leq 10^6$
 \end{frame}
+
+
+
+
+
+
+
+
+
 
 % D
 \subsection{洛谷 P6243 The Milk Queue G}

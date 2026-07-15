@@ -558,6 +558,24 @@ $N\leq 3\times 10^5$
 $n\leq 5\times 10^5$
 \end{frame}
 
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 原题要求必须打印 $k$ 个问题。容易发现点集 $\{(k,mincost_k)\}$ 是下凸的，使用 wqs 二分拿掉 $k$ 的限制
+        \begin{itemize}
+            \item 不会 wqs 二分的可以参考 P2619 [国家集训队] Tree I
+            \item wqs 二分并非今天的重点，现在可以先 skip 掉
+        \end{itemize}
+        \item 将 $b_i$ 减去 wqs 二分的斜率后，变为纯粹的最优化问题
+        \item 考虑一个简单的贪心：每天都尝试“打印”，如果前缀存在某天的“准备”开销和今天的“打印”开销加起来为负，就直接美美打印得吃
+        \item 这显然是错误的，因为后面可能某天打印更划算
+        \item 因此使用反悔贪心。打印的时候尝试能不能把之前的打印拆掉，比较一下与直接打印谁更优即可
+        \item 具体实现可以用优先队列，把当前的 $-b_i$ 和正常的 $a_i$ 混起来，之后如果取出
+    \end{itemize}
+\end{frame}
+
+
+
+
 % K
 \subsection{CodeForces 436E Cardboard Box}
 \begin{frame}{CodeForces 436E Cardboard Box}

@@ -392,34 +392,25 @@ $n\leq 4\times 10^7$
 \begin{frame}{Solution}
     \begin{itemize}
         \item 题外话：感觉属于那种赛场上不严谨猜着做比严格证明简单的多的题
-
+        \pause
         \item 首先有一个显然的 DP。设 $f_{i,j}$ 表示前 $i$ 个数，最后一段是 $[j+1,i]$ 的最小答案。转移需要枚举倒数第二段的段首，复杂度 $O(n^3)$。
-
+        \pause
         \item 半感性地，我们知道 $(a+b)^2=a^2+b^2+2ab>a^2+b^2$。即在保证合法的情况下，拆开一段总是更优的，每段更短更好。
-
+        \pause
         \item 先给出结论：在所有合法的划分中，最优划分一定最后一段最短
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Solution}
-    \begin{itemize}
-        \item 题外话：感觉属于那种赛场上不严谨猜着做比严格证明简单的多的题
-
-        \item 首先有一个显然的 DP。设 $f_{i,j}$ 表示前 $i$ 个数，最后一段是 $[j+1,i]$ 的最小答案。转移需要枚举倒数第二段的段首 $k$，复杂度 $O(n^3)$。
-
-        \item 半感性地，我们知道 $(a+b)^2=a^2+b^2+2ab>a^2+b^2$。即在保证合法的情况下，拆开一段总是更优的，每段更短更好。
-
-        \item 于是先猜出结论：在所有合法的划分中，最优划分一定最后一段最短
     \end{itemize}
 \end{frame}
 
 
 \begin{frame}{Solution}
     “在所有合法的划分中，最优划分一定最后一段最短”
+    \pause
     \begin{itemize}
         \item 数学归纳法。当 $n=1$ 时显然成立，我们尝试证明 $n$ 时也成立。
+        \pause
         \item 借用刚才 DP 转移的思想。
         \item 我们现在不需要再枚举 $k$，数学归纳法保证了 $f_j$ 的最优解的最后一段最短，则它的和也最小，最易合法。取更小的 $k$ 不优。
+        \pause
         \item 设 $g_i$ 表示最优分拆下，最后一段的和。设 $s_i$ 表示前缀和。转移条件可以写成 $g_j+s_j<s_i$，单调性表明可行的 $j$ 是一个前缀。
         \item 问题转化为证明，取最大的 $j$ 最优
     \end{itemize}
@@ -427,11 +418,15 @@ $n\leq 4\times 10^7$
 
 \begin{frame}{Solution}
     “转移时取最大的 $j$ 最优”
+    \pause
     \begin{itemize}
         \item 我们证明任何一个 $k<j$ 都劣于 $j$
+        \pause
         \item 为了简化问题，单独提出所有分拆点，可以证明 $k$ 分拆的一段不可能被 $j$ 分拆的一段完全包含。这表明排布一定形如先重合，后交替，最后一侧有一侧无的形式
         \item “最后一侧有一侧无” 可以忽略
+        \pause
         \item 直接考虑二者各段的和序列为 $[X_1,X_n]$ 和 $[Y_1,Y_m]$。我们下面通过一系列操作，使 $X_i$ 与 $Y_i$ 相同，同时保证 $X_i$ 不更优 $Y_i$ 不更劣，从而说明原本的 $X_i$ 优于 $Y_i$
+        \pause
         \item 找到最大的 $p$ 最小的 $q$，满足 $Y_1=Y_p,Y_q=Y_m$，将 $Y_p+1$ 同时 $Y_q-1$，这使得 $Y_i$ 变得更优
         \item 一旦 $X_i$ 和 $Y_i$ 存在了一段前缀相同，我们将前缀砍掉继续操作
     \end{itemize}
@@ -441,11 +436,19 @@ $n\leq 4\times 10^7$
     “转移时取最大的 $j$ 最优”
     \begin{itemize}
         \item 最终 $Y_1=Y_m$ 或 $Y_1+1=Y_m$
+        \pause
         \item 注意 $k<j$ 使得 $X_n\le Y_m-1 = Y_1$，由此得到 $X_i$ 每个元素都小于 $Y_1$
-        \item 若两序列等长，则二者必定完全恒等，以此保证总和一致
-        \item 若 $n=m+1$，我们把 $X_1$ 分配给 $[X_2,X_n]$，从而让二者相等，同时 $X_i$ 变的更劣
+        \pause
+        \begin{itemize}
+            \item 若两序列等长，则二者必定完全恒等，以此保证总和一致
+            \pause
+            \item 若 $n=m+1$，我们把 $X_1$ 分配给 $[X_2,X_n]$，从而让二者相等，同时 $X_i$ 变的更劣
+            \pause
+        \end{itemize}
         \item 综上，我们总能通过一系列操作，使 $X_i$ 与 $Y_i$ 相同，同时保证 $X_i$ 不更优， $Y_i$ 不更劣
+        \pause
         \item 因此原本的 $X_i$ 优于 $Y_i$，数学归纳法成立，转移时只需要找到最大的合法 $j$ 即可。
+        \pause
         \item 使用数据结构可能会带 $\log$，可以使用单调队列做到线性。卡常。
     \end{itemize}
 \end{frame}
@@ -473,6 +476,36 @@ $Q$ 次询问，每次求从格子 $u$ 到 $v$ 的最短时间
 
 $n,Q\leq 10^6$
 \end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 先考虑单次询问怎么做，不妨设 $u<v$
+        \pause
+        \item 最暴力的做法是每格都染，这给出了答案的上界
+        \pause
+        \item 发现若 $u,v$ 之间存在一对 $i<j$ 满足 $a_i=a_j$，则我们可以少染一次
+        \item 问题转化为怎么在 $u,v$ 之间选出最多这样的区间
+        \pause
+        \item 立马发现可以用简单的 DP 解决，并优化到线性
+        \item 多次询问怎么办？
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 多次询问下发现 DP 没什么前途。这个问题这么简单，能不能不用 DP 呢？
+        \pause
+        \item 贪！心！预处理 $R_i$ 表示 $i$ 右侧最靠左的完整区间的右端点下标
+        \pause
+        \item 我们断言：从 $u$ 开始不断跳 $R_i$，超过 $v$ 之前跳的次数就是最大区间数
+        \item 可以用反证法证明
+        \pause
+        \item 具体实现方面，把询问挂到序列上，使用扫描线，同时使用并查集加树上差分，可以做到线性
+    \end{itemize}
+\end{frame}
+
+
 
 % I
 \subsection{QOJ 1173 Knowledge Is...}

@@ -157,19 +157,63 @@ $n,m\leq 2000$
 % C
 \subsection{CodeForces 442C Artem and Array}
 \begin{frame}{CodeForces 442C Artem and Array}
-    给定长度为 $n$ 的正整数序列 $a$
+    给定长度为 $n$ 的数组 $a$ ，你需要进行 $n$ 次操作：删去某一元素 $a_i$ ，并获得 $\min\{a_{i-1}, a_{i+1}\}$ 的分数。若不存在 $a_{i-1}$ 或 $a_{i+1}$，则此次操作不得分。
 
-进行 $n-2$ 次操作，每次选择一个位置 $i\,(2\leq i\leq \text{len}-1)$ 删除，获得 $\min(a_{i-1},a_{i+1})$ 分
+    请你计算至多能得到多少分。
 
-删除后两边合并，继续操作，直到只剩 $2$ 个数
-
-求最大总得分
-
-$n\leq 5\times 10^5,\; a_i\leq 10^6$
+    $n\leq 5\times 10^5,\; a_i\leq 10^6$
 \end{frame}
 
 
+\begin{frame}{Solution}
+    给出方案：
+    \pause 
+    \begin{itemize}
+        \item 删除所有极小值点，序列变为单峰
+        \item 答案为除了最大值和次大值的元素之和
+    \end{itemize}
+    我们来证明这个思路
 
+
+\end{frame}
+
+\begin{frame}{Solution}
+    “删除所有极小值点”
+    \pause
+    \begin{itemize}
+        \item 感性上容易理解，删除凹下去的部分是“不亏”的
+        \pause
+        \item 设极小值 $y$ 附近是 $[p,x,y,z,q]$，我们尝试证明：删除 $x$ 或 $z$ 之前先删除 $y$ 一定不劣
+        \pause
+        \item A. 若先删除 $x$，则收益为 $\min(p,y)$，剩余序列为 $[p,y,z,q]$
+        \item B. 若先删除 $y$，则收益为 $\min(x,z)$，剩余序列为 $[p,x,z,q]$
+        \pause
+        \item 注意到 B 方案的收益 $\min(x,z)\ge y\ge \min(p,y)$，且 B 的剩余序列更大，显然其剩余答案也大于 A
+        \item 因此 B 方案更优，证明成立
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution}
+    “答案为除了最大值和次大值的元素之和”
+    \pause
+    \begin{itemize}
+        \item 显然最大值不可能进入答案
+        \pause
+        \item 次大值成为答案，当且仅当“存在一次$\min($最大$,$次大$)$”，而这在单峰序列中是不可能的
+        \pause
+        \item 因此答案必定不大于 “除了最大值和次大值的元素之和”
+        \item 构造方案：从“峰尖”开始取即可
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 第一步在理解题目大意后可以感受到
+        \item 第二步可以手玩出来
+        \item 第一步可以带 $\log$，实现方案很多，链表或者一点数据结构都可以
+    \end{itemize}
+\end{frame}
 
 
 
@@ -180,16 +224,60 @@ $n\leq 5\times 10^5,\; a_i\leq 10^6$
 % D
 \subsection{洛谷 P6243 The Milk Queue G}
 \begin{frame}{洛谷 P6243 The Milk Queue G}
+    经典？！
+
     $N$ 头奶牛排队挤奶，每头牛需先后经过两道工序
 
-第 $i$ 头牛的第一道工序耗时 $A_i$，第二道工序耗时 $B_i$
+    第 $i$ 头牛的第一道工序耗时 $A_i$，第二道工序耗时 $B_i$
 
-若牛 $i$ 先于牛 $j$ 开始第一道工序，则她也先开始第二道工序
+    若牛 $i$ 先于牛 $j$ 开始第一道工序，则她也先开始第二道工序
 
-求最优排队顺序下，完成所有挤奶的最短总时间
+    求最优排队顺序下，完成所有挤奶的最短总时间
 
 $N\leq 25000,\; A_i,B_i\leq 2\times 10^4$
 \end{frame}
+
+\begin{frame}{Solution}
+    结论是众所周知的：
+    \begin{itemize}
+        \item A. 当 $a_i\le b_i$ 时，按照 $a_i$ 升序
+        \item B. 当 $a_i> b_i$ 时，按照 $b_i$ 降序
+        \item 将 A 组放到 B 组的左侧
+    \end{itemize}
+    不乏感性理解方法。如何严格证明？
+\end{frame}
+
+\begin{frame}{Solution}
+    1. 用表达式刻画答案
+    $$
+        \max_{k=1}^n\left(\sum_{i=1}^k a_i+\sum_{i=k}^n b_i\right)
+    $$
+    证明？数学归纳法
+\end{frame}
+
+\begin{frame}{Solution}
+    2. 临项交换
+    
+    \begin{itemize}
+        \item 考虑何时交换 $(a_i,b_i)$ 与 $(a_j,b_j)$ 会变优
+        
+        \item 可得到 $\min(b_i,a_j)>\min(a_i,b_j)$
+        \pause
+        
+        \item 但它没有传递性。我们无法直接使用它排序。我们使用刚才构造的全序
+        \pause
+
+        \item 一方面, 其满足我们推得的不等式；另一方面，任意满足我们推得不等式的排列，都可以通过交换变为全序排序后唯一的形式
+
+        \item 证明？考虑交换一对元素对实际答案的影响
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+
 
 % E
 \subsection{洛谷 P6631 序列}

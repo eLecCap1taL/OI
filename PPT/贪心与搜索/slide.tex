@@ -507,6 +507,25 @@ $n,Q\leq 10^6$
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 % I
 \subsection{QOJ 1173 Knowledge Is...}
 \begin{frame}{QOJ 1173 Knowledge Is...}
@@ -588,6 +607,17 @@ $n\leq 5\times 10^5$
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 % K
 \subsection{CodeForces 436E Cardboard Box}
 \begin{frame}{CodeForces 436E Cardboard Box}
@@ -605,6 +635,48 @@ $n\leq 5\times 10^5$
 
 $n\leq 3\times 10^5$
 \end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 一个简单但错误的贪心思路：每次选最便宜的星进行选择，同时“解锁” “补差价” 到第二颗星的选项继续贪心
+        \pause
+        \item 它可以被一个简单的 Hack 卡掉，例如第一关为 (100,105)，而第二关为(101 102)，只需要两颗星。上面的贪心会一头扎进第一关里，这是错误的
+        \item 发现问题在于，我们的贪心无法“看到”相邻第二层的选项
+        \pause
+        \item 于是使用反悔贪心。我们有四个选项：
+        \begin{enumerate}
+            \item 开一个新的 $a_i$
+            \item 补一个 $b_i-a_i$ 的差价
+            \item 反悔一个 $a_i$ 的选择，改选另一个补差价 $b_j-a_j$
+            \item 反悔一个 $b_i-a_i$ 的补差价，改选另一个 $a_j$
+        \end{enumerate}
+        \pause
+        \item 开五个优先队列进行维护即可。与前几道题的思路基本一致，只是选择更多
+        \item 为什么正确？
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution}
+    一个较为简单的正确性理解
+    \pause
+    \begin{itemize}
+        \item 我们对每道关卡的选择只有“2层”
+        \pause
+        \item 为了保持正确性，我们需要在每个节点选择时，具有跳出到任意临近关卡的任意层数的能力。
+        \pause
+        \item 由于贡献可拆分，这需要 $2^K$ 个“出路”。因此我们开了 $2^2$ 个额外的优先队列用于维护各个选择。
+        \pause
+        \item 某种意义上，也类别为执行一个隐性的优化建图 + Prim的过程，边权是我们的赚星的开销。
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+
 
 % L
 \subsection{洛谷 P4511 日程管理}

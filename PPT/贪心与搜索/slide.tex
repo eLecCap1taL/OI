@@ -510,7 +510,6 @@ $n,Q\leq 10^6$
 % I
 \subsection{QOJ 1173 Knowledge Is...}
 \begin{frame}{QOJ 1173 Knowledge Is...}
-    from Petrozavodsk Winter 2021, GP of Suwon
 
 $N$ 个项目，$M$ 名学生
 
@@ -524,6 +523,26 @@ $N$ 个项目，$M$ 名学生
 
 $N\leq 3\times 10^5$
 \end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 说人话：给一堆区间，选最多的匹配，满足匹配内的区间不交
+        \pause
+        \item 不太能 DP，尝试反悔贪心
+        \item 套路地，我们将区间按右端点降序排序进行扫描
+        \pause
+        \begin{itemize}
+            \item 如果右侧存在区间能与当前区间匹配，我们直接进行匹配。我们尽量使用左端点更大的区间
+            \pause
+            \item 如果不存在可以直接匹配的区间，我们尝试拆散已有匹配。设当前区间是 $[L,R]$，若存在匹配的最左端点大于 $L$，我们将当前区间与匹配中的区间交换。我们尽量交换左端点更大的区间
+            \pause
+            \item 这样的交换总能扩大“未匹配区间”的待匹配范围，因此是更优的
+        \end{itemize}
+        \item 使用优先队列维护即可
+    \end{itemize}
+\end{frame}
+
+
 
 % J
 \subsection{CodeForces 802M3 April Fools' Problem (hard)}

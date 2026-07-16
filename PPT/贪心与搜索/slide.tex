@@ -906,7 +906,7 @@ $N\leq 10^5,\; K\le\lfloor\frac{N}{2}\rfloor$
     \end{itemize}
 \end{frame}
 \begin{frame}{Solution}
-    方法 \# 1 贪心搜索
+    方法 \# 2 贪心搜索
     \begin{itemize}
         \item 考虑端点情况，取出全局最小值，记其为 $a_i$
         \item 若 $a_i$ 选，则 $a_{i-1}$ 与 $a_{i+1}$ 必定都不选
@@ -929,30 +929,72 @@ $N\leq 10^5,\; K\le\lfloor\frac{N}{2}\rfloor$
 
 
 % O
-\subsection{CodeForces 2128F Strict Triangle}
-\begin{frame}{CodeForces 2128F Strict Triangle}
-    给定连通无向图 $G$ 和节点 $k$
+% \subsection{CodeForces 2128F Strict Triangle}
+% \begin{frame}{CodeForces 2128F Strict Triangle}
+%     给定连通无向图 $G$ 和节点 $k$
 
-每条边 $i$ 的权重 $w_i$ 可在 $[l_i,r_i]$ 中任取实数
+% 每条边 $i$ 的权重 $w_i$ 可在 $[l_i,r_i]$ 中任取实数
 
-判断是否存在赋值方案，使得
+% 判断是否存在赋值方案，使得
 
-$\mathrm{dist}_w(1,n)\neq \mathrm{dist}_w(1,k)+\mathrm{dist}_w(k,n)$
+% $\mathrm{dist}_w(1,n)\neq \mathrm{dist}_w(1,k)+\mathrm{dist}_w(k,n)$
 
-多组数据，$\sum n,\sum m\leq 2\times 10^5$
+% 多组数据，$\sum n,\sum m\leq 2\times 10^5$
+% \end{frame}
+
+% % P
+% \subsection{CodeForces 2034G2 Simurgh's Watch (Hard Version)}
+% \begin{frame}{CodeForces 2034G2 Simurgh's Watch (Hard Version)}
+%     给定 $n$ 个区间 $[l_i,r_i]$，每个区间需分配一种颜色
+
+% 对任意整数时刻 $t$，若至少有一个区间覆盖 $t$，则存在一种颜色在 $t$ 恰好只出现一次
+
+% 求最小所需颜色数，并给出构造
+
+% $\sum n\leq 2\times 10^5$
+% \end{frame}
+
+% % Q
+% \subsection{LibreOJ 3327 排列}
+% \begin{frame}{LibreOJ 3327 排列}
+%     题面暂未获取，待补充
+% \end{frame}
+
+% R
+\subsection{CodeForces 1693F I Might Be Wrong}
+\begin{frame}{CodeForces 1693F I Might Be Wrong}
+    给定一个 01 字符串 $s$，长度为 $n$
+
+    每次操作可选择区间 $[l,r]$，付出 $|cnt_0-cnt_1|+1$ 的代价，把区间内调整成先 $ 0 $ 后 $ 1 $ 的形式。
+    
+    问把整个序列调成 先 $ 0 $ 后 $ 1 $ 所需的最小代价
+
+$n\leq 2\times 10^5$
 \end{frame}
 
-% P
-\subsection{CodeForces 2034G2 Simurgh's Watch (Hard Version)}
-\begin{frame}{CodeForces 2034G2 Simurgh's Watch (Hard Version)}
-    给定 $n$ 个区间 $[l_i,r_i]$，每个区间需分配一种颜色
-
-对任意整数时刻 $t$，若至少有一个区间覆盖 $t$，则存在一种颜色在 $t$ 恰好只出现一次
-
-求最小所需颜色数，并给出构造
-
-$\sum n\leq 2\times 10^5$
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 不失一般性地，我们钦定先有 $cnt_1\ge cnt_0$。否则将 01 翻转再 reverse 是等价的
+        \item 这个代价的表达式非常的抽象，告诉我们 $01$ 数量差距越小越小。无论如何，我们先尝试贪心地剪枝一些情形
+        \item 若我们操作的区间末尾有 $ 1 $ 则是不优的。这表明我们的操作区间必定以 $ 0 $ 结尾。
+        \item 注意到我们的钦定保证了 $ 1 $ 是更多的，而区间又以 $ 0 $ 结尾。根据连续性，必然存在一个 $01$ 数量相等的后缀
+        \item 我们直接对这个后缀进行操作，花费 $1$ 的代价，而末尾必定变成了若干 $ 1 $。
+        \item 将末尾的 $ 1 $ 丢弃并缩小操作区间，发现递归到子问题，且代价不劣
+        \item 因此我们发现，我们只需要操作那些 $01$ 数量相等的区间，否则总是可以由一些那样的操作替代
+    \end{itemize}
 \end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 现在我们的操作变的比较简洁，可以尝试直接构造操作方案
+        \item 我们依旧总是把全局末尾连续的 $ 1 $ 丢弃，保证末尾是 $ 0 $
+        \item 我们想把 $ 0 $ 前置，不难想到我们总是应该操作一个后缀
+        \item 因此每次找到最长的满足 $01$ 数量相等的后缀进行操作，并删除末尾所有的 $ 1 $
+        \item 若全局有 $cnt_0> cnt_1$ 我们只需要补回删除的若干 $ 1 $，再一次性排序即可
+        \item 可以用类似跳链表的方式做到线性
+    \end{itemize}
+\end{frame}
+
 
 % ===== 结束页 =====
 

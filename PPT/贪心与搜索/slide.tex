@@ -1,4 +1,4 @@
-﻿\documentclass[aspectratio=169]{ctexbeamer}
+﻿\documentclass[aspectratio=169,handout]{ctexbeamer}
 \usepackage[T1]{fontenc}
 \usepackage{latexsym,amsmath,xcolor,multicol,booktabs,calligra}
 \usepackage{graphicx,listings,stackengine}
@@ -767,6 +767,12 @@ $T,Q\leq 3\times 10^5$
 
 
 
+
+
+
+
+
+
 % M
 \subsection{SPOJ MTREECOL Color a tree}
 \begin{frame}{SPOJ MTREECOL Color a tree}
@@ -780,8 +786,91 @@ $T,Q\leq 3\times 10^5$
 
 求最小总染色代价
 
-$N\leq 1000,\; C_i\leq 500$
+$N\leq 10^6,\; C_i$ 不影响复杂度
 \end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 一个显然错误的贪心：从根节点开始拓展联通块，每次取权值最大的节点
+        \item 这个错误无法通过反悔操作来修补，结合 CF436E 来理解，因为树上的反悔分支太多我们无法维护
+        \item 但此时我们可以感受到，“向较大值前进” 这个贪心思想本身是有道理的
+        \item 考虑端点情况，我们取出全局最大值，发现若它的父亲已经被选，则它会在下一秒立刻被选。此贪心显然最优
+        \item 既然二者是连续选择，我们理所应当的将二者缩点，从而递归到规模更小的子问题
+        \item 新点的权值是多少？是二者相加吗？
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution}
+    “新点的权值是多少？”
+
+    考虑两个点集 $A$ 与 $B$，我们设它们的权值分别为 $\{A_i\}$ 和 $\{B_i\}$，大小为 $N_A$ 和 $N_B$
+
+    若先合并 $A$ 则代价为
+
+    $$
+        \sum_{i=1}^{N_A}{i\times A_i}+\sum_{i=1}^{N_B}{\left((i+N_A)\times B_i\right)}
+    $$
+
+    若先合并 $B$ 则代价为
+
+    $$
+        \sum_{i=1}^{N_A}{\left((i+N_B)\times A_i\right)}+\sum_{i=1}^{N_B}{i\times B_i}
+    $$
+
+\end{frame}
+
+\begin{frame}{Solution}
+    
+
+    为了比较大小，令二者作差大于 $ 0 $ 
+
+    $$
+        N_A\sum_{i=1}^{N_B}{i\times B_i}-N_B\sum_{i=1}^{N_A}{i\times A_i}>0
+    $$
+
+    $$
+        N_A\sum_{i=1}^{N_B}{i\times B_i}>N_B\sum_{i=1}^{N_A}{i\times A_i} 
+    $$
+
+    $$
+        \frac{\sum_{i=1}^{N_B}{i\times B_i}}{N_B}>\frac{\sum_{i=1}^{N_A}{i\times A_i}}{N_A}
+    $$
+
+    即我们应该使用联通块内的点权平均值排序
+
+    使用堆和并查集进行维护即可
+
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 % N
 \subsection{洛谷 P3620 数据备份}
@@ -794,8 +883,50 @@ $N\leq 1000,\; C_i\leq 500$
 
 最小化电缆总长度
 
-$N\leq 10^5$
+$N\leq 10^5,\; K\le\lfloor\frac{N}{2}\rfloor$
 \end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 一道小清新且标准的反悔贪心
+        \item 首先发现，我们连接的一定是相邻的一对办公楼
+        \item 直接对原数组做差分
+        \item 问题转化为在差分数组上，选择 $K$ 个不相邻的数，使得总和最小
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution}
+    方法 \# 1 wqs 二分
+    \begin{itemize}
+        \item 直接 DP 需要额外记录一维，表示选择的数量
+        \item 可以发现点集 $(K,ans_K)$ 是下凸的
+        \item 直接使用 wqs 二分，问题变为每选一个，有额外的代价，而不限制总数
+        \item 使用线性 DP 可以进行 check
+        \item 能不能直接贪心？
+    \end{itemize}
+\end{frame}
+\begin{frame}{Solution}
+    方法 \# 1 贪心搜索
+    \begin{itemize}
+        \item 考虑端点情况，取出全局最小值，记其为 $a_i$
+        \item 若 $a_i$ 选，则 $a_{i-1}$ 与 $a_{i+1}$ 必定都不选
+        \item 若 $a_i$ 不选，则 $a_{i-1}$ 与 $a_{i+1}$ 必定都选
+        \begin{itemize}
+            \item 为什么？
+        \end{itemize}
+        \item 类似增广的过程，我们可以不断使用代价最小的决策，再把相邻翻转的代价作为新决策纳入维护
+        \item 使用链表和优先队列可以维护
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+
+
 
 % O
 \subsection{CodeForces 2128F Strict Triangle}

@@ -1,6 +1,6 @@
 \frametitle{我找了好多好多性质 (2)}
 \centering
-\begin{minipage}[c]{0.48\textwidth}
+\begin{minipage}[c]{0.6\textwidth}
 \begin{lstlisting}
 L[i] R[i]为最近的比a[i]小的数
 for(int i=1;i<=n;i++){
@@ -17,7 +17,7 @@ for(int i=1;i<=n;i++){
 \end{lstlisting}
 \end{minipage}%
 \hfill%
-\begin{minipage}[c]{0.48\textwidth}
+\begin{minipage}[c]{0.35\textwidth}
     \begin{itemize}
         \item 这段代码的复杂度是 $O(n\log n)$
         \item 为什么？

@@ -106,7 +106,7 @@
 
 \begin{frame}[fragile]{我找了好多好多性质 (2)}
 \centering
-\begin{minipage}[c]{0.48\textwidth}
+\begin{minipage}[c]{0.6\textwidth}
 \begin{lstlisting}
 L[i] R[i]为最近的比a[i]小的数
 for(int i=1;i<=n;i++){
@@ -123,7 +123,7 @@ for(int i=1;i<=n;i++){
 \end{lstlisting}
 \end{minipage}%
 \hfill%
-\begin{minipage}[c]{0.48\textwidth}
+\begin{minipage}[c]{0.35\textwidth}
     \begin{itemize}
         \item 这段代码的复杂度是 $O(n\log n)$
         \item 为什么？
@@ -272,6 +272,7 @@ for(int i=1;i<=n;i++){
         \item 基本分治有时把问题划分左右两个子问题，最后合并左右的答案
         \item 如果左右子问题之间相互影响怎么办？
         \item CDQ 分治的基本思想是将两侧的互相影响贡献补全
+        \item 我们今天不涉及 CDQ 分治优化 DP 的部分
         \item 看具体题目
     \end{itemize}
 \end{frame}
@@ -364,6 +365,16 @@ for(int i=1;i<=n;i++){
         \end{itemize}
     \end{itemize}
 \end{frame}
+
+
+
+
+
+
+
+
+
+
 
 % ===== 结束页 =====
 

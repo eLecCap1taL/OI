@@ -825,15 +825,15 @@ $N\leq 10^6,\; C_i$ 不影响复杂度
     为了比较大小，令二者作差大于 $ 0 $ 
 
     $$
-        N_A\sum_{i=1}^{N_B}{i\times B_i}-N_B\sum_{i=1}^{N_A}{i\times A_i}>0
+        N_A\sum_{i=1}^{N_B}{B_i}-N_B\sum_{i=1}^{N_A}{A_i}>0
     $$
 
     $$
-        N_A\sum_{i=1}^{N_B}{i\times B_i}>N_B\sum_{i=1}^{N_A}{i\times A_i} 
+        N_A\sum_{i=1}^{N_B}{B_i}>N_B\sum_{i=1}^{N_A}{A_i} 
     $$
 
     $$
-        \frac{\sum_{i=1}^{N_B}{i\times B_i}}{N_B}>\frac{\sum_{i=1}^{N_A}{i\times A_i}}{N_A}
+        \frac{\sum_{i=1}^{N_B}{B_i}}{N_B}>\frac{\sum_{i=1}^{N_A}{A_i}}{N_A}
     $$
 
     即我们应该使用联通块内的点权平均值排序

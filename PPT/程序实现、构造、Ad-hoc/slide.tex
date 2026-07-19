@@ -1,0 +1,352 @@
+﻿\documentclass[aspectratio=169]{ctexbeamer}
+\usepackage[T1]{fontenc}
+\usepackage{latexsym,amsmath,xcolor,multicol,booktabs,calligra}
+\usepackage{graphicx,listings,stackengine}
+\usepackage{hyperref}
+
+\usepackage{PekingU}
+
+% 去掉每节/子节前面的自动目录页
+\AtBeginSection[]{}
+\AtBeginSubsection[]{}
+
+% ===== 每节课改这里 =====
+\author{Cap1taL}
+\title{程序实现、构造、Ad-hoc}
+\subtitle{10kb的题在哪里}
+\date{2026年7月}
+% ========================
+
+% 代码高亮设置
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{halfgray}{gray}{0.55}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\bfseries\color{deepblue},
+    emphstyle=\ttfamily\color{deepred},
+    stringstyle=\color{deepgreen},
+    numbers=left,
+    numberstyle=\small\color{halfgray},
+    rulesepcolor=\color{red!20!green!20!blue!20},
+    frame=shadowbox,
+}
+
+\begin{document}
+
+\kaishu
+
+% 封面
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% 目录
+% \begin{frame}{目录}
+%     \tableofcontents[sectionstyle=show,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/shaded/hide]
+% \end{frame}
+
+% ===== 从这里开始写你的内容 =====
+
+\section{程序实现}
+
+\subsection{洛谷 P11530 峰回路转}
+\begin{frame}{洛谷 P11530 峰回路转}
+    给定一个 $1\sim K$ 的排列 $p$，表示原字符串第 $i$ 个字符在正确阅读顺序中的位置。有三种辅助记号可标注于字符之间或之后：
+    \begin{itemize}
+        \item 近邻逆接 `*`：前后两字符阅读顺序交换
+        \item 近邻顺接 `\#`：后一字符紧跟前一字符之后
+        \item 遥远跳转 `p-q`：标记跨距离的顺序跳转
+    \end{itemize}
+    判断是否存在合法标注方法，若有则输出唯一方案，否则输出 $-1$。
+    
+    $K\le 10^6$
+\end{frame}
+
+
+
+
+
+
+
+
+
+\section{构造 \& Ad-hoc}
+
+\subsection{LOJ 542 序列划分}
+\begin{frame}{LOJ 542 序列划分}
+    给定长度为 $n$ 的整数序列 $a$。判断能否将其划分为 $k$ 的倍数个非空子序列，使得每个元素恰在恰好一个子序列中，且每个子序列均满足：
+    \begin{itemize}
+        \item 首元素和末元素是 $k$ 的倍数
+        \item 长度为 $k$ 的倍数
+    \end{itemize}
+    若有解则输出任意方案。
+    
+    $n,k\le 10^6$
+\end{frame}
+
+
+
+
+
+
+
+\subsection{洛谷 P7390 造树}
+\begin{frame}{洛谷 P7390 造树}
+    $n$ 个点构造一棵树，$i$ 号点度数 $a_i$、权值 $b_i$。边 $(i,j)$ 的价值为 $b_i\times b_j$。在满足度数限制下最大化所有边的价值和。保证有解。
+    
+    $n\le 10^7$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 根据我们的数学知识，我们知道两个大的值相乘更优
+        \item 为了证明，我们考虑调整法
+        \item 假设我们已有一个方案，最大值为 $u$，次大值为 $v$，且 $u,v$ 之间没有直接相连
+        \item 我们取出一个在 $u,v$ 路径上且与 $u$ 相连的 $x$ 点，再取出一个不在 $u,v$ 路径上且与 $v$ 相连的 $y$ 点。（反过来也可以）
+        \item 我们断开 $(u,x)$ 链接 $(u,v)$。同时为了保证度数不变，断开 $(v,y)$ 链接 $(x,y)$
+        \item 容易发现 $b_ub_x+b_vb_y\le b_ub_v+b_xb_y$
+        \item 因此我们不断从最大值开始尝试，维护联通块，途中保证联通块不会无出度即可
+        \item 在按 $b_i$ 降序后，连边方案变得特殊。不需要使用动态数据结构，可以简单合并序列。复杂度瓶颈在 sort，也可以换线性的排序方式
+    \end{itemize}    
+\end{frame}
+
+
+
+
+
+
+
+\subsection{Codeforces 1530E Minimax}
+\begin{frame}{Codeforces 1530E Minimax}
+    定义 $f(t)$ 为字符串 $t$ 所有前缀的 【最大公共前后缀长度的】 最大值。给定字符串 $s$，重排其字符得到 $t$，要求先最小化 $f(t)$，再最小化字典序。输出 $t$。
+    
+    多组数据，$\sum |s|\le 10^5$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 分类讨论，再贪心构造
+        \item 若只有一种字符，显然我们应该直接输出
+        \item 若大于一种字符
+        \begin{itemize}
+            \item 若存在一种字符，只出现一次，我们把它放到开头即可
+            \item 若所有字符都至少出现两次，我们把字典序最小的放到开头
+            \begin{itemize}
+                \item 若开头字符出现次数少于一半，我们可以直接构造 $aaXaXaX$ 来使得 $f(t)$ 为 $ 1 $。
+                \item 若开头字符出现次数多于一半，我们可以直接构造 $abbbaaa..aa$ 或 $abaaacXX$ 来使得 $f(t)$ 为 $ 1 $
+            \end{itemize}
+        \end{itemize}
+        \item 如何想到？从特殊到一般？
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Codeforces 1530G What a Reversal}
+\begin{frame}{Codeforces 1530G What a Reversal}
+    给定两个长度为 $n$ 的 01 串 $a,b$。一次操作可翻转 $a$ 中恰好包含 $k$ 个 1 的子串。求将 $a$ 变为 $b$ 的方案，操作次数 $m\le 4n$，或输出 $-1$ 表示无解。
+    
+    多组数据，$\sum n\le 2000$
+
+    纯粹的数值美……酣畅淋漓，思路顺畅，不卡实现，好题
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 对题目做一点套路的基本分析
+        \item 首先可以发现 $ 1 $ 的数量是不变的。不妨设 $ 1 $ 的数量为 $ m $。因此如果二者 $ 1 $ 的数量都不一样就失败
+        \item 顺着上一条的思路，如果 $k=0$ 或者 $k>m$，显然我们什么都做不了。直接判断是否相等即可
+        \item 而 $k=m$ 数量的情况也很特殊。发现我们无法改变 $ 1 $ 具体的分布，只能改变位置。可以类似哈希一样简单判断
+        \item 开始做一点真正的事情。操作数是 $4n$，这很诡异，同时观察到操作可逆，又要求我们把两个序列变成一样的。自然考虑到中间碰头，都变成一样的形式
+        \item 因此问题转化为，尝试找到一种“标准”，把一个串通过不超过 $2n$ 次操作变为 “标准” 形式
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 我们刚才发现，翻转操作不改变 $ 1 $ 的数量。然而这一限制太弱了，不足以刻画操作。我们更进一步，发现 “内部 $ 1 $” 的排布是不变的
+        \item 这提示我们寻找一种方式刻画 $ 1 $ 的分布
+        \item 差！分！我们设 $p_0,p_1,\cdots,p_m$ 表示 $ 1 $ 之间 $ 0 $ 的数量。在这种意义下，我们的操作等价于选择一个长度为 $k+1$ 的 $p$ 子段 $[L,R]$，自由重新分配 $p_L$ 与 $p_R$，之后翻转中间的 $p$ 序列。
+        \item 我们可以自由分配两端，这很强大
+        \item 又因为我们希望“标准”，不妨先通过若干次操作，把 $p_k+1$ 之后的 $p$ 调整成 $ 0 $。这一步是简单的
+        \item 为什么我们要保留 $[0,k+1]$ 的 $k+2$ 个数？因为这保留了灵活性
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 不妨先不重新分配，对 $[0,k]$ 做一次操作，再对 $[1,k+1]$ 做一次操作，观察发生了什么
+        \item 发现其实序列位移了 $ 2 $ 位
+        \item 这引导我们进行奇偶分类
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution}
+    若 $k$ 是奇数
+    \begin{itemize}
+        \item 在这种情况下，每个数可以到访每个位置
+        \item 而我们有在操作时重新分配首尾的能力
+        \item 立刻想到，我们可以在每两次操作时，把末尾的 $p$ 全部转移给 $p_0$
+        \item 在完成一轮完全位移之后，只有 $p_0$ 有值，值为全序列 $0$ 的个数
+        \item 显然这是一个足够 “标准” 的形式
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution}
+    若 $k$ 是偶数
+    \begin{itemize}
+        \item 在这种情况下，每个数不能到访每个位置
+        \item 我们反而可以利用这一特点，相同奇偶性下标之间的移动正常，不同奇偶性互不影响
+        \item 因此，我们可以在每两次操作时，利用重分配，把 $p_k$ 转移给 $p_0$，把 $p_1$ 转移给 $p_k+1$
+        \item 在完成一轮完全位移之后，只有 $p_0$ 和 $p_k+1$ 有值，值为偶数和奇数位置 $p$ 的和 $0$ 的个数
+        \item 显然这也是一个足够 “标准” 的形式
+    \end{itemize}
+    正序输出 $s$ 的操作序列，倒序输出 $t$ 的序列操作即可
+\end{frame}
+
+
+
+
+
+
+
+
+
+\subsection{BalticOI 2025 BOI acronym}
+\begin{frame}{BalticOI 2025 BOI acronym}
+    $n$ 个字符，仅含 B、O、I。要求 B 出现次数严格多于 O 和 I。
+    
+    已知每个子串 $[l,r]$ 中最常见字符的出现次数 $M_{l,r}$。还原所有 B 的位置。
+    
+    $n\le 2000$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 首先可以找到左右的 $B$，不妨设为 $L,R$。缩小区间，直到众数数量减少即可
+        \item 这种做法提示我们，可能可以通过众数数量的变化来进行判断
+        \item 从 $L+1$ 开始向 $R$ 按位考虑
+        \item 如果 $[L,i-1]$ 中 $B$ 是绝对众数（可以通过剔除 $L$ 判断），那么可以再增量包括 $i$ 就可以确定是否为 $B$
+        \item $[i,R]$ 的情况也是同理的
+        \item 问题在于如果两侧的众数都不是 $B$ 怎么办
+        \item 考虑到我们还没有使用 “只有三种字符” 的限制。发现两侧的众数如果不是 $B$ ，则必然不同，否则 $[L,R]$ 的绝对众数不可能是 $B$
+        \item 在剔除 $L$ 和 $R$ 之后，两侧的众数变成绝对众数。我们反而可以判断 $i$ 处是否 “不是 $B$”。
+        \item 总复杂度 $O(n^2)$
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+\subsection{Codeforces 1244G Running in Pairs}
+\begin{frame}{Codeforces 1244G Running in Pairs}
+    找两个 $1\sim n$ 的排列 $p,q$，使 $\displaystyle\sum_{i=1}^n\max(p_i,q_i)$ 尽量大且 $\le k$。输出该和及任意方案，无解输出 $-1$。
+    
+    $n\le 10^6,\ k\le n^2$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 答案与顺序无关，固定 $p_i=i$，考虑 $q$
+        \item 最小值显然是 $q_i=i$。当我们交换 $(i,j)$ 时，答案必定变大
+        \item 最大值则显然是 $q_i$ 降序
+        \item 因此我们合理猜测，中间的答案都可以取到。考虑从最小值情况构造
+        \item 依次尝试交换 $(1,n),(2,n-1)/cdots$，若某次交换过大，则直接交换更近的数对并结束
+        \item 复杂度 $O(n)$ 
+    \end{itemize}
+\end{frame}
+
+
+
+
+\subsection{GCJ 2015 River Flow}
+\begin{frame}{GCJ 2015 River Flow}
+    若干条流量为 $1$ 的支流，有些被农民取水。每位农民选择一个 $2$ 的幂作为周期 $T$（$\le D$），每 $T$ 天切换一次取水状态。给定 $N$ 天的河流流量记录（即未取水的支流数之和），求与记录一致的最少农民数，或报告不可能。
+    
+    $N\le 5000,\ D\le N/2$ 且为 $2$ 的幂
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 题干略显抽象
+        \item “ $ 2 $ 的幂” 这一周期限制非常诡异，这往往是我们的突破点
+        \item 首先发现 $2D$ 无论如何应该是一个周期，因此先全局做一个判断，之后令 $N=2D$ 方便后续考虑
+        \item 发现所有周期小于 $D$ 的农民取水，不可能影响 $D$ 周期的流量情况
+        \item 换言之，如果 $a_k\neq a_{k+D}$，那只可能是周期为 $D$ 的农民造成的
+        \item 贡献被拆分开了。从大到小考虑取水周期，判断有多少个当前周期的人即可
+        \item 需要考察每个周期为 $D$ 对 $a_{k+D}-a_k$ 的贡献，发现是前后缀加减 $ 1 $ 的形式，做差分即可唯一确定所有的农民
+        \item 复杂度 $O(N)$
+    \end{itemize}
+\end{frame}
+
+
+
+\subsection{QOJ 13322 Tower Defense Game}
+\begin{frame}{QOJ 13322 Tower Defense Game}
+    $n$ 点 $m$ 边无向图。普通塔保护所在城市及其相邻城市。加强塔额外保护距离为 $2$ 的城市（即经由一个中间点可达的城市）。
+    
+    已知整张图可用不超过 $k$ 座普通塔覆盖。求一个不超过 $k$ 座加强塔的覆盖方案。
+    
+    $n\le 10^6,\ m\le 2\times10^6$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 随便选点放架枪塔，标记覆盖的区域
+        \item 不断做即可
+        \item 证明考虑一个加强塔旁边一定有普通塔
+        \item 复杂度均摊是 $O(n)$
+    \end{itemize}
+\end{frame}
+
+\subsection{Codeforces 2162F Beautiful Intervals}
+\begin{frame}{Codeforces 2162F Beautiful Intervals}
+    给定 $n$ 和 $m$ 个区间 $[l_i,r_i]$。构造一个 $0\sim n-1$ 的排列 $p$，对每个区间计算 $v_i=\operatorname{mex}(p[l_i..r_i])$，设多重集 $M=\{v_1,\dots,v_m\}$。最小化 $\operatorname{mex}(M)$。
+    
+    多组数据，$\sum n,\sum m\le 3000$
+\end{frame}
+
+\subsection{Codeforces 1474E What Is It?}
+\begin{frame}{Codeforces 1474E What Is It?}
+    构造一个 $1\sim n$ 的排列 $p$ 和操作序列。每次操作交换 $i$ 和 $j$ 位置的值，要求 $p_j=i$，获得 $(j-i)^2$ 贡献。最终需满足 $p_i=i$。最大化总贡献。
+    
+    多组数据
+\end{frame}
+
+\subsection{Codeforces 1468H K and Medians}
+\begin{frame}{Codeforces 1468H K and Medians}
+    初始序列 $[1,2,\dots,n]$，每次任选 $k$ 个元素（$k$ 为奇数），删除其中除中位数外的所有元素。判断能否得到目标序列 $b$。
+    
+    多组数据，$\sum n\le 2\times10^5$
+\end{frame}
+
+\subsection{Codeforces 1329D Dreamoon Likes Strings}
+\begin{frame}{Codeforces 1329D Dreamoon Likes Strings}
+    字符串 $a$，定义美丽子串为相邻字符均不相同的子串。每次可移除一个美丽子串，剩余部分按原序拼接。求最少步数清空字符串，并输出方案。
+    
+    多组数据，$\sum|a|\le 2\times10^5$
+\end{frame}
+
+% ===== 结束页 =====
+
+\begin{frame}
+    \begin{center}
+        {\Huge\calligra Thanks!}
+    \end{center}
+\end{frame}
+
+\end{document}

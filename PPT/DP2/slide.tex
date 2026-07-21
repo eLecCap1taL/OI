@@ -1,0 +1,82 @@
+﻿\documentclass[aspectratio=169]{ctexbeamer}
+\usepackage[T1]{fontenc}
+\usepackage{latexsym,amsmath,xcolor,multicol,booktabs,calligra}
+\usepackage{graphicx,listings,stackengine}
+\usepackage{hyperref}
+
+\usepackage{PekingU}
+
+% 去掉每节/子节前面的自动目录页
+\AtBeginSection[]{}
+\AtBeginSubsection[]{}
+
+% ===== 每节课改这里 =====
+\author{Cap1taL}
+\title{各类动态规划}
+\subtitle{6:20开始按车号上车，6:50早餐是随车配发，餐食统一在大巴车上分发！转自组委会:我们会与校医核实，如果存在教练故意编造理由请假，将影响明年学校其他名额审批。
+明天社会实践活动请所有同学参加，我们是一个集体，代表？？，今天只有？？的学生在请假，校医反映都是水土不服，可是精神状态都不错。如果这些学校学生继续不服从组委会安排，后面计算机学会将对这些学校申请参赛的名额进行限制！同时也会影响??的参加名额。请各位教练三思。}
+\date{2026年7月}
+% ========================
+
+% 代码高亮设置
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{halfgray}{gray}{0.55}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\bfseries\color{deepblue},
+    emphstyle=\ttfamily\color{deepred},
+    stringstyle=\color{deepgreen},
+    numbers=left,
+    numberstyle=\small\color{halfgray},
+    rulesepcolor=\color{red!20!green!20!blue!20},
+    frame=shadowbox,
+}
+
+\begin{document}
+
+\kaishu
+
+% 封面
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% 目录
+% \begin{frame}{目录}
+%     \tableofcontents[sectionstyle=show,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/shaded/hide]
+% \end{frame}
+
+% ===== 从这里开始写你的内容 =====
+
+
+\section{数位DP}
+
+\begin{frame}{标题}
+    内容
+\end{frame}
+
+\section{计数DP}
+
+\begin{frame}{标题}
+    内容
+\end{frame}
+
+\section{概率DP}
+
+\begin{frame}{标题}
+    内容
+\end{frame}
+
+
+% ===== 结束页 =====
+
+\begin{frame}
+    \begin{center}
+        {\Huge\calligra Thanks!}
+    \end{center}
+\end{frame}
+
+\end{document}

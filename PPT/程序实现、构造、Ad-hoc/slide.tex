@@ -50,42 +50,19 @@
 
 % ===== 从这里开始写你的内容 =====
 
-\section{程序实现}
-
-\subsection{洛谷 P11530 峰回路转}
-\begin{frame}{洛谷 P11530 峰回路转}
-    给定一个 $1\sim K$ 的排列 $p$，表示原字符串第 $i$ 个字符在正确阅读顺序中的位置。有三种辅助记号可标注于字符之间或之后：
-    \begin{itemize}
-        \item 近邻逆接 `*`：前后两字符阅读顺序交换
-        \item 近邻顺接 `\#`：后一字符紧跟前一字符之后
-        \item 遥远跳转 `p-q`：标记跨距离的顺序跳转
-    \end{itemize}
-    判断是否存在合法标注方法，若有则输出唯一方案，否则输出 $-1$。
-    
-    $K\le 10^6$
-\end{frame}
-
-
-
-
-
-
-
-
-
 \section{构造 \& Ad-hoc}
 
-\subsection{LOJ 542 序列划分}
-\begin{frame}{LOJ 542 序列划分}
-    给定长度为 $n$ 的整数序列 $a$。判断能否将其划分为 $k$ 的倍数个非空子序列，使得每个元素恰在恰好一个子序列中，且每个子序列均满足：
-    \begin{itemize}
-        \item 首元素和末元素是 $k$ 的倍数
-        \item 长度为 $k$ 的倍数
-    \end{itemize}
-    若有解则输出任意方案。
+% \subsection{LOJ 542 序列划分}
+% \begin{frame}{LOJ 542 序列划分}
+%     给定长度为 $n$ 的整数序列 $a$。判断能否将其划分为 $k$ 的倍数个非空子序列，使得每个元素恰在恰好一个子序列中，且每个子序列均满足：
+%     \begin{itemize}
+%         \item 首元素和末元素是 $k$ 的倍数
+%         \item 长度为 $k$ 的倍数
+%     \end{itemize}
+%     若有解则输出任意方案。
     
-    $n,k\le 10^6$
-\end{frame}
+%     $n,k\le 10^6$
+% \end{frame}
 
 
 
@@ -313,12 +290,41 @@
     \end{itemize}
 \end{frame}
 
+
+
+
+
+
+
+
+
+
+
 \subsection{Codeforces 2162F Beautiful Intervals}
 \begin{frame}{Codeforces 2162F Beautiful Intervals}
     给定 $n$ 和 $m$ 个区间 $[l_i,r_i]$。构造一个 $0\sim n-1$ 的排列 $p$，对每个区间计算 $v_i=\operatorname{mex}(p[l_i..r_i])$，设多重集 $M=\{v_1,\dots,v_m\}$。最小化 $\operatorname{mex}(M)$。
     
     多组数据，$\sum n,\sum m\le 3000$
 \end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 要求最小化 mex，先尝试能不能构造使得 mex 为 $ 0 $。
+        \item 这要求所有 $v$ 都不为 $ 0 $，即要求每个区间都有 $ 0 $。这等价于要求所有区间有交
+        \item 如果上述条件不满足，我们尝试构造 mex 为 $ 1 $。即所有 $ v $ 不能为 $ 1 $，每个区间里要么连 $ 0 $ 都没有，一旦有 $ 0 $ 就必须有 $ 1 $。那么自然想到 $ 0,1 $ 放在一起对完了。要求区间要么完全覆盖这两个位置，要么完全不覆盖
+        \item 如果上述条件还不满足，我们尝试构造 mex 为 $ 2 $。这要求每个区间一旦有 $0,1$ 就必须也有 $2$。这提示我们构造 $[0,2,1]$，显然区间一旦包含 $0,1$ 就必定包含 $2$
+        \item 做完了
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+
+
 
 \subsection{Codeforces 1474E What Is It?}
 \begin{frame}{Codeforces 1474E What Is It?}
@@ -327,11 +333,50 @@
     多组数据
 \end{frame}
 
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 观察到题干自由度非常高。对于这种高自由度要求最优化的构造，我们可以尝试分析一个界，然后直接构造
+        \item 显然 $(n-1)^2$ 只能获得一次
+        \item 而 $(n-2)^2$ 只能来源于 $1,2,n-2,n$ 四个位置。而我们刚才已经定死了一个位置，因此 $(n-2)^2$ 只能贡献两次
+        \item 而 $(n-3)^2$ 只能来源于 $1,2,3,n-3,n-2,n$ 六个位置。而我们刚才已经定死了三个位置，因此 $(n-2)^2$ 也只能贡献两次
+        \item 以此类推，一共 $n-1$ 个贡献
+        \item 由此我们得到了答案的上界，着手直接构造
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution}
+    构造
+    \begin{itemize}
+        \item 做一些非常朴素的观察，发现操作很可能形如链式
+        \item 即我们把符合要求的 $i$ 给对面的位置，交换回另一个数，再拿它做下一次交换
+        \item 这为我们的构造提供了指引
+        \item 记 $\left\lfloor\frac{n}{2}\right\rfloor$ 为 $m$
+        \item 我们构造 $m+1,1,2,\cdots,m-1,m+2,m+3,\cdots,n-1,n,m$
+        \item 前一半操作，让 $ n $ 从中间向左交换，直到 $ 1 $ 停留在 $ n $ 处
+        \item 再让 $ 1 $ 从中间向右交换，直到最后把 $1$ 换回开头结束
+        \item 十分有趣的构造
+    \end{itemize}
+\end{frame}
+
+
 \subsection{Codeforces 1468H K and Medians}
 \begin{frame}{Codeforces 1468H K and Medians}
     初始序列 $[1,2,\dots,n]$，每次任选 $k$ 个元素（$k$ 为奇数），删除其中除中位数外的所有元素。判断能否得到目标序列 $b$。
     
     多组数据，$\sum n\le 2\times10^5$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 很明显每次删除的元素数量是一定的，为 $k-1$，因此如果删除数量不是其倍数，则无解
+        \item “中位数”很特殊，不好下手，想办法从相对确定的情况下手
+        \item 考虑最后一次删除，它的中位数一定被保留在 $b$ 中了。因此我们不妨在 $b$ 中找到它
+        \item 记 $D=\frac{k-1}{2}$
+        \item 我们断言，只要存在满足需求的最后一次的中位数，就一定有解
+        \item 证明：最后一次删除的数字选择是随意的。我们总是可以选择恰当的数字，使得倒数第二次删除保留的“中位数”是我们最后一次删除的数字
+        \item 具体地，我们在要删除的 $\ge4D$ 个数字中选择 $[D+1,2D]$ 或者 $[3D,4D-1]$ 作为最后一次的删除即可
+        \item 注意要从所剩删除元素较多的一侧选择
+    \end{itemize}
 \end{frame}
 
 \subsection{Codeforces 1329D Dreamoon Likes Strings}
@@ -340,6 +385,66 @@
     
     多组数据，$\sum|a|\le 2\times10^5$
 \end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 每次只能删除相邻不相同的串
+        \item 这表明如果存在一处 $s_i=s_{i+1}$，相当于把序列“切开”了，不能一次性做完这里
+        \item 同时发现，对于这样“切开”中间的部分，每次总是操作极长串是不劣的
+        \item 所以我们考虑缩串，只保留 $s_i=s_{i+1}$ 的部分。更具体地，若 $s_i=s_{i+1}$，则保留 $s_{i+1}$
+        \item 则我们的操作变成单点删一个位置，或者删除相邻的位置（要求字符不同）
+        \item 显然多用后者是不劣的
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 问题转化为一个类似于摩尔投票的过程
+        \item 我们找到出现次数最多的字符 $c$
+        \begin{itemize}
+            \item 若其超过了一半，我们强制所有字符必须与 $c$ 搭配着删除。最后单独的 $c$ 自己一个一个删
+            \item 否则我们随便删除一些非 $c$ 的字符对，直到转化为上一情况
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+
+\section{程序实现}
+
+\subsection{洛谷 P11530 峰回路转}
+\begin{frame}{洛谷 P11530 峰回路转}
+    给定一个 $1\sim K$ 的排列 $p$，表示原字符串第 $i$ 个字符在正确阅读顺序中的位置。有三种辅助记号可标注于字符之间或之后：
+    \begin{itemize}
+        \item 近邻逆接 `*`：前一字符紧跟后一字符之后
+        \item 近邻顺接 `\#`：后一字符紧跟前一字符之后
+        \item 遥远跳转 `p-q`：标记跨距离的顺序跳转
+    \end{itemize}
+    判断是否存在合法标注方法，若有则输出唯一方案，否则输出 $-1$。
+    
+    $K\le 10^6$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 读题？
+        \item 理清题意？
+        \item 手玩？
+        \item 形式化，流程化？
+        \item 写代码的技巧？调的技巧？
+        \item “紧邻” ？
+        \item 如何构造调试用的 Corner Case？
+        \item “不能交叉”还是“不能进入跳转内部”？
+    \end{itemize}
+\end{frame}
+
+% 读题？
+% 厘清题意？
+% 形式化，流程化？
+% 写的技巧？
+% 如何手玩？
+% 两个紧邻的差异？
+% “不能”
 
 % ===== 结束页 =====
 

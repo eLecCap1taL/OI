@@ -103,6 +103,23 @@
     $k\le 999999,\ q\le 10^5,\ n_i\le 999999$
 \end{frame}
 
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 背包好题
+        \item 首先我们发现可以也把 $ 0 $ 当成幸运数字
+        \item 同时，交换两个数的一个数位，贡献不变
+        \item 可以证明每一位都最多存在一个数不是幸运数字。若不是，则取出这样的 $x,y$，根据它们的和是否大于 $ 9 $ 进行调整
+        \item 因此最多一个数，它上面存在不能贡献的数位。剩下 $(k-1)$ 个数的各个位置均为 "0 3 6 9"
+        \item 观察贡献的形式，发现选 $6,9$ 等价于多选几个 $3$
+        \item 多重背包，物品重量是 $3\times 10^k$，贡献就是 $F_k$，物品数量是 $3(k-1)$
+        \item 最后再处理剩余的一个数字，做分组背包，每个数位是一个组，组内有 $ 10 $ 个数位，正常选取即可
+    \end{itemize}
+\end{frame}
+
+
+
+
+
 \subsection{洛谷 P16714 玲珑}
 \begin{frame}{洛谷 P16714 玲珑}
     $N$ 根小木棍，长度 $a_i$，染成红绿蓝三色之一。将所有同色木棍首尾相接拼成长木棍，判断三条长木棍能否拼成三角形。
@@ -112,14 +129,44 @@
     $N\le 200,\ a_i\le 500$
 \end{frame}
 
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 构成三角形要求任意两边之和大于第三边。而我们难以事先确定哪个边较大哪个边较小
+        \item 正难则反，计算不合法的方案数
+        \item 注意到边长总和是固定的，不合法等价于 $\max \ge \frac{n}{2}$，对最长边做背包，每次考虑当前位放什么。最后将方案乘三
+        \item 共线的情况被多减了，要补上
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+
+
 \subsection{Codeforces 601E A Museum Robbery}
 \begin{frame}{Codeforces 601E A Museum Robbery}
     展品有价值 $v_i$ 和质量 $w_i$。支持添加、删除展品，并询问容量为 $1..k$ 的背包最大价值之和的哈希值：
     $$\sum_{m=1}^k s(m)\times p^{\,m-1}\bmod (10^9+7)$$
     其中 $s(m)$ 为容量 $m$ 时的最大价值。
     
-    最多 $10^4$ 次添加，$q\le 3\times10^4$，$k,w\le 10^3$
+    $n\le 5000,q\le 3\times10^4$，$k,w\le 10^3$
 \end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 一个较为简单的胶水练习题
+        \item 注意到我们的背包是最优化背包而非计数背包，所以添加可以 $O(k)$ 解决，但删除不能解决
+        \item 删除难做，添加删除可离线，公式化线段树分治。
+        \item 那么我们可以暴力撤销，即每次向下递归分治时 copy 一份 DP 数组
+        \item 复杂度是 $O(nk\log q+qk)$
+    \end{itemize}
+\end{frame}
+
+
+
+
+
 
 \subsection{AtCoder agc049\_d Convex Sequence}
 \begin{frame}{AtCoder agc049\_d Convex Sequence}
@@ -133,7 +180,18 @@
     $N,M\le 10^5$
 \end{frame}
 
-
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 要求我们计数一些凸数列的数量
+        \item 自然地从最低点劈开，只关注一侧单调的情况
+        \item 发现凸数列一定可以由一段后缀加 $[1,2,3,4,5..]$ 得到。证明考虑二阶差分即可
+        \item 那么我们问题转化为选若干个后缀，执行若干次上述加操作，可以把区间操作抽象成物品，于是有了一个 $O(nm)$ 的背包
+        \item 立刻发现这个后缀加的和很可能超过 $m$，只有 $O(\sqrt{m})$ 级别的区间是有用的，因此复杂度变成 $O(n\sqrt{m})$ 就对了
+        \item 现在考虑变成两侧单调的情况，发现是对称的，我们在另一侧添加一个数，等价于左侧多了一种前缀区间操作，右侧少了一种后缀区间操作，类似于添加和删除物品
+        \item 由于是计数背包，我们可以任意地删除物品
+        \item 复杂度 $O(n\sqrt{m})$
+    \end{itemize}
+\end{frame}
 
 
 
@@ -159,13 +217,6 @@
     \end{itemize}
 \end{frame}
 
-\subsection{洛谷 P9746 合并序列}
-\begin{frame}{洛谷 P9746 合并序列}
-    给定序列 $a$。每次操作选择 $i<j<k$ 满足 $a_i\oplus a_j\oplus a_k=0$，将 $a_i..a_k$ 替换为它们的异或和。判断能否使序列长度为 $1$，并输出方案。
-    
-    多组数据，$n\le 500,\ a_i<512$
-\end{frame}
-
 \subsection{洛谷 P4170 涂色}
 \begin{frame}{洛谷 P4170 涂色}
     初始无色的长度为 $n$ 的木板，每次可将一段连续区间涂成任意颜色，后涂覆盖先涂。求达到目标颜色串的最少涂色次数。
@@ -173,12 +224,111 @@
     $n\le 50$
 \end{frame}
 
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 一个观察，如果两次染色操作相交，那么等价于不交，因为被覆盖的位置没有意义
+        \item 操作要么并列要么包含，考虑区间 DP，设出 $f_{l,r}$
+        \item 讨论两端颜色是否相同
+        \begin{itemize}
+            \item 若相同，直接缩短两端
+            \item 若不同，则至少通过两次操作才能完成该区间。枚举操作断点即可
+        \end{itemize}
+        \item $O(n^3)$
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{洛谷 P9746 合并序列}
+\begin{frame}{洛谷 P9746 合并序列}
+    给定序列 $a$。每次操作选择 $i<j<k$ 满足 $a_i\oplus a_j\oplus a_k=0$，将 $a_i..a_k$ 替换为它们的异或和。判断能否使序列长度为 $1$，并输出方案。
+    
+    $n\le 500,\ a_i<512$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 注意到操作不会改变序列的异或和
+        \item 区间 DP，直接枚举出三个子区间，复杂度 $O(n^6)$
+        \item 发现每次都枚举中间那个区间非常蠢，设 $g_{l,r,k}$ 表示 $[l,r]$ 内是否存在可以被缩起来的异或和为 $k$ 的区间，其本身的更新的 $O(n^3)$ 的。优化到 $O(n^4)$
+        \item 为了进一步优化 DP 的复杂度，我们再定义 $h_{l,r,k}$ 表示 $[l,r]$ 内是否存在 $[l,a],[b,c]$ 满足二者各自能缩起来，且异或和为 $k$
+        \item 由此一来 DP 可以优化到 $O(n^3)$，但 $h$ 数组本身的求解是 $O(n^4)$ 的
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 发现 $g,h$ 的定义是冗余的，以 $g$ 为例，若 $g_{l,r,k}$ 为真，那么 $g_{l,r+1,k}$ 也为真
+        \item 更改定义，设 $g_{l,k}$ 表示最小的 $r$ 使得原来的 $g_{l,r,k}$ 成立，$q$ 同理
+        \item 具体地，如何更新二者？若我们已有 $f_{l,r}$ 为真，那么首先需要枚举 $L\le l$ 来更新 $g_{L,k}$，再枚举一个异或和 $S$ 代表右侧区间，来更新 $q_{l,S}$
+        \item 复杂度 $O(n^3)$，思路很正的一道区间 DP 优化
+        \item 注意枚举顺序，应该采用倒序枚举左端点而不是区间长度递增的顺序。这是由我们的更新所决定的 
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
 \subsection{Codeforces 1987F2 Interesting Problem (Hard Version)}
 \begin{frame}{Codeforces 1987F2 Interesting Problem (Hard Version)}
     给定数组 $a$。每次操作选择一个 $i$ 满足 $a_i=i$，删除 $a_i$ 和 $a_{i+1}$，剩余部分拼接。求最多操作次数。
     
-    多组数据，$\sum n\le 800$
+    多组数据，$n,\sum n\le 800$
 \end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 区间 DP 神题
+        \item 题目要求一个数只有 “落位” 到 $a_i=i$ 时才能成为我们删除的对象
+        \item 不难感受到，由于序列越来越短，所有的数都在单向“向左移动”。可能有本来不能删除的数字归位，然后可以被删除
+        \item 同时一个数需要“回落”的步骤也是固定的，为 $\frac{i-a[i]}{2}$
+        \item 然后你发现删除相邻+拼接，会导致如果我们“匹配”同一步删除的数字，会形成类似括号序列的结构
+        \item 结合数据范围，很难不想到区间 DP
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution}
+    区间 DP
+    \begin{itemize}
+        \item 我们希望考虑一个区间被删空的情况，再进一步利用它做线性 DP
+        \item 结合刚才的观察，我们知道删除前可能需要一个“回落”的过程
+        \item 由此引出状态设计：$f_{l,r}$ 表示删空 $[l,r]$ 需要在 $[1,l-1]$ 删除多少
+        \item 类似括号序列 (()) 和 ()()，显然有两种转移：
+        \begin{itemize}
+            \item 某一次删除了 $(a_l,a_r)$，这先需要 $(l+1,r-1)$ 删空，直接转移即可
+            \item 枚举断点，分别删空 $[l,k],[k+1,r]$。注意 $[k+1,r]$ 所需要的次数还有一部分由 $[l,k]$ 提供
+            \item 转移应该形如若干数取 $\max$ 的形式
+            \item 注意奇偶性带来的非法情况。实际在转移的实现上会有一些细节
+        \end{itemize}
+        \item 有了 $f_{l,r}$ 之后，我们就可以做一次线性 DP，设 $g_i$ 表示这个前缀最多操作多少次。枚举一个极长清空区间，转移时利用 $f_{l,r}$ 判断合法性
+        \item 复杂度 $O(n^3)$
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+
 
 \subsection{AtCoder abc261\_g Replace}
 \begin{frame}{AtCoder abc261\_g Replace}
@@ -187,14 +337,39 @@
     $|S|\le|T|\le 50,\ K\le 50$
 \end{frame}
 
-\subsection{Codeforces 2018F3 Speedbreaker Counting (Hard Version)}
-\begin{frame}{Codeforces 2018F3 Speedbreaker Counting (Hard Version)}
-    $n$ 个城市排成一行。第 $1$ 时刻征服起始城市，之后每时刻可征服一个与已征服城市相邻的城市。若城市 $i$ 在 $\le a_i$ 时刻被征服则获胜。
-    
-    对每个 $0\le k\le n$，统计有多少个数组 $a[1..n]$（$1\le a_i\le n$）使得恰有 $k$ 个起始城市可获胜。答案对给定质数 $p$ 取模。
-    
-    多组数据，$\sum n\le 3000$
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 观察到我们似乎在“膨胀” $S$ 串
+        \item 这提示我们，每个 $S$ 里的字符，都对应了 $T$ 的一个子串
+        \item 两个串匹配，考虑 $DP_{i,j}$ 表示我们在匹配 $S$ 的 $[1,i]$ 和 $T$ 的 $[1,j]$，这一部分是简单的
+        \item 现在我们需要求出 $f_{l,r,c}$ 表示字符 $c$ 变成 $T$ 中 $[l,r]$ 的最小代价，来辅助 $dp_{i,j}$ 的转移。
+    \end{itemize}
 \end{frame}
+
+\begin{frame}{Solution}
+    求出 $f_{l,r,c}$
+    \begin{itemize}
+        \item 首先我们可能会有，从单字符变成单字符的操作，这一部分类似最短路，用弗洛伊德处理掉这类转移
+        \item 然后考虑 $c$ 一定变成了一个 $A_i$。我们设 $g_{i,j,l,r}$ 表示 $A_i$ 的 $[1,j]$ 最少几步变成 $T$ 的 ${l,r}$
+        \item 那么自然可以用 $g_{i,|A_i|,l,r}$ 来更新 $f_{l,r,c}$（要求 $c$ 可以一步变为 $A_i$）
+        \item 至于 $g$ 自身的转移也是直接的，依旧类似双串匹配，有 $g_{i,j,l,r}=\min_{l\le k\le r}(g_{i,j-1,l,k}+f_{k+1,r,c})$
+        \item 看起来好像转移还是有环，但是按照区间从短到长更新就好了
+        \item 复杂度 $O(|T|^5)$ 可以通过，瓶颈在于 $g$ 的更新
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+% \subsection{Codeforces 2018F3 Speedbreaker Counting (Hard Version)}
+% \begin{frame}{Codeforces 2018F3 Speedbreaker Counting (Hard Version)}
+%     $n$ 个城市排成一行。第 $1$ 时刻征服起始城市，之后每时刻可征服一个与已征服城市相邻的城市。若城市 $i$ 在 $\le a_i$ 时刻被征服则获胜。
+    
+%     对每个 $0\le k\le n$，统计有多少个数组 $a[1..n]$（$1\le a_i\le n$）使得恰有 $k$ 个起始城市可获胜。答案对给定质数 $p$ 取模。
+    
+%     多组数据，$\sum n\le 3000$
+% \end{frame}
 
 
 
@@ -223,12 +398,54 @@
     $n\le 10^5,\ p\le 7$
 \end{frame}
 
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 板子状压
+        \item 直接会设出 $f_{i,S}$，$S$ 的含义是每个位置有没有占用，每次考虑这个人在队伍的哪个位置。
+        \item 我们发现这个玩意没法转移，因为如果一个人成为了观众，它可能替换掉之前一个不好的观众，从而没有无后效性
+        \item 注意到观众之间并无高下，一个人在队伍的不同位置有不同的贡献，但只要成为观众就有唯一的代价
+        \item 这件事情是关键的，我们由此可以把人按照 $a_i$ 降序，保证后面考虑的时候，不存在之前的观众可能被后面的观众替换，从而满足了无后效性
+        \item 直接转移即可，复杂度 $O(n2^p)$
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+
+
 \subsection{Codeforces 111C Petya and Spiders}
 \begin{frame}{Codeforces 111C Petya and Spiders}
-    $n\times m$ 棋盘，每格一只蜘蛛。每只蜘蛛可向上/下/左/右走一格或停在原地，不能出界。求最多能空出的格子数。
+    $n\times m$ 棋盘，每格一只蜘蛛。每只蜘蛛可以向任意方向走一格，或者留在原地，从而和别的蜘蛛搞叠叠乐。求最多能空出来多少格子。
     
     $n\cdot m\le 40$
 \end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 看到 $nm\le 40$ 里面反应过来 $\min(n,m)\le 6$
+        \item 发现实际上题目就是在用尽量少的小十字架覆盖棋盘，十字架之间可以重叠，重叠的蜘蛛可以随便选一个十字架中心走过去
+        \item 立马有一个想法是 $f_{i,S}$，要求前 $i$ 行全部覆盖。
+        \item 然而这是不对的，有可能第 $i$ 行的一些格子是由 $i+1$ 行覆盖的
+        \item 立马有一个想法是 $f_{i,S}$ 只要求前 $i+1$ 行全部覆盖，第 $i$ 行的情况留给后人处理
+        \item 然而这也是不对的，因为我们没法转移，在处理 $i+1$ 的时候不能够知道哪些 $i$ 行的位置必须覆盖，哪些已经被 $i-1$ 处理掉了
+        \item 立马有一个想法是 $f_{i,S_1,S_2}$，即记录两行的情况
+        \item 于是这次终于对了，直接枚举判断转移即可
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
 
 \subsection{洛谷 P7718 Equalization}
 \begin{frame}{洛谷 P7718 Equalization}
@@ -237,13 +454,49 @@
     $n\le 18$
 \end{frame}
 
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 好牛的状压
+        \item 看到区间加，我们上来就是一个差分 $b_i$，操作变为在二者之间转移数的数量，或者做单点修改（转移给滚木）
+        \item 那么显然就有了一个 $n-1$ 次的操作方案，每次都无脑转移给 $b_1$。对标原题大概是每次都使得一个数和 $a_1$ 一样
+        \item 尝试减少操作次数。我们的操作目标实际上是使得除了 $b_1$ 之外都为 $ 0 $，那么一旦存在一个 $[2,n]$ 的子集，内部的 $b_i$ 本身为 $1$，我们就可以在子集内部操作，节省一次操作
+        \item 问题转化为如何找尽量多的这种子集。设 $f_S$ 表示 $S$ 集合的和为 $ 0 $ 时最多划分成多少个和为 $ 0 $ 的子集
+        \item 预处理一下可以做到 $O(3^n)$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 操作次数解决了，问题是如何计算方案数。
+        \item 考虑图论建模，一次数的转移可以看做两点之间连边，一次单点修则是自环
+        \item 那么不难发现我们的图形如若干个树，以及一个带自环的树
+        \item 因为我们的边刻画的是数的转移，或者说数的流动，因此自然一个连边方案可以唯一确认所有边权
+        \item 所以不需要考虑边权，问题转化为连边的方案。一个树的连边方案是 $|V|^{|V|-2}$，一个自环树的方案是 $2\times|V|\times|V|^{|V|-2}$
+        \item 之后加加乘乘就可以算出答案，复杂度 $O(3^n)$
+        \item 可以再做更精细的转化，或者上集合幂级数，搞到 $O(n^22^n)$。不过没必要。
+    \end{itemize}
+\end{frame}
+
+
 \subsection{AtCoder arc222\_d Shift and Add}
 \begin{frame}{AtCoder arc222\_d Shift and Add}
     给定正整数序列 $A,B$，构造 $X$：$X_0=0$，对 $i=1..N$ 可选择 $X_i=10X_{i-1}+A_i$ 或 $10X_{i-1}+B_i$。
     
     对每个 $k$，求 $X_k$ 所能取得的最小数位和（十进制各位数字之和）。每个 $k$ 独立计算。
     
-    $N\le 2\times10^4$
+    $N\le 2\times10^4\; A_i,B_i\le 10^9$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 状态设计题
+        \item 注意到 $A_i,B_i$ 的长度不超过 $ 9 $，这意味着他们的影响是有限的
+        \item 更具体地，在超过 $ 9 $ 的范围里，它们只能最多产生 $ 1 $ 的进位
+        \item 换言之，$i-9$ 之前的部分 “相对比较稳定”
+        \item 设 $f_{i,S,0/1}$ 表示处理了前 $ i $ 个，最后九个的选择情况是 $S$，并且向 $i-9$ 有 $0/1$ 的进位的情况下，前 $i-9$ 个位置的最小数位和
+        \item 转移时枚举下一次的选择，限制是选择必须符合状态中假设的进位情况，然后最优化即可
+        \item 刷表法转移，复杂度 $O(N2^{\lg(V)})$
+    \end{itemize}
 \end{frame}
 
 

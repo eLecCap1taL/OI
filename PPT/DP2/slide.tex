@@ -54,22 +54,216 @@
 
 \section{数位DP}
 
-\begin{frame}{标题}
-    内容
+\begin{frame}{声明}
+    本人数位DP一直使用记忆化搜索，从未对递推法发表过任何诋毁
 \end{frame}
+
+\subsection{洛谷 P3413 萌数}
+\begin{frame}{洛谷 P3413 萌数}
+    一个数是萌的，当且仅当其十进制表示中存在长度至少为 $2$ 的回文子串。
+    
+    求 $[l,r]$ 中萌数的个数，对 $10^9+7$ 取模。
+    
+    $n\le 1000$（$r$ 的位数）
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 公式化差分
+        \item 回文子串太多情况
+        \item 发现奇数长度的子串一定可以只取中间三个
+        \item 发现偶数长度的子串一定可以只取中间两个
+        \item 因此只需要考虑长度为 $2,3$ 的部分。直接上数位 DP，不想动脑的话可以把后两位全扔进状态，再加几个 bool 变量状物就做完了
+    \end{itemize}
+\end{frame}
+
+\subsection{洛谷 P4067 储能表}
+\begin{frame}{洛谷 P4067 储能表}
+    一个 $n$ 行 $m$ 列的表格，初始时 $(i,j)$ 格储存 $(i\oplus j)$ 点能量。每时间单位每格减少 $1$，到 $0$ 后不再减少。
+    
+    $k$ 时间单位后，求总能量
+    $$\sum_{i=0}^{n-1}\sum_{j=0}^{m-1}\max((i\oplus j)-k,0)$$
+    对 $p$ 取模。
+    
+    多组数据，$n,m,k\le 10^{18}$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 进行题意转化，发现比较小的异或对均无用
+        \item 问题转化成，对于 $\forall i\oplus j\ge k$ 计算个数 $X$ 和他们的加和 $Y$，答案为 $Y-X*k$
+        \item 因此可以按二进制数位 DP，引入三个布尔状态，表示 $i,j,k$ 有没有满足条件，然后枚举各自这一位的 $0,1$ 即可
+    \end{itemize}
+\end{frame}
+
+\subsection{AtCoder arc153\_d Sum of Sum of Digits}
+\begin{frame}{AtCoder arc153\_d Sum of Sum of Digits}
+    定义 $f(x)$ 为 $x$ 的十进制各位数字之和。给定序列 $A[1..N]$，求一个非负整数 $x$ ，使最小化 $\displaystyle\sum_{i=1}^N f(A_i+x)$。
+    
+    $N\le 2\times10^5,\ A_i<10^9$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 关键是进位问题的处理
+        \item 发现 $ f(x+y) $ 可以拆成 $ f(x)+f(y)-9*k $ ，其中 $ k $ 是进位次数
+        \item 这启示我们可以考虑进位带来的贡献。由于进位，我们从低位向高位进行，发现每次加的 $x$ 是一样的，因此若我们把 $A_i$ 排序，一定是一段前缀产生进位
+        \item 所以我们可以只在状态中记录进位的数量，采用刷表法转移，枚举进位个数和 $x$ 位值，再进行排序，更新贡献和下一层的进位次数即可。复杂度瓶颈在排序，使用基数排序可以不带 $ \log N$
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+
 
 \section{计数DP}
 
-\begin{frame}{标题}
-    内容
+\begin{frame}{Solution}
+    前言
+
+    分类？
+
+    积累？
 \end{frame}
+
+\subsection{AtCoder dp\_t Permutation}
+\begin{frame}{AtCoder dp\_t Permutation}
+    给定 $N$ 和长度为 $N-1$ 的字符串 $s$（含 `<` 和 `>`）。求 $1\sim N$ 的排列 $p$ 的个数，使得对每个 $i$，若 $s_i$ 为 `<$\,$` 则 $p_i<p_{i+1}$，若为 `>$\,$` 则 $p_i>p_{i+1}$。答案对 $10^9+7$ 取模。
+    
+    $N\le 3000$
+\end{frame}
+
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 标准计数
+        \item 排列一般是不好计数的，但我们发现这个题的限制是局部的，且只关注大小关系
+        \item $dp_{i,j}$ 表示前 $i$ 个，最后一个放的是第 $j$ 大
+        \item 转移的时候根据限制枚举新数，并使用前缀和优化转移即可
+        \item 为什么我们需要这个 $j$ ？
+    \end{itemize}
+\end{frame}
+
+\subsection{JOI Open 2016 摩天大楼 / Skyscraper}
+\begin{frame}{JOI Open 2016 摩天大楼 / Skyscraper}
+    将互不相同的 $N$ 个整数 $A_1,\dots,A_N$ 排成排列 $f$，要求相邻元素绝对差之和 $\displaystyle\sum_{i=1}^{N-1}|f_i-f_{i+1}|\le L$。求方案数，对 $10^9+7$ 取模。
+    
+    $N\le 100,\ L\le 1000$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 连续段 DP
+        \item 排列一般是不好直接计数的，一个套路是，尝试从小到大 或 从大到小加入
+        \item 为什么要这样？我们实际上是在拆分贡献做扫描线，把考虑差分变成了，考虑在值域上有哪些相邻的数在此处有贡献
+        \item 因此设 $f_{i,j,k,0/1,0/1}$ 表示前 $i$ 个，$j$ 处可贡献，$k$ 的已有贡献（要求 $k\le L$），最左右有没有选，进行转移即可 
+    \end{itemize}
+\end{frame}
+
+\subsection{AtCoder agc054\_b Greedy Division}
+\begin{frame}{AtCoder agc054\_b Greedy Division}
+    $N$ 个橘子，第 $i$ 个重量 $W_i$。按排列 $p$ 的顺序依次分配：当前总重量小的人拿下一个橘子。求使两人最终总重量相等的排列个数，对 $998244353$ 取模。
+    
+    $N\le 100,\ W_i\le 100$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 排列一般是不好计数的，这个题我们选择转化计数对象，寻找双射
+        \item 考虑任意两个操作序列 $(A_i,B_i)$，我们可以构造一个合法的排列，而每个排列显然只有一种操作序列
+        \item 而操作序列可以由选数集合和阶乘计算出来
+        \item 因此我们只需要求出合法选数集合的数量，使用一个背包即可，需要记录选择的个数来计算阶乘
+    \end{itemize}
+\end{frame}
+
+\subsection{Codeforces 1806D DSU Master}
+\begin{frame}{Codeforces 1806D DSU Master}
+    给定 $n$ 和 $a[1..n-1]\in\{0,1\}$。对长度为 $k$ 的排列 $p$ 构造图 $G$：$m=k+1$ 个顶点，依次处理 $p_i$，在含 $p_i$ 和 $p_i+1$ 的弱连通分量的源点之间按 $a_{p_i}$ 方向加边。
+    
+    定义排列值为顶点 $1$ 的入度。对每个 $k=1..n-1$，求所有 $k$ 阶排列的值之和，对 $998244353$ 取模。
+    
+    $\sum n\le 5\times10^5$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 题面不说人话，实际上就是按照排列合并并查集
+        \item 排列一般是不好计数的，这个题我们尝试从长度较短的所有排列总答案，扩展到长度较长的
+        \item 考虑什么样的操作才能对 $ 1 $ 有贡献，若我们操作 $x$ 则要求 $[1,x-1]$ 已经被操作过， $1$ 是联通块根，且 $a_x=0$
+        \item 因此可以 DP，设 $f_i$ 表示使前缀联通，且 $1$ 为根的方案数。考虑加入一个新操作何时非法，当且仅当它的 $a=1$ 且位于末尾，会使得 $1$ 不再是根
+        \item 有了 $f$ 之后可以计算贡献，设 $g_i$ 表示长度为 $i$ 的排列的答案，发现加入一个新操作不会影响以前的答案，同时新操作有贡献正如刚才所说
+        \item $g_i=g_{i-1}\times i+f_{i-1}[a_i==0]$
+    \end{itemize}    
+\end{frame}
+
 
 \section{概率DP}
 
-\begin{frame}{标题}
-    内容
+\begin{frame}{前言}
+    \begin{itemize}
+        \item 期望的线性性
+        \item 离散随机变量乘积的期望
+        \item 示性函数转化
+    \end{itemize}
 \end{frame}
 
+\subsection{洛谷 P3211 XOR和路径}
+\begin{frame}{洛谷 P3211 XOR和路径}
+    无向连通图，边权非负。从 $1$ 号节点出发等概率随机走相邻边，直到到达 $N$ 号节点。求所得路径 XOR 和的期望值，保留三位小数。
+    
+    $N\le 100,\ M\le 10^4$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 期望+高斯消元
+        \item $f_u$ 表示 $u$ 到 $n$ 的期望值
+        \item 可以直接列出转移方程
+        \item 显然有环，需要高斯消元
+        \item 于是 xor 无法处理，因为期望具有线性性，考虑拆位，变成线性方程组
+        \item 之后高斯消元
+    \end{itemize}
+\end{frame}
+
+\subsection{Codeforces 398B Painting The Wall}
+\begin{frame}{Codeforces 398B Painting The Wall}
+    $n\times n$ 的墙，已有 $m$ 个瓷砖被涂色。每轮等概率随机选一个瓷砖，若未涂色则涂上颜色，然后休息一分钟。重复直到每行每列都至少有一个瓷砖被涂色。求期望时间。
+    
+    $n\le 2000$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 需要学会处理自环的转移
+        \item 直接 $dp_{i,j}$ 表示还有 $i,j$ 个行列未染色
+        \item 转移考虑随机点的情况，分四类，每类都有一个概率系数
+        \item 发现存在自己转移到自己，于是移项，化系数，得到无环的方程
+        \item 直接 DP 转移
+    \end{itemize}
+\end{frame}
+
+\subsection{AtCoder agc060\_c Large Heap}
+\begin{frame}{AtCoder agc060\_c Large Heap}
+    考虑 $1\sim 2^N-1$ 的排列 $P$，称为堆式排列当且仅当对每个 $i$ 有 $P_i < P_{2i}$ 且 $P_i < P_{2i+1}$。令 $U=2^A,\ V=2^{B+1}-1$。
+    
+    从所有堆式排列中等概率随机选取一个，求 $P_U < P_V$ 的概率，对 $998244353$ 取模。
+    
+    $N\le 5000$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 对排列计数是困难的，但这题问的是概率
+        \item 从小到大加入点，那么如果先加入到 $U$ 就是成功的
+        \item 在随机意义下，我们把“等概率选择排列”，变为“从小到大每个值随机一个合法位置加入”，显然二者等价
+        \item 注意到题目取得点是二叉树的左链和右链
+        \item 设 $dp_{i,j}$ 表示在左右两侧的进展是 $i,j$，那么只有子树内的添加是有效的，从 $dp_{i+1,j}$ 和 $dp_{i,j+1}$ 转移即可，要乘上概率系数
+    \end{itemize}
+\end{frame}
 
 % ===== 结束页 =====
 

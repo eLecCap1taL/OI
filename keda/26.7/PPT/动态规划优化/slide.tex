@@ -1,0 +1,516 @@
+﻿\documentclass[aspectratio=169]{ctexbeamer}
+\usepackage[T1]{fontenc}
+\usepackage{latexsym,amsmath,xcolor,multicol,booktabs,calligra}
+\usepackage{graphicx,listings,stackengine}
+\usepackage{hyperref}
+
+\usepackage{PekingU}
+
+% 去掉每节/子节前面的自动目录页
+\AtBeginSection[]{}
+\AtBeginSubsection[]{}
+
+% ===== 每节课改这里 =====
+\author{Cap1taL}
+\title{动态规划优化}
+\subtitle{台下观众欣喜若狂}
+\date{2026年7月}
+% ========================
+
+% 代码高亮设置
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{halfgray}{gray}{0.55}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\bfseries\color{deepblue},
+    emphstyle=\ttfamily\color{deepred},
+    stringstyle=\color{deepgreen},
+    numbers=left,
+    numberstyle=\small\color{halfgray},
+    rulesepcolor=\color{red!20!green!20!blue!20},
+    frame=shadowbox,
+}
+
+\begin{document}
+
+\kaishu
+
+% 封面
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% 目录
+% \begin{frame}{目录}
+%     \tableofcontents[sectionstyle=show,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/shaded/hide]
+% \end{frame}
+
+% ===== 从这里开始写你的内容 =====
+
+\section{状态设计优化}
+
+\begin{frame}{前言}
+    动态规划作为一种分解问题为子问题的算法与思想，其核心正在于问题阶段的划分。改变刻画状态空间的方式，寻找独特的问题结构……
+    
+    如何找出更好的状态往往是优化的重难点
+
+    一般而言，当状态过于繁杂时，我们通常需要跳出现有的状态限制，思考状态是否存在冗余？状态的某一维度是否存在某种性质，使得我们可以保留它的特征信息？而当状态过于简单导致转移出现困难时，我们可以尝试根据转移时遇到的困难（是否有情况无法区分或重复贡献？）去倒推我们所需要的状态划分
+
+    有时，相同的转移方程与状态，甚至可以有截然不同的理解方式。动态规划状态的设计是一门精妙的艺术
+    
+\end{frame}
+
+\subsection{洛谷 P10299 [CCC 2024 S5] Chocolate Bar Partition}
+
+\begin{frame}{洛谷 P10299 [CCC 2024 S5] Chocolate Bar Partition}
+      $2\times N$ 的巧克力，每个小方块有美味度 $T_{i,j}$。将巧克力分成若干四连通块，使每个块的平均美味度相同，最大化块数。
+      
+      $1\le N\le 2\times 10^5$，$0\le T_{i,j}\le 10^8$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 建模神题
+        \item 平均数太诡异，我们先全部减平均数，变成找和为零的联通块
+        \item 一个朴素的想法是设 $f_{i,j,k}$，分别记录末尾两个联通块的和，转移枚举两个新块的归属，维护贡献即可
+        \item 这个状态设计没有前途，我们需要优化状态
+        \item 我们观察到，若两个块和均不为零，我们的转移是固定的，即各分配一个。
+        \item 因此我们希望直到某个块和为 $ 0 $ 时再处理转移
+        \item 设计状态 $f_{i,j}(j\in\{0,1\})$ 表示处理了前 $i$
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Solution}
+    状态设计优化
+    \begin{itemize}
+        \item 设计状态 $f_{i,j}(j\in\{0,1\})$ 表示处理了前 $i$ 列，第 $j$ 行的块和不一定为 $ 0 $
+        \item 考虑转移
+        \begin{enumerate}
+            \item 新一列的两个都并入 "不一定为 $ 0 $" 联通块
+            \item 另一行通过独立出一段和为 $ 0 $ 的块从而合法。当前行延续 "不一定为 $ 0 $"
+            \item 另一行通过取一段与之前的非法拼起来从而合法。当前行的部分 "不一定为 $ 0 $"。需要满足转移条件
+            \item 检查当前所谓的 "不一定为 $ 0 $" 联通块是否一定是合法的，如果是则立即结算贡献，从而保证块数最大化
+        \end{enumerate}
+    \end{itemize}
+\end{frame}
+
+
+
+
+\subsection{Codeforces 2201C Rigged Bracket Sequence}
+
+\begin{frame}{Codeforces 2201C Rigged Bracket Sequence}
+      给定正规括号序列 $S$（长度为 $n$）。选择一个非空子序列将其循环右移一位（第 $j$ 个选中位置得到原第 $j-1$ 个选中位置的字符）。
+      
+      统计有多少个非空子序列在右移后 $S$ 仍为正规括号序列。
+      
+      $2\le n\le 3\times 10^5$，$\sum n\le 3\times 10^5$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 状态设计动机与性质相关
+        \item 把判断括号序列合法转成判断前缀和非负
+        \item 考虑操作序列中的两个相邻位置 $(i,j)$，同时考虑 $i<t<j$
+        \item 那么对于 $t$ 来说，前方多了操作的最后一个括号，少了第 $i$ 括号
+        \item 所以显然我们操作的最后一个括号是 $)$ 时才有可能不合法
+        \item 设 $f_i$ 表示前 $i$，最后一个操作的是 $i$ 的方案数
+        \item 如果是右括号，则无任何限制
+        \item 如果是左括号，枚举 $j$，能转移当且仅当 $j$ 是左括号，或他们中间的位置均不小于 $2$
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+\subsection{Codeforces 2001E2 Deterministic Heap (Hard Version)}
+
+\begin{frame}{Codeforces 2001E2 Deterministic Heap (Hard Version)}
+      大小为 $2^n-1$ 的完美二叉树（最大堆），初始全 $0$。每次操作选择一个节点 $v$，将根到 $v$ 路径上所有节点 $+1$。
+      
+      若某堆的前两次 $\mathrm{pop}$ 操作均确定（每次选择子节点时值不相等），称其为确定性最大堆。求恰好 $k$ 次操作后能得到多少种不同的确定性最大堆。
+      
+      $2\le n\le 100$，$1\le k\le 500$，$\sum n\le 100$，$\sum k\le 500$，$p$ 为质数
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 考虑两次 pop 操作的形态，发现第二次 pop 形如：先走一段第一次 pop 的操作，再拐弯去别的子树，此后相当于第一次 pop
+        \item 这启示我们类似 "分段" 地 DP
+        \item 考虑第二次 pop 时最为特殊的分叉点 $u$，我们不妨假设第一次 pop 去了它的左儿子，第二次却去了右儿子
+        \item 这要求它的左儿子的两个儿子，均比它的右儿子小，这样才会拐弯
+        \item 反之亦然，如果两次 pop 都去了左儿子，则要求左儿子的两个儿子，存在一个比它的右儿子大
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution}
+    状态设计
+    \begin{itemize}
+        \item 首先计算 $ 0 $ 次 pop 的情况，只有操作合法的要求
+        \item 设 $f_{i,k}$ 表示子树高为 $i$，根节点值是 $k$ 的方案数
+        $$
+            f_{i,k}=\sum_{x+y\le k;x\neq y}f_{i-1,x}\times f_{i-1,y}
+        $$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution}
+    状态设计
+    \begin{itemize}
+        \item 再来计算一次 pop。
+        \item 设 $g_{i,k,v}$ 表示树高为 $i$ 根节点为 $k$，两个儿子都不大于 $v$ 的方案数
+        $$
+            g_{i,k,v}=2\times \sum_{x+y\le k;x<y\le v}f_{i-1,x}\times g_{i-1,y,y}
+        $$
+        \item 其中的系数 $2$ 表示不知道哪一侧更大
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution}
+    状态设计
+    \begin{itemize}
+        \item 再来计算两次 pop。
+        \item 设 $h_{i,k,v}$ 表示树高为 $i$ 根节点为 $k$，两个儿子的最大值不小于 $v$ 的方案数
+        $$
+            h_{i,k,v}=2\times \sum_{x+y\le k;x<y;v\le y}\left(  g_{i-1,y,x-1}\times g_{i-1,x,x}  + h_{i-1,y,j+1}f_{i-1,x}  \right)
+        $$
+        \item 其中的系数 $2$ 表示不知道哪一侧更大
+        \item 第一项表示分叉向两侧，第二项表示同侧删两次。各自有各自的值大小要求，和之前的分析保持一致
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution}
+    状态的设计是为转移服务的
+\end{frame}
+
+
+\section{单调队列/单调栈/前缀和优化}
+
+\subsection{前言}
+\begin{frame}{前言}
+    \begin{itemize}
+        \item 均为较为基本且常用的优化手段
+        \item 前缀和并不一定是求和，也有可能是保留最值等信息或者后缀信息，其代表一类预处理的思想
+        \item 单调队列，单调栈优化在做的事情本质和它们的模板一样，这里以单调队列为例，单调栈是类似的
+    \end{itemize}
+\end{frame}
+\begin{frame}{前言}
+    \begin{itemize}
+        \item 朴素的单调队列解决的是滑动窗口的最值问题
+        \item 在DP中，有时决策转移区间会随着某一维状态的变化而变化。一般来说，这类转移可以使用数据结构进行加速，而当转移区间的左右端点均单调移动时，我们可以使用单调队列优化
+        \item 单调队列可以优化的转移形如：
+        $$
+            dp_i=max_{j\in[L_i,R_i]}{candidate_j}+something
+        $$
+        \item 有一些题目的转移并不直接符合上式，却仍可以使用单调队列加速。我们需要对方程和状态做观察变形，这类变形通常较为套路，我们以下面的题目为例
+    \end{itemize}
+\end{frame}
+
+\subsection{洛谷 B2173 多重背包}
+\begin{frame}{洛谷 B2173 多重背包}
+      $n$ 种物品，背包容量 $V$。第 $i$ 种物品体积 $w_i$、价值 $val_i$、最多 $c_i$ 件。求不超过容量的最大总价值。
+      
+      $1\le n\le 500$，$1\le V\le 1000$，$1\le c_i\le 100$
+\end{frame}
+
+\begin{frame}{Solution}
+    核心观察是转移有点类似一个一个跳，但是相邻$j$转移点完全没法复用，因此按模$v$分类，一类一类转移，然后可以变成滑动窗口，窗口大小固定为物品数量
+\end{frame}
+
+
+\subsection{洛谷 P16692 染色 Plus}
+
+\begin{frame}{洛谷 P16692 染色 Plus}
+      $1\times N$ 网格，$M$ 种颜料，每种在 $[L_i,R_i]$ 内可用，涂一格花费 $C_i$。每格需涂一种可用颜料，且任意连续 $K$ 格颜色不能全相同。求最小总代价，或输出 $-1$。
+      
+      $2\le N,M\le 2\times 10^5$，$2\le K\le N$，$1\le C_i\le 10^9$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 首先观察到，一个位置最多使用最优三个颜色。首先用一点数据结构技巧处理出每个颜色可能被使用的区间
+        \item 题目限制等价于单颜色段不能超过 $ K-1 $
+        \item 我们设 $dp_{i,c}$ 表示前 $ i $ 且最后涂的颜色为 $ c $。第二维不是完整的 $O(n)$ 数组，而总是存储前三个最优颜色，当然，对于不同的 $i$ 最优的颜色也不一样。
+        $$
+            dp_{i,c}=\min_{\substack{j\in [i-(K-1),i],\\ [j+1,i]\subseteq \{c\text{可行区间}\},\;c'\neq c}}
+            \bigl(dp_{j,c'}+C(i-j)\bigr)
+        $$
+        \item 看起来非常滑动窗口，但颜色的限制让我们非常难以处理
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 设 $g_{i,c}=\min_{c'\neq c}\left(f_{i-1,c'}\right)$
+        \item 依旧只对 $i$ 有用的三个 $c$ 进行处理——可以 $O(1)$ 计算。
+        \item 因此转移变为
+        $$
+            dp_{i,c}=\min_{\substack{j\in [i-(K-1),i],\\ [j+1,i]\subseteq \{c\text{可行区间}\}}}
+            \bigl(g_{j+1,c}+C(i-j)\bigr)
+        $$
+        \item 颜色独立，对每个颜色维护单调序列，可以解决滑动窗口转移
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+
+\section{斜率优化}
+
+\begin{frame}{前言}
+    若我们的 DP 转移形如
+    $$
+        dp_i=\min\{dp_j+a(i)\times b(j)+c(i)+d(j)\}
+    $$
+    则我们可以整理为
+    $$
+        dp_i-c(i)=\min\{(dp_j+d(j))-(-a(i)\times b(j))\}
+    $$
+    此时若我们看作一个点 $(b(j),dp_j+d(j))$，会发现我们要做的，实际上是选取一些这样的点 $j$，用一条斜率为 $-a(i)$ 的点穿过，求截距的最小值
+
+    自然地，我们会尝试维护凸包
+
+    斜率优化的 “凸” 是由转移的数学形式而来的，某种意义上，可以说与题目无关（对比 wqs 二分的 “凸”）
+\end{frame}
+
+\begin{frame}{斜率优化四种情形汇总}
+    \begin{tabular}{l|cc}
+    $x_j$ \textbackslash $k_i$ & $k_i$ 单调 & $k_i$ 不单调 \\
+    \hline
+    $x_j$ 单调 & 单调队列 & 凸包二分 \\
+    $x_j$ 不单调 & CDQ / 李超树 & CDQ / 李超树
+    \end{tabular}
+
+    我们来看具体例题
+\end{frame}
+
+\subsection{洛谷 P3195 [HNOI2008] 玩具装箱}
+
+\begin{frame}{洛谷 P3195 [HNOI2008] 玩具装箱}
+      $n$ 件玩具排成一排，第 $i$ 件长度为 $C_i$。将连续若干件装入一容器，若装 $[i,j]$，则容器长度 $x=j-i+\sum_{k=i}^j C_k$，费用 $(x-L)^2$。求最小总费用。
+      
+      $1\le n\le 5\times 10^4$，$1\le L\le 10^7$，$1\le C_i\le 10^7$
+\end{frame}
+
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 转移方程是显然的
+        \item 拆开平方，会存在 $w(i)$ 与 $w(j)$ 的交叉项
+        \item 正是这个交叉二次项指引我们使用斜率优化
+        \item 具体结合 DP转移 推导
+        \item 一大关键是，本题中玩具价值总为正，这保证了我们的横坐标为升序，因此可以直接维护凸包
+    \end{itemize}
+\end{frame}
+
+
+\subsection{洛谷 P5504 [JSOI2011] 柠檬}
+
+\begin{frame}{洛谷 P5504 [JSOI2011] 柠檬}
+      $n$ 个贝壳排成一排，每个有大小 $s_i$。每次取一段连续贝壳，选一个大小 $s_0$，若该段中大小为 $s_0$ 的有 $t$ 个，则得到 $s_0t^2$ 只柠檬。求将贝壳取完能得到的最大柠檬数。
+      
+      $1\le n\le 10^5$，$1\le s_i\le 10^4$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 一个显然的观察：我们选取的区间两端贝壳大小必定相同，且是我们指定的颜色，否则不选肯定更优
+        \item 设 $cnt_i$ 代表前缀意义上 $a_i$ 出现了多少次，有转移
+        $$
+            dp_i=\max_{a_j=a_i}\left(dp_{j-1}+a_i(cnt_i-cnt_j+1)^2\right)
+        $$
+        \item 观察到平方，知道拆开后会出现交叉项。整理
+        $$
+            dp_i-a_i(cnt_i+1)^2=\max_{a_j=a_i}\left(dp_{j-1}+a_icnt_j^2-2a_icnt_j(cnt_i+1)\right)
+        $$
+        \item 同时存在两种交叉项，似乎不好处理
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Solution}
+    $$
+        dp_i-a_i(cnt_i+1)^2=\max_{a_j=a_i}\left(dp_{j-1}+a_icnt_j^2-2a_icnt_j(cnt_i+1)\right)
+    $$
+    \begin{itemize}
+        \item 注意到我们的性质保证了 $a_j=a_i$，于是只需替换
+        $$
+            dp_i-a_i(cnt_i+1)^2=\max_{a_j=a_i}\left(dp_{j-1}+a_jcnt_j^2-2a_icnt_j(cnt_i+1)\right)
+        $$
+        \item 再整理
+        $$
+            dp_i-a_i(cnt_i+1)^2=\max_{a_j=a_i}\left(dp_{j-1}+a_jcnt_j^2-2a_i(cnt_i+1)cnt_j\right)
+        $$
+        \item “横坐标” 是 ($cnt_j$) 单调，于是直接维护凸包并二分即可
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{CDQ分治优化}
+
+\begin{frame}{前言}
+    \begin{itemize}
+        \item CDQ分治还可以用来优化一类 1D/1D 的动态规划
+        \item 我们关注到，用 $dp_j$ 更新 $dp_i$ 也类似一种 “点对” 关系
+        \item CDQ 分治可以改变一类转移的顺序，同时也可以配合斜率优化使用
+        \item 我们结合题目来讲解
+    \end{itemize}
+\end{frame}
+
+\subsection{洛谷 P2487 [SDOI2011] 拦截导弹}
+
+\begin{frame}{洛谷 P2487 [SDOI2011] 拦截导弹}
+      导弹有高度 $h_i$ 和速度 $v_i$，拦截系统要求后一发炮弹的高度和速度均不高于前一发。求最多能拦截的导弹数量，以及每枚导弹被拦截的概率（所有最优方案等概率选取）。
+      
+      $1\le n\le 5\times 10^4$，$1\le h_i,v_i\le 10^9$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 一个二维LDS问题
+        \item 转移的时候有三维偏序限制。暴力做法可以顺着扫描线去掉一维，再使用树套树等数据结构处理二位偏序，不过这非常坏
+        \item 我们使用CDQ分治来解决这类问题
+        \item 具体地，我们使用 CDQ(l,r) 来计算出内部所有的 $dp_i$，每次先向左递归，再用左半更新右半，最后向右递归
+        \item 在最关键的用左侧更新右侧部分，我们可以把左右都按照 $a$ 排序，再把 $b$ 插入一维数据结构即可
+        \item 注意按 $a$ 排序无法使用归并，因为右侧部分还没有向下递归——我们不能更改他们之间的顺序，否则转移顺序就会被破坏
+    \end{itemize}
+\end{frame}
+
+\subsection{辅助斜率优化}
+\begin{frame}{辅助斜率优化}
+    $$
+        dp_i-c(i)=\min\{(dp_j+d(j))-(-a(i)\times b(j))\}
+    $$
+    若点 $(b(j),dp_j+d(j))$ 的插入横坐标不是升序的，则我们无法简单的通过弹栈来维护凸包
+
+    暴力做法是用平衡树维护凸包并在平衡树上二分，不过能否用更简单的方法呢？
+
+\end{frame}
+\begin{frame}{辅助斜率优化}
+    $$
+        dp_i-c(i)=\min\{(dp_j+d(j))-(-a(i)\times b(j))\}
+    $$
+    我们使用 CDQ 分治，在递归左侧之后，将左侧按照横坐标升序，右侧的“待更新”按照“斜率”升序
+
+    之后我们扫描左侧，用栈维护出凸包，再扫描右侧回答询问即可。复杂度瓶颈是排序，扫描均为线性，也无需进行二分
+
+\end{frame}
+
+\subsection{洛谷 P4655 [CEOI 2017] Building Bridges}
+
+\begin{frame}{洛谷 P4655 [CEOI 2017] Building Bridges}
+      $n$ 根柱子，高度 $h_i$，拆除代价 $w_i$。可在 $i,j$ 间建桥，代价 $(h_i-h_j)^2$。用桥连接第 $1$ 根和第 $n$ 根柱子（桥梁不相交），求最小总代价（建桥+拆除）。
+      
+      $2\le n\le 10^5$，$0\le h_i\le 10^6$，$|w_i|\le 10^6$
+\end{frame}
+
+\begin{frame}
+    \begin{itemize}
+        \item 转移方程显然
+        $$
+        dp_i=\min\left(dp_j+(h_i-h_j)^2+s_{i-1}-s_j\right)
+        $$
+        \item 拆开并整理
+        $$
+        dp_i-h_i^2-s_{i-1}=\min\left(h_j^2+dp_j-s_j-2h_ih_j\right)
+        $$
+        \item 套用斜率优化，我们发现“横坐标”是 $h_j$，很不幸，它不是单调的
+        \item 因此使用 CDQ 分治，每次把左侧对 $h$ 排序后正常维护凸包，再用来更新右侧的 $dp_i$ 即可
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+
+\section{决策单调性优化}
+
+\begin{frame}{前言}
+    类似wqs二分，这一部分的讲解，不会使用四边形不等式对决策单调性做出证明
+    
+    我们只讲解它的部分常用情形，以及怎么在做题时使用
+
+\end{frame}
+
+\begin{frame}{前言}
+    \begin{itemize}
+        \item 我们常常会见到这样的转移
+        $$
+            dp_{i,j}=\min_kw(i,j,k)
+        $$
+        \item 其中的 $w(i,j,k)$ 可能类似 $dp_{i-1,k}+something(i,j,k)$ 的形式，总之是一个与 $i,j$ 有关的函数
+        \item 决策单调性，顾名思义，表示若 $j_2>j_1$，则对他们各自最优秀的 $w$ 满足 $k_2>k_1$，即随着 $j$ 增大，最优秀的 $k$ 也在增大
+        \item 如果 $w(i,j,k)$ 可以 $O(1)$ 计算，或 $w(i,j,k)$ 可以 $O(1)$ 地转移到 $O(i,j\pm 1,k)$ 和 $O(i,j,k\pm 1)$（类似莫队），则我们可以使用分治法加速
+        
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{前言}
+    \begin{itemize}
+        \item 具体地，我们使用 solve(l,r,L,R) 来计算出所有 $dp_{i,l}~dp_{i,r}$，保证他们的最优转移区间是 $[L,R]$
+        \item 我们计算 $mid=\frac{l+r}{2}$，然后暴力计算 $dp_{i,mid}$ 并得到它的最优转移点 $p$，递归到 solve(l,mid-1,L,p) 和 solve(mid+1,r,p,R)。复杂度显然为 $O(n\log n)$
+        \item 如果 $w$ 不能快速计算只能 $O(1)$ 改变至相邻区间，我们只需在暴力计算 $dp_{i,mid}$ 时暴力移动 $w$ 复杂度仍为 $O(n\log n)$
+        \item 同递归树内移动次数 $O(n)$，总共 $O(\log)$ 层，因此均摊 $O(1)$
+        \item 具体题目
+    \end{itemize}
+\end{frame}
+
+\subsection{Codeforces 868F Yet Another Minimization Problem}
+
+\begin{frame}{Codeforces 868F Yet Another Minimization Problem}
+      将序列 $a$ 分成 $k$ 个子段，每个子段的费用是该段内相同元素的对数。求所有子段费用之和的最小值。
+      
+      $2\le n\le 10^5$，$2\le k\le \min(n,20)$，$1\le a_i\le n$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item DP式子显然
+        \item 发现有决策单调性
+        \item 问题在于 $w$ ，发现只需要维护桶，那么移动是简单的
+        \item 复杂度 $kn\log n$
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+
+% ===== 结束页 =====
+
+\begin{frame}
+    \begin{center}
+        {\Huge\calligra Thanks!}
+    \end{center}
+\end{frame}
+
+\end{document}

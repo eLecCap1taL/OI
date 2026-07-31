@@ -1,0 +1,219 @@
+﻿\documentclass[aspectratio=169]{ctexbeamer}
+\usepackage[T1]{fontenc}
+\usepackage{latexsym,amsmath,xcolor,multicol,booktabs,calligra}
+\usepackage{graphicx,listings,stackengine}
+\usepackage{hyperref}
+
+\usepackage{PekingU}
+
+% 去掉每节/子节前面的自动目录页
+\AtBeginSection[]{}
+\AtBeginSubsection[]{}
+
+% ===== 每节课改这里 =====
+\author{Cap1taL}
+\title{比赛题讲解}
+\subtitle{?!比赛?!}
+\date{2026年7月}
+% ========================
+
+% 代码高亮设置
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{halfgray}{gray}{0.55}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\bfseries\color{deepblue},
+    emphstyle=\ttfamily\color{deepred},
+    stringstyle=\color{deepgreen},
+    numbers=left,
+    numberstyle=\small\color{halfgray},
+    rulesepcolor=\color{red!20!green!20!blue!20},
+    frame=shadowbox,
+}
+
+\begin{document}
+
+\kaishu
+
+% 封面
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% 目录
+% \begin{frame}{目录}
+%     \tableofcontents[sectionstyle=show,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/shaded/hide]
+% \end{frame}
+
+% ===== 从这里开始写你的内容 =====
+
+\section{模拟赛}
+
+\subsection{GCJ 2010 Theme Park}
+\begin{frame}{GCJ 2010 Theme Park}
+    过山车每次最多载 $k$ 人，运行 $R$ 次。$N$ 个小组排队，每组 $g_i$ 人。每次按顺序让尽可能多小组上车，满员或无法容纳下一组即出发。上车的小组按原顺序回到队尾。求总收入（每人 $1$ 欧元）。
+    
+    $R\le 10^8,\ N\le 1000, T\le 50$
+\end{frame}
+
+\begin{frame}{Solution}
+    % 整行居中布局
+    \centering
+    % 左侧图片区域 占 0.48 文本宽
+    \begin{minipage}{0.40\textwidth}
+    \includegraphics[width=\linewidth]{pic/1.png}
+    \end{minipage}
+    \hfill % 中间留白分隔
+    % 右侧文字区域
+    \begin{minipage}{0.55\textwidth}
+        \begin{itemize}
+            \item 暴力模拟，一旦出现循环（循环定义为一个队列局面出现过）则无需继续计算
+            \item 注意到一共有 $n$ 种局面
+            \item 复杂度 $O(Tn^2)$
+            \item 双指针预处理所有局面的上车情况，可以随便做到线性，$O(Tn)$
+            \item 本质上是一个类似基环树森林的东西
+            \item 这个题用时不应该超过 $20\min$，哪怕放在 NOIP 也是很简单的签到了
+        \end{itemize}
+    \end{minipage}
+\end{frame}
+
+
+
+
+
+\subsection{洛谷 P16928 聚魔石}
+\begin{frame}{洛谷 P16928 聚魔石}
+    $n$ 个聚魔石排成一排，编号 $1\sim n$，每个有魔力存储量 $p_i$（$1\sim n$ 排列）和存储容易度 $w_i$。
+    
+    初始 $s$ 充能，随后从已充能区间 $[l,r]$ 向相邻未充能位置扩展：若 $l>1$ 且 $r<n$，则以 $w_{l-1}/(w_{l-1}+w_{r+1})$ 概率向左、$w_{r+1}/(w_{l-1}+w_{r+1})$ 概率向右。
+    
+    若新充能石的 $p$ 严格大于此前所有已充能石的 $p$，则发生一次共鸣。初始 $s$ 也算一次共鸣。求共鸣期望次数，对 $998244353$ 取模。
+    
+    $n\le 2000$
+\end{frame}
+
+\begin{frame}{Solution}
+    % 整行居中布局
+    \centering
+    % 左侧图片区域 占 0.48 文本宽
+    \begin{minipage}{0.40\textwidth}
+    \includegraphics[width=\linewidth]{pic/2.jpg}
+    \end{minipage}
+    \hfill % 中间留白分隔
+    % 右侧文字区域
+    \begin{minipage}{0.55\textwidth}
+        \begin{itemize}
+            \item 区间不断扩展，自然想到区间 DP
+            \item 设 $dp_{l,r}$ 表示现在 $[l,r]$ 已注魔，到住满还能期望共鸣几次
+            \item 转移直接考虑左右即可 
+            \item 这个题在熟悉期望的情况下是可以秒出做法的，比较模板
+        \end{itemize}
+    \end{minipage}
+\end{frame}
+
+
+
+
+
+
+
+
+\subsection{洛谷 P3538 [POI 2012] OKR-A Horrible Poem}
+
+\begin{frame}{洛谷 P3538 [POI 2012] OKR-A Horrible Poem}
+
+给定长度为 $n$ 的字符串，$q$ 次询问子串 $[l,r]$ 的最短完整周期长度。
+
+\vspace{0.5em}
+$1\le n\le 500\,000,\quad 1\le q\le 2\,000\,000$
+
+\end{frame}
+
+
+
+\begin{frame}{Solution}
+    % 整行居中布局
+    \centering
+    % 左侧图片区域 占 0.48 文本宽
+    \begin{minipage}{0.40\textwidth}
+    \includegraphics[width=\linewidth]{pic/1.png}
+    \end{minipage}
+    \hfill % 中间留白分隔
+    % 右侧文字区域
+    \begin{minipage}{0.55\textwidth}
+        \begin{itemize}
+            \item 先考虑怎么判断一个长度是否是循环节
+            \item 哈希比对 $[l,r-d]$ 和 $[l+d,r]$
+            \item 现在问题在与要判断的长度太多。发现只有长度的约数才有可能是循环节，暴力枚举约数即可
+            \item 复杂度 $O(qd)$，$d$ 是 $1~n$ 最大约数数量，实测是 $ 100 $。
+        \end{itemize}
+    \end{minipage}
+\end{frame}
+
+
+
+
+\subsection{洛谷 P4219 [BJOI2014] 大融合}
+
+\begin{frame}{洛谷 P4219 [BJOI2014] 大融合}
+
+    $N$ 个孤立星球，边按顺序添加，每次连边保证两端不连通。动态询问某条边当前的负载——即所在的树上经过该边的简单路径数量。
+
+    \vspace{0.5em}
+    $1\le N,Q\le 10^5$
+
+\end{frame}
+
+
+
+\begin{frame}{Solution}
+    % 整行居中布局
+    \centering
+    % 左侧图片区域 占 0.48 文本宽
+    \begin{minipage}{0.40\textwidth}
+    \includegraphics[width=\linewidth]{pic/1.png}
+    \end{minipage}
+    \hfill % 中间留白分隔
+    % 右侧文字区域
+    \begin{minipage}{0.55\textwidth}
+        \begin{itemize}
+            \item 做法很多
+            \item 首先发现，题目要计算的东西，等价于断开这条边后 $(u,v)$ 两点联通块大小的乘积
+            \item 因此我们在每次查询 $(u,v)$ 之前，加一个移除操作，在查询之后再加回来
+            \item 现在题面变成，动态加边删边，查询操作变为查询点所在的联通块大小
+            \item 一眼线段树分治，之后变成加边和撤销边，查询联通块大小，使用可撤销并查集维护，复杂度 $O(q\log q)$
+            \item 期望用时 $ 1 h $ 左右 
+        \end{itemize}
+    \end{minipage}
+\end{frame}
+
+\begin{frame}
+    概率与期望？
+    \begin{itemize}
+        \item 条件概率？
+        \item 期望的线性性？
+        \item 全概率公式？
+        \item 全期望公式？
+        \item 二者的区别？
+    \end{itemize}
+\end{frame}
+
+\subsection{Codeforces 280C Game on Tree}
+
+\begin{frame}{Codeforces 280C Game on Tree}
+      给定一棵 $n$ 个结点的有根树（根为 $1$）。每次等概率选择一个未被删除的结点，将其及其子树全部删去。求删除所有结点的期望操作次数。
+      
+      $1\le n\le 10^5$
+\end{frame}
+% ===== 结束页 =====
+
+\begin{frame}
+    \begin{center}
+        {\Huge\calligra Thanks!}
+    \end{center}
+\end{frame}
+
+\end{document}

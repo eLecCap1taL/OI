@@ -1,0 +1,481 @@
+﻿\documentclass[aspectratio=169]{ctexbeamer}
+\usepackage[T1]{fontenc}
+\usepackage{latexsym,amsmath,xcolor,multicol,booktabs,calligra}
+\usepackage{graphicx,listings,stackengine}
+\usepackage{hyperref}
+
+\usepackage{PekingU}
+
+% 去掉每节/子节前面的自动目录页
+\AtBeginSection[]{}
+\AtBeginSubsection[]{}
+
+% ===== 每节课改这里 =====
+\author{Cap1taL}
+\title{连通姓问题}
+\subtitle{我没要求你永远写出正解，我不是恶魔。 可是，你说你要骇可交互库是什么意思？你的思维怎么了？你才10多岁吧?再这样下去，你42岁骇可交互库四次，84岁骇可交互库八次，最后就变成扒题大蛇了。作为在线法官，我可能得打败你。真的。}
+\date{2026年7月}
+% ========================
+
+% 代码高亮设置
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{halfgray}{gray}{0.55}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\bfseries\color{deepblue},
+    emphstyle=\ttfamily\color{deepred},
+    stringstyle=\color{deepgreen},
+    numbers=left,
+    numberstyle=\small\color{halfgray},
+    rulesepcolor=\color{red!20!green!20!blue!20},
+    frame=shadowbox,
+}
+
+\begin{document}
+
+\kaishu
+
+% 封面
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% 目录
+% \begin{frame}{目录}
+%     \tableofcontents[sectionstyle=show,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/shaded/hide]
+% \end{frame}
+
+% ===== 从这里开始写你的内容 =====
+
+\section{常用算法}
+
+\subsection{强连通分量}
+\begin{frame}{Tarjan}
+    \begin{itemize}
+        \item Tarjan 求 scc 是在有向图 DFS 搜索树上进行处理，用栈压入走过的点
+        \item 定义如下变量：
+        \begin{itemize}
+            \item $dfn_u$：$u$ 被访问的次序
+            \item $low_u$：从 $u$ 开始走任意条树边和最多一条非树边，所能到达的最小的栈中 $dfn$
+        \end{itemize}
+        \item 容易发现，一整个 scc 一定在其中某个节点的子树中，且这个点就是 $dfn_u=low_u$ 的点
+        \item 在符合要求的点处批量弹栈即可
+        \item Tarjan 求得的 SCC 是按逆拓扑序排序的
+        \item 复杂度 $O(n+m)$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Kosaraju}
+    \begin{itemize}
+        \item 很有意思的算法
+        \item 对图做一次 DFS 遍历（可能需要多起点）并标注 $dfn$
+        \item 将所有边反向，按 $dfn$ 从大到小开始遍历，每次遍历一个极大联通块，即为一个 scc
+        \item 复杂度 $O(n+m)$
+    \end{itemize}
+\end{frame}
+
+\subsection{强连通分量}
+\begin{frame}{2-SAT}
+    \begin{itemize}
+        \item 本质图论建模
+        \item 给定若干布尔变量 $x_i$，有约束形如 "$x_i=k$" 与 "$x_j=k'$" 至少有一个成立
+        \item 每个变量用两个点表示，代表 “成立” 与 “不成立”
+        \item $u\to v$ 代表 "若 $u$ 成立则 $v$ 必须成立"，据此建边即可
+        \item 容易发现不合法当且仅当一个变量的 “成立” 和 “不成立” 在一个 scc 中
+        \item 考虑缩点后的图，一个变量的两个点之间存在拓扑先后关系，我们应该永远取拓扑序大的，否则将导出矛盾。构造方案只需要用 tarjan 的逆拓扑序，取先出现的即可
+    \end{itemize}
+\end{frame}
+
+\subsection{割点与割桥}
+\begin{frame}{割点}
+    \begin{itemize}
+        \item 简单而言，若去除这个点后连通分量增多，则这个点是割点
+        \item 利用刚才求 SCC 的 Tarjan 做法，显然若 $low_v\ge dfn_u$，即 $v$ 无法通过别的地方 “逃离 $u$ 的子树”，则 $u$ 是它子树的 “必经之路”，自然它是割点
+        \item 需要特判根节点，因为我们根节点是没有父亲的。观察可以发现根节点是割点会导致各个子树独立，因此若根节点有多个子树则它是割点
+        \item 一个常见错误是，在返祖边时用 $low_v$ 更新 $low_u$，这会导致 $u$ 在经过 $v$ 的情况下从 $v$ 的其他子树离开 $v$，从而出现错误
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{割桥}
+    \begin{itemize}
+        \item 类似割点，判据只需要改为 $low_v>dfn_u$ 即可，正确性是显然的
+        \item 由于是在处理边，需要考虑重边的情况。最简单的处理方式是把 “不能回头经过父亲” 改为 “不能回头走从父亲来的边”。
+    \end{itemize}
+\end{frame}
+
+\subsection{双连通分量}
+\begin{frame}{双连通分量}
+    \begin{itemize}
+        \item 如果一个图，删任何边都依旧连通，则它边双连通
+        \item 如果一个图，删任何点都依旧连通，则它点双连通（不适用于仅两点直接连边的情况）
+        \item 边双具有传递性，而点双没有
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Tarjan 求边双连通分量}
+    \begin{itemize}
+        \item 几乎直接照搬求 scc 的代码
+        \item 考虑割桥在 DFS 生成树上的形态，我们可以发现，如果把生成树试做有向图，各个边双连通分量就是强连通分量
+        \item 直接求强连通分量即可
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{割桥求边双连通分量}
+    \begin{itemize}
+        \item 先利用 Tarjan 或者其他方法求出割桥
+        \item 把割桥割去，剩下的自然为边双连通分量
+        \item 具体实现可以做一次 DFS
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Tarjan 求点双连通分量}
+    \begin{itemize}
+        \item 依旧考虑求出割点
+        \item 首先，显然一个割点一定是一个点双连通分量的 “根”，即点双连通分量不能 “跨过” 一个割点，否则这个割点在分量内也会成为割点
+        \item 同时，一个点可以属于多个点双，注意在边双连通分量中，一个边则不可以属于多个边双连通分量
+        \item 因此，在我们求解割点、找到一个 $low_v\ge dfn_u$ 时，我们着手弹栈，就可以得到一个 v-dcc
+        \item 要注意把 $u$ 压回栈中——它可能还属于别的点双
+        \item 至于树根，若它有多个子树，则它是割点，正常处理。若它只有一个子树，显然它应该归属于它子树顶部的点双，因为它不是割点不会影响合法性
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{圆方树}
+    \begin{itemize}
+        \item 一些连通性问题需要我们缩点
+        \item SCC 缩点后可以得到一个 DAG
+        \item e-DCC 缩点后可以得到一棵树
+        \item 而 v-DCC 却没有这样的性质，核心问题在于一个点可能属于多个 v-DCC
+        \item 因此我们使用圆方树
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{圆方树}
+    \begin{itemize}
+        \item 圆方树的结构非常简单
+        \item 原图中的点全部保留为圆点
+        \item 对于每个 v-DCC 建立一个方点，并向其所管辖的圆点连边
+        \item 一个圆点有可能连接多个方点，这正说明一个点可能属于多个点双
+        \item 容易证明这是一棵树
+        \item 圆方树可以用于处理一类连通性与路径问题，同时树的形态又允许我们用树链剖分等树上算法进行信息的维护
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+
+
+\section{习题}
+
+\subsection{洛谷 P5058 [ZJOI2004] 嗅探器}
+
+\begin{frame}{洛谷 P5058 [ZJOI2004] 嗅探器}
+      无向连通图，两个信息中心 $a,b$。求一个编号最小的中间服务器，使得删除该服务器后 $a,b$ 不连通（即所有 $a,b$ 间通信都会经过它）。
+      
+      $1\le n\le 2\times 10^5$，边数 $\le 5\times 10^5$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 圆方树宣传片，不用圆方树就爆改 Tarjan 去吧，一想一调一个不吱声
+        \item 注意到题目说的就是割点，因此我们无脑拉出圆方树
+        \item 在圆方树上刻画 “经过的割点” 这件事情是自然的
+        \item 从其中一个点做 DFS 并维护路径信息即可
+        \item 路径上的圆点均为相应的割点，非割点的点均不会被经过
+    \end{itemize}    
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{洛谷 P3469 [POI 2008] BLO-Blockade}
+
+\begin{frame}{洛谷 P3469 [POI 2008] BLO-Blockade}
+      无向连通图。对每个节点 $i$，删去与 $i$ 关联的所有边（保留 $i$），求不连通的有序点对 $(x,y)$ 的数量。
+      
+      $n\le 10^5$，$m\le 5\times 10^5$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 圆方树宣传片，不用圆方树就爆改 Tarjan 去吧，一想一调一个不吱声
+        \item 注意到题目在搞割点，因此我们无脑拉出圆方树
+        \item 在圆方树上刻画 “点对之间的割点” 这件事情是自然的
+        \item 每个非叶圆点都是一个割点
+        \item 那么删除点后不联通的点对，自然就是它各个子树大小的乘积
+        \item 此处子树大小定义为圆点数量
+        \item DFS 维护后直接计算即可
+    \end{itemize}    
+\end{frame}
+
+
+
+
+
+
+
+
+\subsection{洛谷 P4334 [COI 2007] Policija}
+
+\begin{frame}{洛谷 P4334 [COI 2007] Policija}
+      无向连通图。$Q$ 次询问：删去一条给定边 $G_1G_2$ 后，或删去一个给定点 $C$ 后，$A$ 能否到达 $B$。
+      
+      $N\le 10^5$，$E\le 5\times 10^5$，$Q\le 3\times 10^5$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 圆方树宣传片，不用圆方树就捣鼓 dfn 去吧，一想一调一个不吱声
+        \item 注意到题目在删点删边，因此我们无脑拉出圆方树
+        \item 对于删点询问，我们只需要支持在树上查询路径中有无某个点，这个做法很多
+        \item 某种意义上，圆方树是一种重构树，所以它不方便刻画原图的信息
+        \item 因此，对于删边询问，我们首先判断删的是否是割边，若不是则无影响；若是，“必经这条边” 等价于 “必经边的两个端点” ，转换成了刚才的问题
+    \end{itemize}    
+\end{frame}
+
+
+
+
+
+
+
+
+\subsection{洛谷 P4630 [APIO2018] 铁人两项}
+
+\begin{frame}{洛谷 P4630 [APIO2018] 铁人两项}
+      无向连通图。求三元组 $(s,c,f)$ 的数量，使存在一条从 $s$ 经过 $c$ 到 $f$ 且不重复经过点的路径（$s,c,f$ 两两不同）。
+      
+      $n\le 10^5$，$m\le 2\times 10^5$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 赋权小技巧
+        \item 考虑枚举所有的路径 $(s,f)$，然后 $c$ 的可能性数量即为路径经过点的种类数
+        \item 多路径问题，拉出圆方树，问题变成怎么在圆方树上考虑一条路径可能经过的点？
+        \item 圆方树的一个重要性质是，路径永远圆方交替
+        \item 因此给方点赋权为 v-DCC 大小，代表可以访问内部所有点，又因为一个点同属于两个 v-DCC 且两端的圆点不可作为 $c$，全部赋权为 $-1$ 即可
+        \item 问题转化为对于所有的圆点路径计算路径和，可以统计路径覆盖数再乘点权，随便想办法 dp 做一下
+    \end{itemize}    
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{洛谷 P2515 [HAOI2010] 软件安装}
+
+\begin{frame}{洛谷 P2515 [HAOI2010] 软件安装}
+      $N$ 个软件，安装需要 $W_i$ 空间、价值 $V_i$。磁盘总容量为 $M$。软件间存在依赖，每个软件至多依赖一个软件，依赖未正确安装时价值为 $0$。求最大总价值。
+      
+      $N\le 100$，$M\le 500$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 若 $A$ 依赖 $B$，则我们连边 $A\to B$，代表有 $A$ 就有 $B$
+        \item 由于每个软件只有一个依赖，这实际上是一个内向基环树，不过我们不用管这么多，直接用大力缩环
+        \item 一个环上要么选要么都不选，因此可以看做一个大的新软件包
+        \item 现在变成一个内向森林，不好考虑，因此再建一个点，把各个森林的根连起来，变成一棵树，然后做树上 DP 即可
+    \end{itemize}    
+\end{frame}
+
+
+
+
+
+
+
+\subsection{洛谷 P2272 [ZJOI2007] 最大半连通子图}
+
+\begin{frame}{洛谷 P2272 [ZJOI2007] 最大半连通子图}
+      有向图半连通当任意两点 $u,v$ 满足 $u\to v$ 或 $v\to u$ 可达。求节点数最多的半连通导出子图的节点数 $K$，以及对应的方案数 $C\bmod X$。
+      
+      $N\le 10^5$，$M\le 10^6$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 小清新 SCC 模板题
+        \item 首先发现这个玩意比 SCC 的要求若，也就是说 SCC 一定是一个 “半连通子图”
+        \item 因此先给整个图缩点变成 DAG，发现在 DAG 上的 “半连通子图” 一定是一个顺着有向边的链，否则不能满足可达条件
+        \item 拓扑排序后 DP，此处的最长链定义为点权和最大的链，点权是 SCC 大小
+    \end{itemize}    
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+\subsection{洛谷 P4637 [SHOI2011] 扫雷机器人}
+
+\begin{frame}{洛谷 P4637 [SHOI2011] 扫雷机器人}
+      直线上 $n$ 颗地雷，坐标为 $x_i$、威力 $d_i$，引爆后连锁引爆 $|x_i-x_j|\le d_i$ 的雷。每次从未引爆的雷中等概率选一颗引爆，求炸完所有雷所需引爆次数的期望。
+      
+      $n\le 4000$，$|x_i|,d_i\le 10^8$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 建边后缩点
+        \item 直接在 DAG 上 DP 比较困难，我们考虑利用期望的线性性拆贡献
+        \item 考虑每个雷，只有真的是它自己开始爆炸才算数。因此统计有多少个雷能把他连着一起爆，答案是 $\sum \frac{1}{cnt}$
+        \item 这等价于可达性的传递闭包，暴力建边后处理是 $O\left(\frac{n^3}{w}\right)$，实现的好可以过
+        \item 发现这样建图太蠢，一个地雷能覆盖到的点是一个区间，直接线段树优化建图，变为 $O\left(\frac{n^2\log n}{w}\right)$
+        \item 再仔细想一想，发现很多边是不必要的。具体地，我们只允许左侧第一个能引爆它的雷向它连边，更远处的省略。显然这样不会改变可达性
+        \item 复杂度 $O\left(\frac{n^2}{w}\right)$
+    \end{itemize}    
+\end{frame}
+
+
+
+
+
+
+
+\subsection{洛谷 P5782 [POI 2001 R2] 和平委员会}
+
+\begin{frame}{洛谷 P5782 [POI 2001 R2] 和平委员会}
+      $n$ 个党派各有两个代表（$2i-1,2i$），委员会须每个党派恰选一人，且互相厌恶的代表不能同时入选。求可行委员会成员表或输出无解。
+      
+      $n\le 8000$，$m\le 20000$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 2-SAT 练手题
+        \item 把一个人拆成两个点，代表在里面和不在里面
+        \item 一方面，刻画两个同党派代表互斥的条件
+        \item 另一方面，刻画厌恶关系
+        \item 用 Tarjan 跑 SCC 后构造方案即可
+        \item 通过这道题来再熟练 2-SAT 的构造方案
+    \end{itemize}    
+\end{frame}
+
+
+
+
+
+
+
+\subsection{洛谷 P3825 [NOI2017] 游戏}
+
+\begin{frame}{洛谷 P3825 [NOI2017] 游戏}
+      地图类型 $a,b,c,x$，赛车 $A,B,C$ 分别不能用于 $a,b,c$，$x$ 可用任意赛车。$n$ 场游戏给定地图，另有 $m$ 条规则：若第 $i$ 场用 $h_i$ 车，则第 $j$ 场必须用 $h_j$ 车。求任意可行安排或输出 $-1$。
+      
+      $n\le 5\times 10^4$，$x$ 地图数 $\le 8$，$m\le 10^5$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 2-SAT！
+        \item 考虑没有邪恶的 x 的情况，是一个完全的 2-SAT 问题，根据要求连边
+        \item 问题在于有 x 怎么办，一个暴力做法是枚举他们选什么地图，复杂度多乘一个 $3^{cnt_x}$
+        \item 而注意到 $x$ 的可能安排是确定的，我们实际上并不关心到底 x 是什么地图，只是想 “给这个地图选任何车的机会”，因此只需要枚举两种地图，复杂度变为 $O\left(2^{cnt_x}(n+m)\right)$
+    \end{itemize}    
+\end{frame}
+
+
+
+\subsection{AtCoder ARC069F Flags}
+
+\begin{frame}{AtCoder ARC069F Flags}
+      $N$ 面旗子，第 $i$ 面可放在坐标 $x_i$ 或 $y_i$。最大化任意两面旗子之间的最小距离 $d$。
+      
+      $2\le N\le 10^4$，$1\le x_i,y_i\le 10^9$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 二分答案，之后把所有候选位置拉出来建点，转成 2-SAT
+        \item 限制是一个旗子只能插一个地方，以及 check 的限制，此时限制连边是一个区间
+        \item 可以立刻使用线段树优化建图，不过太烂了
+        \item 考虑不真的建图。使用 kosaraju，DFS 的时候用并查集维护访问的区间来找出度点，而不是真的建图去找点。使用线性序列并查集可以做到单 $\log V$
+    \end{itemize}    
+\end{frame}
+
+
+
+
+
+
+\subsection{Codeforces 555E Case of Computer Network}
+
+\begin{frame}{Codeforces 555E Case of Computer Network}
+      无向图，$q$ 条消息需从 $s_i$ 传到 $d_i$。判断能否给每条无向边定向，使所有消息都可达。
+      
+      $n,m,q\le 2\times 10^5$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 边双性质题
+        \item 对于一个 e-DCC，我们一定可以把他定向为一个 SCC
+        \item 具体可以考虑拿出来一个环，然后再不断向上添加链，一直是一个 SCC。不可能不存在这样的链，否则链端会不满足 e-DCC 性质
+        \item 因此考虑把 e-DCC 缩起来。与 v-DCC 不同，e-DCC 缩点后天然是一棵树
+        \item 在树上就好办了，用差分之类的树上算法判断一下矛盾即可
+    \end{itemize}    
+\end{frame}
+
+
+
+
+
+
+
+
+
+\subsection{Codeforces 999E Reachability from the Capital}
+
+\begin{frame}{Codeforces 999E Reachability from the Capital}
+      有向图，首都 $s$。可以新建从任意点到任意点的有向边，求使 $s$ 能到达所有城市的最少新增边数。
+      
+      $n\le 5000$，$m\le 5000$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 可达性问题，我们先对图进行缩点，然后在 DAG 上考虑
+        \item 首先把 $s$ 能到的点弄出去
+        \item 发现还存在一些不可访问的点，直接清点入度为 $ 0 $ 的点数量即可
+    \end{itemize}    
+\end{frame}
+
+% ===== 结束页 =====
+
+\begin{frame}
+    \begin{center}
+        {\Huge\calligra Thanks!}
+    \end{center}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,317 @@
+﻿\documentclass[aspectratio=169]{ctexbeamer}
+\usepackage[T1]{fontenc}
+\usepackage{latexsym,amsmath,xcolor,multicol,booktabs,calligra}
+\usepackage{graphicx,listings,stackengine}
+\usepackage{hyperref}
+
+\usepackage{PekingU}
+
+% 去掉每节/子节前面的自动目录页
+\AtBeginSection[]{}
+\AtBeginSubsection[]{}
+
+% ===== 每节课改这里 =====
+\author{Cap1taL}
+\title{比赛题讲解}
+\subtitle{?!比赛?!}
+\date{2026年7月}
+% ========================
+
+% 代码高亮设置
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{halfgray}{gray}{0.55}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\bfseries\color{deepblue},
+    emphstyle=\ttfamily\color{deepred},
+    stringstyle=\color{deepgreen},
+    numbers=left,
+    numberstyle=\small\color{halfgray},
+    rulesepcolor=\color{red!20!green!20!blue!20},
+    frame=shadowbox,
+}
+
+\begin{document}
+
+\kaishu
+
+% 封面
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% 目录
+% \begin{frame}{目录}
+%     \tableofcontents[sectionstyle=show,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/shaded/hide]
+% \end{frame}
+
+% ===== 从这里开始写你的内容 =====
+
+\section{第一套}
+
+\subsection{JOISC 2018 糖果 / Candies}
+\begin{frame}{JOISC 2018 糖果 / Candies}
+    $N$ 颗糖果排成一排，美味值 $A_i$。不能同时选相邻的糖果。
+    
+    对每个 $j=1..\lceil N/2\rceil$，求吃掉恰好 $j$ 颗糖果的最大美味值总和。
+    
+    $N\le 2\times10^5$
+\end{frame}
+
+\begin{frame}{Solution}
+    % 整行居中布局
+    \centering
+    % 左侧图片区域 占 0.48 文本宽
+    \begin{minipage}{0.40\textwidth}
+    \includegraphics[width=\linewidth]{pic/1.png}
+    \end{minipage}
+    \hfill % 中间留白分隔
+    % 右侧文字区域
+    \begin{minipage}{0.55\textwidth}
+        \begin{itemize}
+            \item 兄弟，我发现这道题我们讲过
+            \item 洛谷 P3620
+            \item 使用链表维护反悔贪心，兄弟这个和咱们讲的一模一样
+        \end{itemize}
+    \end{minipage}
+\end{frame}
+
+
+
+
+
+\subsection{洛谷 P7322 排列变换}
+\begin{frame}{洛谷 P7322 排列变换}
+    对于 $1\sim n$ 的排列 $p$，定义 $f(p)$ 为所有长度为 $k$ 的滑动窗口最大值构成的序列，$w(f(p))$ 为该序列中不同数的个数。
+    
+    求所有排列 $p$ 的 $w(f(p))$ 之和，对 $998244353$ 取模。
+    
+    $n\le 5\times10^5$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 纯粹的计数题
+        \item 直接计算要爆炸，考虑拆分每个位置的贡献
+        \item 一个区间 $[l,r]$ 移动到新的 $[l+1,r+1]$ 会产生新的数，显然当且仅当 $a_{l},a_{r+1}$ 有一个是 $[l,r+1]$ 的最大值
+        \begin{itemize}
+            \item 从 $ 1 $ 到 $ n $ 枚举区间左端点的值 $v$:
+            \item 最大值可能是 $a_l$ 也可能是 $a_{r+1}$，有系数 $ 2 $
+            \item 枚举还可以向右滑动的区间个数，$(n-k)$
+            \item 区间内还剩下 $k$ 个位置，必须比 $v$ 小，因此有 $\tbinom{v-1}{k}$
+            \item 其余的数随便放，有 $(n-k-1)!$
+            \item 乘起来就可以了
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+
+
+\subsection{洛谷 P5629 区间与除法}
+\begin{frame}{洛谷 P5629 区间与除法}
+    $op$ 操作：将当前数除以 $d$ 并向下取整。有 $m$ 个"原数"，若一个数经若干次 $op$ 操作后可变成某个原数，则称该数可被消灭。每次询问区间 $[l,r]$，求在消灭最多数的前提下最少需要多少个原数。
+    
+    $n\le 5\times10^5,\ m\le 60,\ q\le 10^6$
+\end{frame}
+
+
+
+\begin{frame}{Solution}
+    % 整行居中布局
+    \centering
+    % 左侧图片区域 占 0.48 文本宽
+    \begin{minipage}{0.40\textwidth}
+    \includegraphics[width=\linewidth]{pic/1.png}
+    \end{minipage}
+    \hfill % 中间留白分隔
+    % 右侧文字区域
+    \begin{minipage}{0.55\textwidth}
+        \begin{itemize}
+            \item 兄弟，你注意到 $m$ 只有 $ 60 $ 并且全局只有一个 $d$ 大家都一样
+            \item 因此我们可以暴力给每个数先除一遍，看看它能变成哪些数
+            \item 我们发现如果一个原数还能除成另一个原数，大的那个就废了
+            \item 所以一个数要么删不掉，要么变成它能变成的最小原数删去
+            \item 相当于每个数有一个专属原数，现在区间查询这个区间每个人“专属原数”的并
+            \item 直接压一个 unsigned long long 就行，用 ST 表或者线段树之类的做
+        \end{itemize}
+    \end{minipage}
+\end{frame}
+
+
+
+
+\subsection{NOISG 2020 Aesthetic}
+\begin{frame}{NOISG 2020 Aesthetic}
+    $N$ 点 $M$ 边连通无向图，边按编号升序美观性递增。可操作：选 $i<j$，将边 $j$ 的长度加到边 $i$ 上。求操作后 $1\to N$ 最短路径可能达到的最大值。
+    
+    $N,M\le 3\times10^5$
+\end{frame}
+
+\begin{frame}
+    \begin{itemize}
+        \item 似乎大家都把基环树及以前的分数拿到了
+        \item 首先你拉出最短路树，再把树上的 $(1,n)$ 最短路拿出来
+        \item 如果我们压根没操作这个路径，那答案肯定不变，这不好
+        \item 如果我们操作了这个路径，有可能最短路仍然是这一条，若变化则一定不经过我们操作的边
+        \item 证明是简单的……较为直观的理解是：你改变路径本来就是为了绕开我们操作的边，现在你又没绕过，你变化干什么？
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \begin{itemize}
+        \item 因此我们拎出来最短路径，逐个考虑操作边
+        \item 我们要做的实际上是要找一条非树边，使他可以跨越我们的操作边
+        \item 这是简单的，我们从 $1$ 到 $n$ 扫描，添加子树的所有连向后面的非树边，到时候再删去
+        \item 扫描线+数据结构维护即可，应该可以用 multiset
+    \end{itemize}
+\end{frame}
+
+
+
+
+\section{第二套}
+
+\subsection{JOI 2015 铁路旅行 / Railroad Trip}
+\begin{frame}{JOI 2015 铁路旅行 / Railroad Trip}
+    从 $1$ 到 $N$ 的链状铁路网，铁路 $i$ 连接 $i$ 和 $i+1$。纸质车票 $A_i$，IC 卡票价 $B_i<A_i$，购卡费 $C_i$。$M-1$ 天行程 $P_1\to P_2\to\cdots\to P_M$，求最小总花费（购卡费 + 票价）。
+    
+    $N,M\le 10^5$
+\end{frame}
+
+\begin{frame}{Solution}
+    简单贪心
+\end{frame}
+
+
+
+
+
+
+
+
+
+\subsection{ROI 2015 潜水艇 / Submarine}
+\begin{frame}{ROI 2015 潜水艇 / Submarine}
+    $h\times w$ 网格，每个元素有权值（字母编码映射）。潜在潜艇图像由三部分组成：
+    \begin{itemize}
+        \item 艇身：水平带，$(x_1,y_1)\to(x_2,y_1)$
+        \item 指挥塔：垂直带，$(x_3,y_1)\to(x_3,y_2)$，$x_1\le x_3<x_2$
+        \item 尾部：垂直带，$(x_4,y_3)\to(x_4,y_4)$，$x_3<x_4\le x_2$，$y_3\le y_1\le y_4$
+    \end{itemize}
+    求所有可能潜艇图像中元素和的最大值。
+    
+    $h,w\le 2000$
+\end{frame}
+
+\begin{frame}
+    \begin{itemize}
+        \item 谁家小种花
+        \item 预处理一个点开始向上的最大和段作为指挥塔
+        \item 预处理一个点两侧的最大和段作为尾部
+        \item 考虑沿着潜艇的主干DP，可以划分几个阶段，然后 DP 就好了
+        \item $O(hw)$
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+
+
+\subsection{洛谷 P14938 竞唆芳杰}
+\begin{frame}{洛谷 P14938 竞唆芳杰}
+    $n$ 个点的有根外向树，初始时 $\{a\}$ 为空。操作：在树上加入不超过 $k$ 条有向边，然后重复选择点 $u$，删除所有从 $u$ 可到达的点，将 $u$ 加入 $a$ 末尾，直到图删空。求本质不同的序列 $\{a\}$ 个数，对 $998244353$ 取模。
+    
+    $n\le 5000$
+\end{frame}
+
+\begin{frame}{Solution}
+    % 整行居中布局
+    \centering
+    % 左侧图片区域 占 0.48 文本宽
+    \begin{minipage}{0.40\textwidth}
+    \includegraphics[width=\linewidth]{pic/1.png}
+    \end{minipage}
+    \hfill % 中间留白分隔
+    % 右侧文字区域
+    \begin{minipage}{0.55\textwidth}
+        \begin{itemize}
+            \item 兄弟，这是个诈骗题
+            \item 首先考虑不能加边的情况，是一个简单的树上背包
+            \item 限制是祖先不能先于后代出现，以及最后一个数必须是 $ 1 $
+            \item 然后你发现，就算加了边，原来的祖先还是不能先于后代出现，限制没变弱
+            \item 那自然要想想加边到底有啥用。我们希望加了边之后要能做一些我们之前做不到的事。你发现可以向 $ 1 $ 连边，也就是没有了最后一个数得是 $ 1 $ 的限制
+            \item 直接树上背包
+        \end{itemize}
+    \end{minipage}
+\end{frame}
+
+
+
+
+\subsection{洛谷 P16827 谐音替换}
+\begin{frame}{洛谷 P16827 谐音替换}
+    $X$ 是 $Y$ 的谐音替换，当且仅当 $X$ 是 $Y$ 的前缀或后缀。
+    
+    给定 $n$ 个语言串 $S_i$ 和 $m$ 个待分析串 $T_i$。对每个 $T$，求将其分割为三个非空段 $A+B+C$ 的方案数，使得每段都是 $S$ 中某个串的谐音替换。
+    
+    $\sum|S_i|\le 5\times10^5,\ \sum|T_i|\le 3\times10^5$
+\end{frame}
+
+\begin{frame}{Solution}
+    % 整行居中布局
+    \centering
+    % 左侧图片区域 占 0.48 文本宽
+    \begin{minipage}{0.40\textwidth}
+    \includegraphics[width=\linewidth]{pic/1.png}
+    \end{minipage}
+    \hfill % 中间留白分隔
+    % 右侧文字区域
+    \begin{minipage}{0.55\textwidth}
+        \begin{itemize}
+            \item 兄弟，这也是个诈骗题
+            \item 首先把所有的前后缀都哈希一下
+            \item 我们先只管前缀，考虑对于一个 $L$，有哪些 $R$ 能使得 $T_{[L,R]}$ 是前缀-谐音替换
+            \item 注意到前缀的前缀也是前缀，所以我们可以知道合法的 $R$ 一定是一个以 $L$ 为左端点的区间。可以用哈分加二希判断
+        \end{itemize}
+    \end{minipage}
+\end{frame}
+\begin{frame}{Solution}
+    % 整行居中布局
+    \centering
+    % 左侧图片区域 占 0.48 文本宽
+    \begin{minipage}{0.40\textwidth}
+    \includegraphics[width=\linewidth]{pic/1.png}
+    \end{minipage}
+    \hfill % 中间留白分隔
+    % 右侧文字区域
+    \begin{minipage}{0.55\textwidth}
+        \begin{itemize}
+            \item 现在考虑计算答案，我们枚举第二个分界点，暴力做法是再枚举第一个分界点，判断三段行不行。但你注意到合法的前缀也是区间，合法的中间段也是区间，所以合法的转移点也是区间。
+            \item 做个二维矩形并就可以支持查询哪些区间合法
+            \item 完全无脑的数据结构做法
+        \end{itemize}
+    \end{minipage}
+\end{frame}
+
+% ===== 结束页 =====
+
+\begin{frame}
+    \begin{center}
+        {\Huge\calligra Thanks!}
+    \end{center}
+\end{frame}
+
+\end{document}

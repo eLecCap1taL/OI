@@ -127,8 +127,8 @@ void print(){cout<<nval+S[rt]<<"\n";}
 char ED;
 int main(){
 	cerr<<abs(&ST-&ED)/1024.0/1024<<"\n";
-//	freopen("taki.in","r",stdin);
-//	freopen("taki.out","w",stdout);
+	freopen("taki.in","r",stdin);
+	freopen("taki.out","w",stdout);
 	k=read(),q=read();
 	for(int i=1;i<=k;i++)
 	{

@@ -1,0 +1,4 @@
+1 square 预处理
+2 direction
+https://qoj.ac/contest/1814/problem/349   期望DP
+2 fusion DS

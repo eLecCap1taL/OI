@@ -70,3 +70,7 @@ bundle_06.js
 # Old PowerPoint (superseded by LaTeX)
 *.zip
 *.pptx
+keda/模拟赛1/
+*.in
+*.ans
+*.exe

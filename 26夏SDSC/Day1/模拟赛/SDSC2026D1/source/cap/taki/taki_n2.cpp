@@ -24,7 +24,6 @@
 #include <cmath>
 #include <random>
 #include <chrono>
-#include <list>
 // #include "ext/pb_ds/assoc_container.hpp"
 // #include "ext/pb_ds/tree_policy.hpp"
 // #include "ext/pb_ds/priority_queue.hpp"
@@ -208,7 +207,67 @@ OPERATOR_FOR_INSERT(unordered_set)
 OPERATOR_FOR_INSERT(multiset)
 OPERATOR_FOR_INSERT(unordered_multiset)
 
+template<typename T1,typename T2>
+inline bool chkmax(T1& x,const T2& y){return (T1)x<y?x=(T1)y,true:false;}
+template<typename T1,typename T2>
+inline bool chkmin(T1& x,const T2& y){return (T1)y<x?x=(T1)y,true:false;}
 
+class TIMECHKER{
+public:
+	~TIMECHKER(){
+		// cerr<<endl<<clock()*1.0/CLOCKS_PER_SEC<<endl;
+	}
+}TIMECHECKER;
+
+constexpr int mod=998244353;
+// constexpr int mod=1e9+7;
+
+constexpr int& mdd(int& x){return x;}
+template<class T1,class ...T2>
+constexpr int& mdd(int& x,const T1& y,const T2& ...xr){
+	x+=y;
+	if(x>=mod)	x-=mod;
+	return mdd(x,xr...);
+}
+constexpr int& mmv(int& x){return x;}
+template<class T1,class ...T2>
+constexpr int& mmv(int& x,const T1& y,const T2& ...xr){
+	x-=y;
+	if(x<0)	x+=mod;
+	return mmv(x,xr...);
+}
+constexpr int& mll(int& x){return x;}
+template<class T1,class ...T2>
+constexpr int& mll(int& x,const T1& y,const T2& ...xr){
+	x=(LL)x*y%mod;
+	return mll(x,xr...);
+}
+constexpr int add(const int& x){return x;}
+template<class ...T>
+constexpr int add(const int& x,const T& ...xr){
+	int ret=x+add(xr...);
+	if(ret>=mod)	ret-=mod;
+	return ret;
+}
+constexpr int mul(const int& x){return x;}
+template<class ...T>
+constexpr int mul(const int& x,const T& ...xr){
+	return (LL)x*mul(xr...)%mod;
+}
+constexpr int mev(const int& x){return mod-x;}
+
+constexpr int qpow(int x,int y){
+	int ret=1;
+	while(y){
+		if(y&1)	mll(ret,x);
+		mll(x,x),y>>=1;
+	}
+	return ret;
+}
+
+/*
+
+*/
 
 // make stone logic
 class Stone{
@@ -235,168 +294,70 @@ public:
 	}
 	
 	bool operator < (const Stone& x)const{
-		if(sum*x.N==x.sum*N){
-			if(sum==x.sum){
-				if(val==x.val){
-					return N<x.N;
-				}
-				return val<x.val;
-			}
-			return sum<x.sum;
-		}
 		return sum*x.N<x.sum*N;
 	}
 };
 Stone operator + (const Stone& x,const Stone& y){
-	return Stone(x.sum+y.sum,x.val+y.val+y.N*x.sum,x.N+y.N);
+	return Stone(x.sum+y.sum,x.val+y.val+x.N*y.sum,x.N+y.N);
 }
-
-	
-class SegmentTree{
-public:
-	class Node{
-	public:
-		int l,r;
-		Stone s;
-	}tr[(MAXN<<2)<<2];
-	inline int lc(int x){return x<<1;}
-	inline int rc(int x){return x<<1|1;}
-	void push_up(int p){
-		tr[p].s=tr[lc(p)].s+tr[rc(p)].s;
-	}
-	void build(int p,int l,int r){
-		tr[p].l=l,tr[p].r=r;
-		if(l==r)	return ;
-		int mid=(l+r)>>1;
-		build(lc(p),l,mid);
-		build(rc(p),mid+1,r);
-	}
-	void upd(int p,int pos,const Stone& res){
-		if(tr[p].l==tr[p].r){
-			tr[p].s=res;
-			return ;
-		}
-		int mid=(tr[p].l+tr[p].r)>>1;
-		if(pos<=mid)	upd(lc(p),pos,res);
-		else	upd(rc(p),pos,res);
-		push_up(p);
-	}
-	
-	LL root_ans(){
-		return tr[1].s.val;
-	}
-}tr;
-
-// register stone operation list
-class StoneRecoder{
-protected:
-	vector<int> ent[MAXN<<2];
-	
-	// re-index
-	int cnt=0;
-	map<Stone,int> mp;
-	
-	// map_int to rank
-	int idx[MAXN<<2];
-	
-	class StoneLoader{
-	public:
-		Stone base;
-		int cnt;
-		
-		void load(){
-			cnt++;
-		}
-		void unload(){
-			cnt--;
-		}
-		Stone get(){
-			if(cnt==0)	return Stone(0,0,0);
-			return Stone(
-	            base.sum*cnt,
-	            base.val*cnt+base.sum*base.N*cnt*(cnt-1)/2,
-	            base.N * cnt
-	        );
-		}
-	}ls[MAXN<<2];
-	
-public:
-	void load(int tm,const Stone& res){
-		if(mp[res]==0)	mp[res]=++cnt;
-		
-		int id=mp[res];
-		
-		ent[tm]+=id;
-	}
-	void unload(int tm,const Stone& res){
-		int id=mp[res];
-		
-		ent[tm]+=-id;
-	}
-	
-	void process(int q){
-		cnt=0;
-		for(const auto& [res,id]:mp){
-			idx[id]=++cnt;
-			ls[cnt].base=res;
-		}
-		
-		// now [cnt] is the num of Stones
-		tr.build(1,1,cnt);
-		
-		foru(i,0,q){
-			// now, answer the querys
-			
-			for(auto opt:ent[i]){
-				if(opt<0){
-					opt=idx[-opt];
-					// del
-					ls[opt].unload();
-				}else{
-					opt=idx[opt];
-					// add
-					ls[opt].load();
-				}
-				tr.upd(1,opt,ls[opt].get());
-			}
-			
-			printf("%lld\n",tr.root_ans());
-		}
-	}
-}rec;
 
 // seq
 class Seq{
 protected:
-	list<Stone> a[MAXN];
+	deque<Stone> a[MAXN];
 public:
-	void push_back(int id,int x,int tm){
-		a[id].emplace_back(x,x,1);
+	void push_back(int id,int x){
+		Stone res(x,x,1);
+		
+		a[id].push_back(res);
 		
 		//shrink
-		while(sz(a[id])>1 && a[id].back()<*prev(a[id].end(),2)){
+		while(sz(a[id])>1 && a[id][sz(a[id])-1]<a[id][sz(a[id])-2]){
 			auto res=a[id].back();
 			a[id].pop_back();
-			
-			rec.unload(tm,a[id].back());
 			a[id].back().add_right(res);
 		}
 		
-		rec.load(tm,a[id].back());
+		// for(auto x:a[id])	printf("{%lld,%lld,%d} ",x.sum,x.val,x.N);
+		// HH;
 	}
-	void push_front(int id,int x,int tm){
-		a[id].emplace_front(x,x,1);
+	void push_front(int id,int x){
+		Stone res(x,x,1);
+		
+		a[id].push_front(res);
 		
 		//shrink
-		while(sz(a[id])>1 && *next(a[id].begin(),1)<a[id].front()){
+		while(sz(a[id])>1 && a[id][1]<a[id][0]){
 			auto res=a[id].front();
 			a[id].pop_front();
-			
-			rec.unload(tm,a[id].front());
 			a[id].front().add_left(res);
 		}
+	}
+	
+	
+	// brute
+	LL get_ans(int k){
+		vector<Stone> ls;
 		
-		rec.load(tm,a[id].front());
+		foru(i,1,k){
+			for(const auto& res:a[i]){
+				ls+=res;
+			}
+		}
+		
+		sort(All(ls));
+		
+		if(ls.empty()){
+			return 0;
+		}
+		
+		Stone ans(0,0,0);
+		for(const auto& res:ls){
+			ans.add_right(res);
+			printf("final stone [%d]{%lld,%lld,%d}\n",1,res.sum,res.val,res.N);
+		}
+		
+		return ans.val;
 	}
 }seq;
 
@@ -405,10 +366,7 @@ public:
 int k,q;
 int s[MAXN];
 
-signed main(){
-	freopen("taki.in","r",stdin);
-	freopen("taki.out","w",stdout);
-	 
+void solve(bool SPE){ 
 	k=RIN,q=RIN;
 	
 	foru(i,1,k){
@@ -416,22 +374,53 @@ signed main(){
 
 		foru(j,1,s[i]){
 			int x=RIN;
-			seq.push_back(i,x,0);
+			seq.push_back(i,x);
 		}
 	}
+	
+	printf("%lld\n",seq.get_ans(k));
 	
 	foru(i,1,q){
 		// process operations
 		int op=RIN,t=RIN,v=RIN;
 		
 		if(op==0){
-			seq.push_front(t,v,i);
+			seq.push_front(t,v);
 		}else{
-			seq.push_back(t,v,i);
+			seq.push_back(t,v);
 		}
+	
+		printf("%lld\n",seq.get_ans(k));
 	}
 	
-	rec.process(q);
+	return ;
+}
+/*
+检查文件读写
+检查多测清空
+检查数组大小
+*/
+signed main()
+{
+	#define RFILE
+	// #define MULTITEST
+	// #define TESTCASEID
 	
+	#ifdef RFILE
+	#ifndef CPEDITOR
+	freopen("taki.in","r",stdin);
+	freopen("taki.out","w",stdout);
+	#endif
+	#endif
+	
+	#ifdef MULTITEST
+	int T=RIN;
+	#else
+	int T=1;
+	#endif
+	
+	for(int i=1;i<=T;i++){
+		solve(i==0);
+	}
 	return 0;
 }

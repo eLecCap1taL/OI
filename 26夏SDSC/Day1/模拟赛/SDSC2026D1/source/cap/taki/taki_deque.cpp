@@ -368,13 +368,13 @@ public:
 // seq
 class Seq{
 protected:
-	list<Stone> a[MAXN];
+	deque<Stone> a[MAXN];
 public:
 	void push_back(int id,int x,int tm){
 		a[id].emplace_back(x,x,1);
 		
 		//shrink
-		while(sz(a[id])>1 && a[id].back()<*prev(a[id].end(),2)){
+		while(sz(a[id])>1 && a[id].back()<a[id][sz(a[id])-2]){
 			auto res=a[id].back();
 			a[id].pop_back();
 			
@@ -388,7 +388,7 @@ public:
 		a[id].emplace_front(x,x,1);
 		
 		//shrink
-		while(sz(a[id])>1 && *next(a[id].begin(),1)<a[id].front()){
+		while(sz(a[id])>1 && a[id][1]<a[id].front()){
 			auto res=a[id].front();
 			a[id].pop_front();
 			

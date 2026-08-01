@@ -24,7 +24,6 @@
 #include <cmath>
 #include <random>
 #include <chrono>
-#include <list>
 // #include "ext/pb_ds/assoc_container.hpp"
 // #include "ext/pb_ds/tree_policy.hpp"
 // #include "ext/pb_ds/priority_queue.hpp"
@@ -208,7 +207,69 @@ OPERATOR_FOR_INSERT(unordered_set)
 OPERATOR_FOR_INSERT(multiset)
 OPERATOR_FOR_INSERT(unordered_multiset)
 
+template<typename T1,typename T2>
+inline bool chkmax(T1& x,const T2& y){return (T1)x<y?x=(T1)y,true:false;}
+template<typename T1,typename T2>
+inline bool chkmin(T1& x,const T2& y){return (T1)y<x?x=(T1)y,true:false;}
 
+class TIMECHKER{
+public:
+	~TIMECHKER(){
+		// cerr<<endl<<clock()*1.0/CLOCKS_PER_SEC<<endl;
+	}
+}TIMECHECKER;
+
+constexpr int mod=998244353;
+// constexpr int mod=1e9+7;
+
+constexpr int& mdd(int& x){return x;}
+template<class T1,class ...T2>
+constexpr int& mdd(int& x,const T1& y,const T2& ...xr){
+	x+=y;
+	if(x>=mod)	x-=mod;
+	return mdd(x,xr...);
+}
+constexpr int& mmv(int& x){return x;}
+template<class T1,class ...T2>
+constexpr int& mmv(int& x,const T1& y,const T2& ...xr){
+	x-=y;
+	if(x<0)	x+=mod;
+	return mmv(x,xr...);
+}
+constexpr int& mll(int& x){return x;}
+template<class T1,class ...T2>
+constexpr int& mll(int& x,const T1& y,const T2& ...xr){
+	x=(LL)x*y%mod;
+	return mll(x,xr...);
+}
+constexpr int add(const int& x){return x;}
+template<class ...T>
+constexpr int add(const int& x,const T& ...xr){
+	int ret=x+add(xr...);
+	if(ret>=mod)	ret-=mod;
+	return ret;
+}
+constexpr int mul(const int& x){return x;}
+template<class ...T>
+constexpr int mul(const int& x,const T& ...xr){
+	return (LL)x*mul(xr...)%mod;
+}
+constexpr int mev(const int& x){return mod-x;}
+
+constexpr int qpow(int x,int y){
+	int ret=1;
+	while(y){
+		if(y&1)	mll(ret,x);
+		mll(x,x),y>>=1;
+	}
+	return ret;
+}
+
+/*
+
+*/
+
+bool bg;
 
 // make stone logic
 class Stone{
@@ -292,34 +353,14 @@ class StoneRecoder{
 protected:
 	vector<int> ent[MAXN<<2];
 	
-	// re-index
+	// reidx
 	int cnt=0;
 	map<Stone,int> mp;
 	
-	// map_int to rank
+	// map_int to rk
 	int idx[MAXN<<2];
-	
-	class StoneLoader{
-	public:
-		Stone base;
-		int cnt;
-		
-		void load(){
-			cnt++;
-		}
-		void unload(){
-			cnt--;
-		}
-		Stone get(){
-			if(cnt==0)	return Stone(0,0,0);
-			return Stone(
-	            base.sum*cnt,
-	            base.val*cnt+base.sum*base.N*cnt*(cnt-1)/2,
-	            base.N * cnt
-	        );
-		}
-	}ls[MAXN<<2];
-	
+	vector<Stone> ls[MAXN<<2];
+	int loaded[MAXN<<2]; // number of a stone
 public:
 	void load(int tm,const Stone& res){
 		if(mp[res]==0)	mp[res]=++cnt;
@@ -338,7 +379,7 @@ public:
 		cnt=0;
 		for(const auto& [res,id]:mp){
 			idx[id]=++cnt;
-			ls[cnt].base=res;
+			ls[cnt]+=res;
 		}
 		
 		// now [cnt] is the num of Stones
@@ -351,13 +392,22 @@ public:
 				if(opt<0){
 					opt=idx[-opt];
 					// del
-					ls[opt].unload();
+					loaded[opt]--;
 				}else{
 					opt=idx[opt];
 					// add
-					ls[opt].load();
+					loaded[opt]++;
+					
+					// calc new stacked-stone
+					if(loaded[opt]>sz(ls[opt])){
+						ls[opt]+=ls[opt].back()+ls[opt][0];
+					}
 				}
-				tr.upd(1,opt,ls[opt].get());
+				if(loaded[opt]==0){
+					tr.upd(1,opt,Stone(0,0,0));
+				}else{
+					tr.upd(1,opt,ls[opt][loaded[opt]-1]);
+				}
 			}
 			
 			printf("%lld\n",tr.root_ans());
@@ -368,13 +418,15 @@ public:
 // seq
 class Seq{
 protected:
-	list<Stone> a[MAXN];
+	deque<Stone> a[MAXN];
 public:
 	void push_back(int id,int x,int tm){
-		a[id].emplace_back(x,x,1);
+		Stone res(x,x,1);
+		
+		a[id].push_back(res);
 		
 		//shrink
-		while(sz(a[id])>1 && a[id].back()<*prev(a[id].end(),2)){
+		while(sz(a[id])>1 && a[id][sz(a[id])-1]<a[id][sz(a[id])-2]){
 			auto res=a[id].back();
 			a[id].pop_back();
 			
@@ -385,10 +437,12 @@ public:
 		rec.load(tm,a[id].back());
 	}
 	void push_front(int id,int x,int tm){
-		a[id].emplace_front(x,x,1);
+		Stone res(x,x,1);
+		
+		a[id].push_front(res);
 		
 		//shrink
-		while(sz(a[id])>1 && *next(a[id].begin(),1)<a[id].front()){
+		while(sz(a[id])>1 && a[id][1]<a[id][0]){
 			auto res=a[id].front();
 			a[id].pop_front();
 			
@@ -405,10 +459,7 @@ public:
 int k,q;
 int s[MAXN];
 
-signed main(){
-	freopen("taki.in","r",stdin);
-	freopen("taki.out","w",stdout);
-	 
+void solve(bool SPE){ 
 	k=RIN,q=RIN;
 	
 	foru(i,1,k){
@@ -433,5 +484,37 @@ signed main(){
 	
 	rec.process(q);
 	
+	return ;
+}
+/*
+检查文件读写
+检查多测清空
+检查数组大小
+*/
+
+bool ed;
+signed main()
+{
+	cerr<<(&bg-&ed)/1024.0/1024.0<<endl;
+	#define RFILE
+	// #define MULTITEST
+	// #define TESTCASEID
+	
+	#ifdef RFILE
+	#ifndef CPEDITOR
+	freopen("taki.in","r",stdin);
+	freopen("taki.out","w",stdout);
+	#endif
+	#endif
+	
+	#ifdef MULTITEST
+	int T=RIN;
+	#else
+	int T=1;
+	#endif
+	
+	for(int i=1;i<=T;i++){
+		solve(i==0);
+	}
 	return 0;
 }

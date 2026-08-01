@@ -4,6 +4,7 @@
   int main(){
 	freopen("uika.in","r",stdin);
 	freopen("uika.out","w",stdout);
+    ios::sync_with_stdio(0);
     cin>>t;
     while(t--){
         cin>>n>>k>>m;

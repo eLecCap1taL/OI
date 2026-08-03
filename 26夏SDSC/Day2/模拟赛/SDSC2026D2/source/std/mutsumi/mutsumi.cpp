@@ -227,7 +227,7 @@ signed main()
 			
 			for(int k=l+1;k<r;k+=2){
 				if(f[l][k]==INT_MAX || f[k+1][r]==INT_MAX)	continue;
-				chkmin(f[l][r],max({res,f[l][k],f[k+1][r]-(k-l+1)/2}));
+				chkmin(f[l][r],max({f[l][k],f[k+1][r]-(k-l+1)/2}));
 			}
 			
 			if(L==2 || f[l+1][r-1]<=res){

@@ -1,0 +1,37 @@
+subtasks:
+  - score: 10
+    type: min
+    cases:
+      - '1'
+      - '2'
+  - score: 20
+    type: min
+    cases:
+      - '3'
+      - '4'
+  - score: 20
+    type: min
+    cases:
+      - '5'
+      - '6'
+  - score: 30
+    type: min
+    cases:
+      - '7'
+      - '8'
+      - '9'
+      - '10'
+  - score: 20
+    type: min
+    cases:
+      - '11'
+      - '12'
+      - '13'
+      - '14'
+
+inputFile: 'a#.in'
+outputFile: 'a#.ans'
+
+specialJudge:
+  language: cpp17
+  fileName: spj_cpp.cpp

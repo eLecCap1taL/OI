@@ -1,0 +1,225 @@
+﻿\documentclass[aspectratio=169]{ctexbeamer}
+\usepackage[T1]{fontenc}
+\usepackage{latexsym,amsmath,xcolor,multicol,booktabs,calligra}
+\usepackage{graphicx,listings,stackengine}
+\usepackage{hyperref}
+
+\usepackage{PekingU}
+
+% 去掉每节/子节前面的自动目录页
+\AtBeginSection[]{}
+\AtBeginSubsection[]{}
+
+% ===== 每节课改这里 =====
+\author{Cap1taL}
+\title{杂题选讲}
+\subtitle{?!?!}
+\date{2026年8月}
+% ========================
+
+% 代码高亮设置
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{halfgray}{gray}{0.55}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\bfseries\color{deepblue},
+    emphstyle=\ttfamily\color{deepred},
+    stringstyle=\color{deepgreen},
+    numbers=left,
+    numberstyle=\small\color{halfgray},
+    rulesepcolor=\color{red!20!green!20!blue!20},
+    frame=shadowbox,
+}
+
+\begin{document}
+
+\kaishu
+
+% 封面
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% 目录
+% \begin{frame}{目录}
+%     \tableofcontents[sectionstyle=show,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/shaded/hide]
+% \end{frame}
+
+% ===== 从这里开始写你的内容 =====
+
+\section{我杂了好多好多题}
+
+\subsection{洛谷 P8314 Parkovi}
+\begin{frame}{洛谷 P8314 Parkovi}
+    给定一棵 $n$ 个节点的树，边有长度
+
+选择 $k$ 个位置修建公园（同一节点最多一个）
+
+最小化每个节点到最近公园距离的最大值
+
+$n\leq 2\times 10^5$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 一道小清新的树上贪心
+        \item 最大值最小，首先套一个二分答案，问题转化为如何 check
+        \item 我们从端点（叶子）开始考虑
+        \item 使用贪心策略，则一个公园会被尽量放的更浅，以期望覆盖更多的节点
+        \item 每个节点并不关心子树内的具体决策
+        \item 使用 DFS 遍历树，合并子树时先考虑能不能子树间相互覆盖，再考虑当前根节点是否必须放置公园
+        \item 细节：根节点没有父节点 
+    \end{itemize}
+\end{frame}
+
+\subsection{Codeforces 1648E Air Reform}
+
+\begin{frame}{Codeforces 1648E Air Reform}
+      原图 $G$ 有 $n$ 点 $m$ 边，边权 $c_i$，路径费用定义为路径上最大边权。补图 $G'$ 包含所有 $G$ 中没有的边，边权为 $G$ 中两点间最小路径费用。对 $G$ 中每条边，求 $G'$ 中该两点间的最小路径费用。
+
+      $n,m\le 2\times 10^5$，$\sum n,\sum m\le 2\times 10^5$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 首先拉出来原图的 Kruskal 重构树，两点在原图的最小路径费用就是 LCA 的点权
+        \item 现在对补图用 Boruvka。尝试对每个点求出不同联通块的最小出边，我们发现两点的 LCA 越深，路径费用越小，体现在重构树上即为 dfn 越接近 LCA 越靠下
+        \item 因此，我们只需要对每个点，找到 dfn 意义下左侧和右侧第一个 “不同联通块” 且 “原图中无连边” 的点即可
+        \item 具体实现可以用 set 维护联通块，直接在联通块内跳 dfn，若有连边就再暴力跳，失败的尝试次数有限
+        \item 复杂度为 $O((n+m)\log^2 n)$，使用链表替换 set 可以做到单 $\log$，可能多了一些细节
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+
+\subsection{CodeForces 1693F I Might Be Wrong}
+\begin{frame}{CodeForces 1693F I Might Be Wrong}
+    给定一个 01 字符串 $s$，长度为 $n$
+
+    每次操作可选择区间 $[l,r]$，付出 $|cnt_0-cnt_1|+1$ 的代价，把区间内调整成先 $ 0 $ 后 $ 1 $ 的形式。
+    
+    问把整个序列调成 先 $ 0 $ 后 $ 1 $ 所需的最小代价
+
+$n\leq 2\times 10^5$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 不失一般性地，我们钦定先有 $cnt_1\ge cnt_0$。否则将 01 翻转再 reverse 是等价的
+        \item 这个代价的表达式非常的抽象，告诉我们 $01$ 数量差距越小越小。无论如何，我们先尝试贪心地剪枝一些情形
+        \item 若我们操作的区间末尾有 $ 1 $ 则是不优的。这表明我们的操作区间必定以 $ 0 $ 结尾。
+        \item 注意到我们的钦定保证了 $ 1 $ 是更多的，而区间又以 $ 0 $ 结尾。根据连续性，必然存在一个 $01$ 数量相等的后缀
+        \item 我们直接对这个后缀进行操作，花费 $1$ 的代价，而末尾必定变成了若干 $ 1 $。
+        \item 将末尾的 $ 1 $ 丢弃并缩小操作区间，发现递归到子问题，且代价不劣
+        \item 因此我们发现，我们只需要操作那些 $01$ 数量相等的区间，否则总是可以由一些那样的操作替代
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 现在我们的操作变的比较简洁，可以尝试直接构造操作方案
+        \item 我们依旧总是把全局末尾连续的 $ 1 $ 丢弃，保证末尾是 $ 0 $
+        \item 我们想把 $ 0 $ 前置，不难想到我们总是应该操作一个后缀
+        \item 因此每次找到最长的满足 $01$ 数量相等的后缀进行操作，并删除末尾所有的 $ 1 $
+        \item 若全局有 $cnt_0> cnt_1$ 我们只需要补回删除的若干 $ 1 $，再一次性排序即可
+        \item 可以用类似跳链表的方式做到线性
+    \end{itemize}
+\end{frame}
+
+\subsection{Codeforces 1530G What a Reversal}
+\begin{frame}{Codeforces 1530G What a Reversal}
+    给定两个长度为 $n$ 的 01 串 $a,b$。一次操作可翻转 $a$ 中恰好包含 $k$ 个 1 的子串。求将 $a$ 变为 $b$ 的方案，操作次数 $m\le 4n$，或输出 $-1$ 表示无解。
+    
+    多组数据，$\sum n\le 2000$
+
+    纯粹的数值美……酣畅淋漓，思路顺畅，不卡实现，好题
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 对题目做一点套路的基本分析
+        \item 首先可以发现 $ 1 $ 的数量是不变的。不妨设 $ 1 $ 的数量为 $ m $。因此如果二者 $ 1 $ 的数量都不一样就失败
+        \item 顺着上一条的思路，如果 $k=0$ 或者 $k>m$，显然我们什么都做不了。直接判断是否相等即可
+        \item 而 $k=m$ 数量的情况也很特殊。发现我们无法改变 $ 1 $ 具体的分布，只能改变位置。可以类似哈希一样简单判断
+        \item 开始做一点真正的事情。操作数是 $4n$，这很诡异，同时观察到操作可逆，又要求我们把两个序列变成一样的。自然考虑到中间碰头，都变成一样的形式
+        \item 因此问题转化为，尝试找到一种“标准”，把一个串通过不超过 $2n$ 次操作变为 “标准” 形式
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 我们刚才发现，翻转操作不改变 $ 1 $ 的数量。然而这一限制太弱了，不足以刻画操作。我们更进一步，发现 “内部 $ 1 $” 的排布是不变的
+        \item 这提示我们寻找一种方式刻画 $ 1 $ 的分布
+        \item 差！分！我们设 $p_0,p_1,\cdots,p_m$ 表示 $ 1 $ 之间 $ 0 $ 的数量。在这种意义下，我们的操作等价于选择一个长度为 $k+1$ 的 $p$ 子段 $[L,R]$，自由重新分配 $p_L$ 与 $p_R$，之后翻转中间的 $p$ 序列。
+        \item 我们可以自由分配两端，这很强大
+        \item 又因为我们希望“标准”，不妨先通过若干次操作，把 $p_k+1$ 之后的 $p$ 调整成 $ 0 $。这一步是简单的
+        \item 为什么我们要保留 $[0,k+1]$ 的 $k+2$ 个数？因为这保留了灵活性
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 不妨先不重新分配，对 $[0,k]$ 做一次操作，再对 $[1,k+1]$ 做一次操作，观察发生了什么
+        \item 发现其实序列位移了 $ 2 $ 位
+        \item 这引导我们进行奇偶分类
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution}
+    若 $k$ 是奇数
+    \begin{itemize}
+        \item 在这种情况下，每个数可以到访每个位置
+        \item 而我们有在操作时重新分配首尾的能力
+        \item 立刻想到，我们可以在每两次操作时，把末尾的 $p$ 全部转移给 $p_0$
+        \item 在完成一轮完全位移之后，只有 $p_0$ 有值，值为全序列 $0$ 的个数
+        \item 显然这是一个足够 “标准” 的形式
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution}
+    若 $k$ 是偶数
+    \begin{itemize}
+        \item 在这种情况下，每个数不能到访每个位置
+        \item 我们反而可以利用这一特点，相同奇偶性下标之间的移动正常，不同奇偶性互不影响
+        \item 因此，我们可以在每两次操作时，利用重分配，把 $p_k$ 转移给 $p_0$，把 $p_1$ 转移给 $p_k+1$
+        \item 在完成一轮完全位移之后，只有 $p_0$ 和 $p_k+1$ 有值，值为偶数和奇数位置 $p$ 的和 $0$ 的个数
+        \item 显然这也是一个足够 “标准” 的形式
+    \end{itemize}
+    正序输出 $s$ 的操作序列，倒序输出 $t$ 的序列操作即可
+\end{frame}
+
+\subsection{Codeforces 2162F Beautiful Intervals}
+\begin{frame}{Codeforces 2162F Beautiful Intervals}
+    给定 $n$ 和 $m$ 个区间 $[l_i,r_i]$。构造一个 $0\sim n-1$ 的排列 $p$，对每个区间计算 $v_i=\operatorname{mex}(p[l_i..r_i])$，设多重集 $M=\{v_1,\dots,v_m\}$。最小化 $\operatorname{mex}(M)$。
+    
+    多组数据，$\sum n,\sum m\le 3000$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 要求最小化 mex，先尝试能不能构造使得 mex 为 $ 0 $。
+        \item 这要求所有 $v$ 都不为 $ 0 $，即要求每个区间都有 $ 0 $。这等价于要求所有区间有交
+        \item 如果上述条件不满足，我们尝试构造 mex 为 $ 1 $。即所有 $ v $ 不能为 $ 1 $，每个区间里要么连 $ 0 $ 都没有，一旦有 $ 0 $ 就必须有 $ 1 $。那么自然想到 $ 0,1 $ 放在一起对完了。要求区间要么完全覆盖这两个位置，要么完全不覆盖
+        \item 如果上述条件还不满足，我们尝试构造 mex 为 $ 2 $。这要求每个区间一旦有 $0,1$ 就必须也有 $2$。这提示我们构造 $[0,2,1]$，显然区间一旦包含 $0,1$ 就必定包含 $2$
+        \item 做完了
+    \end{itemize}
+\end{frame}
+
+
+% ===== 结束页 =====
+
+\begin{frame}
+    \begin{center}
+        {\Huge\calligra Thanks!}
+    \end{center}
+\end{frame}
+
+\end{document}

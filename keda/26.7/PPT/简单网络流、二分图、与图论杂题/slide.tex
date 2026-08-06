@@ -1,0 +1,205 @@
+﻿\documentclass[aspectratio=169]{ctexbeamer}
+\usepackage[T1]{fontenc}
+\usepackage{latexsym,amsmath,xcolor,multicol,booktabs,calligra}
+\usepackage{graphicx,listings,stackengine}
+\usepackage{hyperref}
+
+\usepackage{PekingU}
+
+% 去掉每节/子节前面的自动目录页
+\AtBeginSection[]{}
+\AtBeginSubsection[]{}
+
+% ===== 每节课改这里 =====
+\author{Cap1taL}
+\title{简单网络流、二分图、与图论杂题}
+\subtitle{我求求你别再追查牛战士了，行吗？我打了32把，2700的AK，我用了多少把，经济吃没了，队友被我吃垮了，现在好不容易有了便宜枪，你们非说它是瘤子，那枪瘤不瘤我们能不知道吗？那枪才1400一把，枪贩子根本不挣钱，谁家能不遇上个eco局，你就能保证你这一辈子都有钱起AK吗？你把他骂走了，我们都得等死。我不想死，我想活着，行吗？}
+\date{2026年8月}
+% ========================
+
+% 代码高亮设置
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{halfgray}{gray}{0.55}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\bfseries\color{deepblue},
+    emphstyle=\ttfamily\color{deepred},
+    stringstyle=\color{deepgreen},
+    numbers=left,
+    numberstyle=\small\color{halfgray},
+    rulesepcolor=\color{red!20!green!20!blue!20},
+    frame=shadowbox,
+}
+
+\begin{document}
+
+\kaishu
+
+% 封面
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% 目录
+% \begin{frame}{目录}
+%     \tableofcontents[sectionstyle=show,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/shaded/hide]
+% \end{frame}
+
+% ===== 从这里开始写你的内容 =====
+
+\section{网络流}
+
+\subsection{基本算法}
+\begin{frame}{最大流-基本概念}
+    \begin{itemize}
+        \item 最大流最小割定理
+        \item 残量网络
+        \item 增广路
+        \item 反向边与退流的作用
+        \item 不断增广得到最大流
+        \item 朴素增广的复杂度可以达到 $O(mf)$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{最大流-Dinic}
+    \begin{itemize}
+        \item 给残量网络 bfs 分层
+        \item 从源点开始在层间 “推流”，寻找阻塞流
+        \item 每个节点尝试所有出边推流，推流大小为剩余入流量与 cap 的最小值
+        \item 当前弧优化
+        \item Dinic 的最坏复杂度是 $O(n^2m)$
+        \item 在单位网络上为 $m\min(m^{\frac{1}{2}},n^{\frac{2}{3}})$ 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{最大流-ISAP}
+    \begin{itemize}
+        \item Dinic 每次都要重新 bfs，有没有更厉害的算法
+        \item 有的兄弟，有的
+        \item 与 Dinic 不同，ISAP 采取一次 bfs 的策略。在算法初始时从 T 到 S 分层，并维护各个层的点数
+        \item 当一个点增广结束时，意味着它无法在当前层获得更多增广，于是把它的层数减一，同步维护各层的点数
+        \item 推流仍然只能跨一层进行。所以显然当某一层的点数为 $ 0 $ 时，我们无法在残量网络上进行任何增广，从而得到最大流
+        \item ISAP 的渐进最坏时间复杂度与 Dinic 相同，但实际使用一般会快一半以上
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{最小费用最大流-SSP}
+    \begin{itemize}
+        \item 适用于无负环的情况
+        \item 每次增广的时候改为寻找费用最小的增广路
+        \item 只需要把 Dinic 的 bfs 换成 SPFA
+        \item 增广时从必须跨层增广变为必须沿着最短路 DAG 增广
+        \item 复杂度为 $O(nmf)$
+    \end{itemize}
+\end{frame}
+
+% \subsection{P2053 [SCOI2007] 修车}
+
+% \begin{frame}{P2053 [SCOI2007] 修车}
+%     $M$ 位技术人员，$N$ 位车主。第 $j$ 位技术人员维修第 $i$ 辆车需要时间 $T_{i,j}$。
+%     需要安排每位技术人员所维修的车辆及顺序，使所有顾客的平均等待时间最小。
+%     其中，顾客的等待时间指从送车到维修完毕所用的总时间。
+
+%     \medskip
+%     $2\le M\le 9$，$1\le N\le 60$，$1\le T_{i,j}\le 10^3$。
+% \end{frame}
+
+% \begin{frame}{Solution}
+%     \begin{itemize}
+%         \item 
+%     \end{itemize}
+% \end{frame}
+
+\section{二分图}
+
+\subsection{常用算法}
+\begin{frame}{二分图相关概念}
+    \begin{itemize}
+        \item 最小点覆盖等于最大匹配
+        \item 最大独立集等于最小点覆盖
+        \item 完美匹配
+        \item 最大匹配
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{二分图最大匹配}
+    \begin{itemize}
+        \item 网络流算法运行更快，且 Dinic 并不难写
+        \item 建立源点，连向左部
+        \item 建立汇点，连向右部
+        \item 单位网络，复杂度为 $O(\sqrt{n}m)$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Hall 定理}
+    \begin{itemize}
+        \item Hall 定理给出了二分图完美匹配存在的充要条件
+        \item 不妨设左部点更少。若对于其任意一个子集，邻域大小都大于集合大小，则完美匹配存在
+        \item 必要性显然正确，若存在一个子集不满足上述条件，则这个子集内就会出现失配
+        \item 考虑利用数学归纳证明充分性。设 $N(S)$ 表示子集 $S$ 的邻域
+        \begin{itemize}
+            \item $n=1$ 的边界显然成立
+            \item 如果存在一个真子集 $|S|=N(S)$，则我们可以删除这个子集。假设删除后出现一个非法子集 $T$，则我们可以在一开始选取 $S$ 与 $T$ 的交集，同样会产生矛盾。
+            \item 如果所有子集都满足 $|S|> N(S)$，则我们可以随便删掉一对点，仍然满足 $|S|\ge N(S)$，从而归纳到了子问题
+        \end{itemize}
+        \item 综上 Hall 定理成立
+    \end{itemize}
+\end{frame}
+
+
+\subsection{Codeforces 1634E Fair Share}
+
+\begin{frame}{Codeforces 1634E Fair Share}
+    给定 $m$ 个数组，第 $i$ 个数组包含 $n_i$ 个整数，且 $n_i$ 为偶数。有两个初始为空的可重集 $L, R$。要求将每个数组中的数平均分成两组，分别放入 $L$ 和 $R$，使得最终 $L=R$。判断是否存在这样的分配方案。
+
+    \medskip
+    $1\le m\le 10^5$，$2\le n_i$ 且 $2\mid n_i$，$\sum n_i\le 2\times 10^5$，$1\le a_i\le 10^9$。
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 首先判掉数有奇数个的情况，显然无解
+        \item 操作非常自由，看起来非常可以乱搞，考虑加强限制
+        \item 我们钦定一个序列里，每两个数不能位于同一个集合，在他们之间连边
+        \item 再对于每个数，每两个连边
+        \item 可以发现图总是由偶环构成的。假如存在奇环，必然存在一个点，有两条位置限制连边或值限制连边，而这是不可能的
+        \item 因此这种情况下总是有解，二分图染色即可
+    \end{itemize}
+\end{frame}
+
+\subsection{Codeforces 1519F Chests and Keys}
+
+\begin{frame}{Codeforces 1519F Chests and Keys}
+    有 $n$ 个宝箱，第 $i$ 个宝箱中有 $a_i$ 枚金币；有 $m$ 把钥匙，第 $j$ 把钥匙售价为 $b_j$。
+    Alice 可以在第 $i$ 个宝箱上安装若干种锁，其中第 $j$ 种锁只能用第 $j$ 把钥匙打开，安装花费为 $c_{i,j}$。
+    Bob 可以购买任意数量的钥匙，然后打开他能打开的所有宝箱。若 Bob 的收益（打开宝箱的金币总数减去购买钥匙的费用）为正，则 Bob 获胜；否则 Alice 获胜。
+    Alice 希望加锁后，无论 Bob 如何购买钥匙，Bob 都无法获得正收益。求满足条件的最少加锁花费；若不存在方案，输出 $-1$。
+    
+    \medskip
+    $1\le n,m\le 6$，$1\le a_i,b_j\le 4$，$1\le c_{i,j}\le 10^7$。
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 设 $L_i$ 表示 $i$ 号宝箱上锁的集合，则对于任何一个开宝箱集合 $X$，我们都需要满足：
+        $$
+            \sum_{i\in L_{i\in X}} b_i \ge \sum_{i\in X} a_i
+        $$
+        \item 类似 Hall 定理，因此我们拆点，把每个箱子拆成 $a_i$ 个点，每个锁拆成 $b_i$ 个点，若上面有锁就全部连边。我们要求它存在完美匹配
+        \item 直接设 $f_{i,S}$ 表示宝箱侧前 $i$ 个点，每个锁还有几个点没匹配的集合 $S$ 的答案
+        \item 转移只需要枚举当前宝箱点匹配什么点即可，复杂度 $O(n\times 5^{2n})$，DP 的常数很小
+    \end{itemize}
+\end{frame}
+
+% ===== 结束页 =====
+
+\begin{frame}
+    \begin{center}
+        {\Huge\calligra Thanks!}
+    \end{center}
+\end{frame}
+
+\end{document}

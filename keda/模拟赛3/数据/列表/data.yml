@@ -1,0 +1,40 @@
+subtasks:
+  - score: 10
+    type: min
+    cases:
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      - '5'
+  - score: 30
+    type: min
+    cases:
+      - '6'
+      - '7'
+      - '8'
+      - '9'
+      - '10'
+  - score: 30
+    type: min
+    cases:
+      - '11'
+      - '12'
+      - '13'
+      - '14'
+      - '15'
+  - score: 5
+    type: min
+    cases:
+      - '16'
+  - score: 25
+    type: min
+    cases:
+      - '17'
+      - '18'
+      - '19'
+      - '20'
+      - '21'
+
+inputFile: 'c#.in'
+outputFile: 'c#.ans'

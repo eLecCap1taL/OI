@@ -1,0 +1,160 @@
+﻿\documentclass[aspectratio=169]{ctexbeamer}
+\usepackage[T1]{fontenc}
+\usepackage{latexsym,amsmath,xcolor,multicol,booktabs,calligra}
+\usepackage{graphicx,listings,stackengine}
+\usepackage{hyperref}
+
+\usepackage{PekingU}
+
+% 去掉每节/子节前面的自动目录页
+\AtBeginSection[]{}
+\AtBeginSubsection[]{}
+
+% ===== 每节课改这里 =====
+\author{Cap1taL}
+\title{字符串算法}
+\date{2026年8月}
+% ========================
+
+% 代码高亮设置
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{halfgray}{gray}{0.55}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\bfseries\color{deepblue},
+    emphstyle=\ttfamily\color{deepred},
+    stringstyle=\color{deepgreen},
+    numbers=left,
+    numberstyle=\small\color{halfgray},
+    rulesepcolor=\color{red!20!green!20!blue!20},
+    frame=shadowbox,
+}
+
+\begin{document}
+
+\kaishu
+
+% 封面
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% 目录
+% \begin{frame}{目录}
+%     \tableofcontents[sectionstyle=show,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/shaded/hide]
+% \end{frame}
+
+% ===== 从这里开始写你的内容 =====
+
+\section{字符串算法}
+
+\subsection{Manacher 回文串算法}
+\begin{frame}{Manacher}
+    \begin{itemize}
+        \item 用于在线性时间内求出一个字符串内所有的回文串
+        \item 回文串总量是 $O(n^2)$ 的，所以看起来在线性时间内求出所有回文串是不可能的
+        \item 但事实上，我们可以在每个回文中心处记录回文半径，来将信息量降低到 $O(n)$
+        \item 使用哈希加二分等手段可以在 $O(n\log n)$ 内求出它们，使用后缀数组等也可以做到线性
+        \item 不过我们有针对回文串更简单的做法，就是 Manacher
+        \item 下面我们将以奇数长度（回文中心是字符）的情况为例
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Manacher}
+    \begin{itemize}
+        \item 记一个位置的回文半径为 $d_i$
+        \item 我们尝试从左向右扫描，依次求出每个 $d_i$。不妨假设我们现在正要求解 $d_i$，此时所有 $<i$ 的 $d$ 都已经求解完毕了
+        \item 在我们扫描的过程中，我们时刻维护我们已知的右端点 $r$ 最大的回文串
+        \item 现在有多种情况：
+        \begin{itemize}
+            \item $i>r$：此时我们从 $[i,i]$ 开始暴力拓展，即依次考虑 $[i-1,i+1],[i-2,i+2]\cdots$
+            \item $i\le r$：此时我们尝试利用以前的 $d_i$。找到 $i$ 的对应点 $j=l+(r-i)$。由于对称，$d_i$ 应该几乎与 $d_j$ 相同，除非 $d_j$ 超出了 $[l,r]$ 的范围，此时我们需要将 $d$ 截断，然后开始暴力扩展
+        \end{itemize}
+        \item 尝试分析 Manacher 的复杂度。每次我们暴力拓展都会使得 $r$ 增加，并且 $r$ 单调不降。因此 Manacher 的复杂度为线性
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Manacher}
+    \begin{itemize}
+        \item 对于偶数长度的回文串
+        \item 可以修改算法细节使其适用
+        \item 更简单的做法是，在原串相邻字符中间插入分隔符，并直接运行奇数算法
+    \end{itemize}
+\end{frame}
+
+\subsection{Trie 字典树}
+\begin{frame}{01 - Trie}
+    \begin{itemize}
+        \item 一种特殊的 Trie，只有 $0,1$ 两种字符
+        \item 01-Trie 是解决一类位值问题的利器 
+    \end{itemize}
+\end{frame}
+
+\section{习题}
+
+\subsection{洛谷 P4555 [国家集训队] 最长双回文串}
+
+\begin{frame}{洛谷 P4555 [国家集训队] 最长双回文串}
+    给定长度为 $n$ 的串 $S$，求 $S$ 的最长双回文子串 $T$，即可将 $T$ 分为两部分 $X,Y$（$|X|,|Y|\ge 1$）且 $X$ 和 $Y$ 都是回文串。
+    
+    $2\le n\le 10^5$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 首先求出每个位置的回文半径，可以使用哈希或者 Manacher
+        \item 考虑如何处理双回文串
+        \item 我们可以枚举两个回文中心，它们可以组成一个双回文串的前提是，回文半径之和不小于间距。暴力枚举复杂度为 $O(n^2)$
+        \item 注意到答案是两个回文中心间距的二倍，于是我们总是希望它们相距尽可能远
+        \item 扫描线。扫描枚举右侧的回文中心 $i$，考虑左侧所有的 $[j-d_j,j+d_j]$，维护一个 $j+d_j$ 的单调栈，在单调栈上二分找到最靠左的 $j$ 即可。复杂度 $O(n\log n)$
+    \end{itemize}
+\end{frame}
+
+\subsection{洛谷 P4551 最长异或路径}
+\begin{frame}{洛谷 P4551 最长异或路径}
+    给定一棵 $n$ 个点的带权树，求任意两个结点之间唯一路径上所有边权的异或最大值。
+    
+    $1\le n\le 10^5$，$0\le w<2^{31}$
+\end{frame}
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 注意到异或可以相互抵消
+        \item 预处理每个点到根的异或和，问题转化为给定 $n$ 个数，要求从中找两个数，使得异或和最大
+        \item 将所有数按二进制位从高到低，挂上 01 - Trie。
+        \item 异或为 $1$ 当且仅当两个位不同
+        \item 因此我们枚举一个数 $x$，去 01-Trie 中查询一个数与它异或和最大，只需要每步尽量走与 $x$ 位不同的边即可
+        \item 复杂度 $O(n\log V)$
+    \end{itemize}
+\end{frame}
+
+\subsection{洛谷 P6824 [EZEC-4] 可乐}
+
+\begin{frame}{洛谷 P6824 [EZEC-4] 可乐}
+    给定 $n$ 个正整数 $a_i$ 和整数 $k$。选择一个非负整数 $x$，最大化满足 $a_i \oplus x \le k$ 的可乐箱数。
+    
+    $1\le n,k,a_i\le 10^6$
+\end{frame}
+
+\begin{frame}{Solution}
+    \begin{itemize}
+        \item 建出 01 -Trie，在一位上异或 $ 1 $ 等价于交换左右子树
+        \item 01-Trie 上 DP
+        \item 设 $f_u$ 表示 $u$ 子树内，在 $k$ 的限制下能获取的最大可乐数
+        \item 若 $k$ 当前位是 $ 0 $，则我们总是只能获取当前位为 $0$ 的可乐。有 $f_u=max(f_{lc_u},f_{rc_u})$
+        \item 若 $k$ 当前位是 $ 1 $，则我们总是可以获取当前位为 $0$ 的可乐，而其余可乐使用子问题决策。有 $f_u=max(f_{lc_u}+sz_{rc_u},f_{rc_u}+sz_{lc_u})$
+        \item 复杂度 $O(n\log V)$
+    \end{itemize}
+\end{frame}
+
+% ===== 结束页 =====
+
+\begin{frame}
+    \begin{center}
+        {\Huge\calligra Thanks!}
+    \end{center}
+\end{frame}
+
+\end{document}

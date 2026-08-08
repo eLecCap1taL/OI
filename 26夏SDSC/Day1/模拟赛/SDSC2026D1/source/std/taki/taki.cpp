@@ -406,8 +406,8 @@ int k,q;
 int s[MAXN];
 
 signed main(){
-	freopen("taki.in","r",stdin);
-	freopen("taki.out","w",stdout);
+	// freopen("taki.in","r",stdin);
+	// freopen("taki.out","w",stdout);
 	 
 	k=RIN,q=RIN;
 	
